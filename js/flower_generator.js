@@ -24,7 +24,31 @@ function drawFlower1(petalColor,petalShape,circleShape) {
     petal_shape_max = 19;
     color_max = 360;
 
-    // calculate color (lab -> rgb space)
+    // calculate color (lab -> rgb space). Shift according to exp type center value
+    petalColor = parseInt(petalColor);
+    if (petalColor != -1) {
+        switch(globals.exp) {
+            case "A":
+              petalColor -= 15;
+              break;
+            case "B":
+              petalColor += 75;
+              break;
+            case "C":
+              petalColor += 165;
+              break;
+            case "D":
+              petalColor += 255;
+              break;
+            default:
+              break;
+        }                  
+        if (petalColor <= 0) {
+            petalColor  += 360;
+        } else if (petalColor  > 360) {
+            petalColor  -= 360;
+        }
+    }
     var rgb_color = xyzToRgb(labToXyz(angle2Lab(petalColor)));
 
     // gray square

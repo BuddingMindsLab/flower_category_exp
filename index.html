@@ -15,11 +15,11 @@
 
     <script src="assets/img/flowers/set0/set0_order.js"></script>
     <script src="assets/img/flowers/set60/set60_order.js"></script>
-    <script src="assets/img/flowers/set60/set90_order.js"></script>
+    <script src="assets/img/flowers/set90/set90_order.js"></script>
     <script src="assets/img/flowers/set120/set120_order.js"></script>
     <script src="assets/img/flowers/set180/set180_order.js"></script>
     <script src="assets/img/flowers/set240/set240_order.js"></script>
-    <script src="assets/img/flowers/set240/set270_order.js"></script>
+    <script src="assets/img/flowers/set270/set270_order.js"></script>
     <script src="assets/img/flowers/set300/set300_order.js"></script>
 
     <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
@@ -44,7 +44,11 @@
     // get prolific ID and session ID
     var prolific_ids = jsPsych.data.urlVariables();
 
+    // get experiment type (A, B, C, or D)
+    var exp_type = prolific_ids.exp;
+
     window.globals = {x1: 180, x2: 180, x3: 9};
+    globals.exp = exp_type.toString();
     var timeline = [];
 
     /**************************************************** set up ****************************************************/
@@ -163,45 +167,52 @@
     ]
     var back_copy = [[backgrounds[0][0].slice(), backgrounds[0][1].slice()], [backgrounds[1][0].slice(), backgrounds[1][1].slice()]];
 
-    // choose flower set (48 flower images)  
     var flower_sets = ['set0','set60', 'set90', 'set120', 'set180', 'set240', 'set270', 'set300'];
-    var set_folder = jsPsych.randomization.sampleWithoutReplacement(flower_sets,1)[0];
+    var set_folder = flower_sets[0];
+    var group_condition = 0;
+    var background_set = 0;
+    var lure = 0;
+    var flower_info = [];
 
-    var categories = all_categories[set_folder];
-    var group_condition = jsPsych.randomization.sampleWithoutReplacement([0, 1], 1)[0]; // 0: 'A'='sun', 1:'B'='sun'
-    
-    // choose background image set (48 originals, 48 lures) - 2 options
-    var background_set = jsPsych.randomization.sampleWithoutReplacement([0, 1], 1)[0]; 
-    var lure = jsPsych.randomization.sampleWithoutReplacement([0, 1], 1)[0]; //which list within the set is the lures 
-    
-    switch(set_folder) {
-        case 'set0':
+    /*                      A                        B        C       D
+        start colour :      0                      | 90     | 180   | 270
+        group condition:    0 (A:sun, B:cloud)     | 0      | 1     | 1
+        background set:     0                      | 1      | 0     | 1
+        lure:               1                      | 1      | 0     | 0
+    */
+    switch(exp_type){
+        case "A":
+            set_folder = flower_sets[0];
+            group_condition = 0;
+            background_set = 0;
+            lure = 1;
             flower_info = set0_flower_info;
             break;
-        case 'set60':
-            flower_info = set60_flower_info;
-            break;
-        case 'set90':
+        case "B":
+            set_folder = flower_sets[2];
+            group_condition = 0;
+            background_set = 1;
+            lure = 1;
             flower_info = set90_flower_info;
             break;
-        case 'set120':
-            flower_info = set120_flower_info;
-            break;
-        case 'set180':
+        case "C":
+            set_folder = flower_sets[4];
+            group_condition = 1;
+            background_set = 0;
+            lure = 0;
             flower_info = set180_flower_info;
             break;
-        case 'set240':  
-            flower_info = set240_flower_info;
-            break;
-        case 'set270':  
+        case "D":
+            set_folder = flower_sets[6];
+            group_condition = 1;
+            background_set = 1;
+            lure = 0;
             flower_info = set270_flower_info;
             break;
-        case 'set300':
-            flower_info = set300_flower_info;
-            break;  
         default:
-
-    }
+            break;
+    }   
+    var categories = all_categories[set_folder];
 
     // category learning stimuli (flower, sun/shade, background, lure)
     var stimuli = []; 
@@ -214,6 +225,7 @@
                 var g = 'shade';
             }
             var randomIndex = Math.floor(Math.random()*(num_trials-x-i)); // randomly select background image
+            
             // create if first of colour set or first of shape
             var create = 1;
             for (idx=0; idx<x; idx++){
@@ -692,13 +704,14 @@
     }
 
     /******************************************************************************************/
+    
     timeline.push(fullscreen);
     timeline.push(consent_inst);
     timeline.push(consent_page);
     timeline.push(start_trial);
 
     timeline.push(categorization_trials);
-/*     timeline.push(draw_end_learning);
+    timeline.push(draw_end_learning);
     timeline.push(timer_loop);
     timeline.push(next_trial);
 
@@ -710,7 +723,7 @@
 
     timeline.push(recon_instruction_trial);
     timeline.push(reconstruction_trials);
-    timeline.push(draw_end_recon_test); */
+    timeline.push(draw_end_recon_test); 
 
     timeline.push(debrief_page);
     timeline.push(end_trial);
