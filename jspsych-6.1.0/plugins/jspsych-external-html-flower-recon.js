@@ -130,6 +130,9 @@ jsPsych.plugins['external-html-flower-recon'] = (function() {
       function startTime(){
         display_element.getElementsByTagName("p")[0].innerHTML = trial.trial_duration/1000 - s;
         s += 1;
+        if (s > 30) {
+          return;
+        }
         t = setTimeout(function(){ startTime() }, 1000);;
       }
       startTime();

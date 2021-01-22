@@ -666,6 +666,7 @@
                 subject: subject_id,
                 duration: duration,
                 date: Date(),
+                exp_type: exp_type,
                 flower_set: set_folder,
                 flower_shape_condition: group_condition,
                 background_img_set: background_set,
@@ -705,7 +706,7 @@
 
     /******************************************************************************************/
     
-    timeline.push(fullscreen);
+/*     timeline.push(fullscreen);
     timeline.push(consent_inst);
     timeline.push(consent_page);
     timeline.push(start_trial);
@@ -719,7 +720,7 @@
     timeline.push(recognition_trials);
     timeline.push(draw_end_rec_test);
     timeline.push(timer_loop);
-    timeline.push(next_trial);
+    timeline.push(next_trial); */
 
     timeline.push(recon_instruction_trial);
     timeline.push(reconstruction_trials);
@@ -738,7 +739,24 @@
         message_progress_bar: '',
         max_load_time: 180000,
         on_finish: function() {
-          //window.location.replace("https://app.prolific.co/submissions/complete?cc=8MW6M1R0");
+            
+            switch(exp_type) {
+                case "A":
+                    window.location.replace("https://app.prolific.co/submissions/complete?cc=8MW6M1R0");
+                    break;
+                case "B":
+                    window.location.replace("https://app.prolific.co/submissions/complete?cc=8ATFOXWZ");
+                    break;
+                case "C":
+                    window.location.replace("https://app.prolific.co/submissions/complete?cc=8ATFOXWZ");
+                    break;
+                case "D":
+                    window.location.replace("https://app.prolific.co/submissions/complete?cc=8ATFOXWZ");
+                    break;
+                default:
+            }
+          
+          
         },
     })
 
