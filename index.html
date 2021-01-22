@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category Learning Task</title>
+    <script src="jspsych-6.1.0/jspsych.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-image-bkg-keyboard-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-external-html.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-external-html-flower-recon.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
+    <script src="js/category_var.js"></script>
+
+    <script src="assets/img/flowers/set0/set0_order.js"></script>
+    <script src="assets/img/flowers/set60/set60_order.js"></script>
+    <script src="assets/img/flowers/set120/set120_order.js"></script>
+    <script src="assets/img/flowers/set180/set180_order.js"></script>
+    <script src="assets/img/flowers/set240/set240_order.js"></script>
+    <script src="assets/img/flowers/set300/set300_order.js"></script>
+
+    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+        }
+        
+        /* Scale canvas with resize attribute to full size */
+        canvas[resize] {
+            width: 30%;
+        }
+    </style>
+
+</head>
+<script>
+    
+    var start_time = new Date();
+
+    // get prolific ID and session ID
+    var prolific_ids = jsPsych.data.urlVariables();
+
+    window.globals = {x1: 180, x2: 180, x3: 9};
+    var timeline = [];
+
+    /**************************************************** set up ****************************************************/
+
+    // general experiment settings
+    var instruction_time = 5000;
+    var waiting_time = 3;
+    var count_down = waiting_time;
+    var num_trials = 8; // number of learning trials (multiple of 4) - usually 48
+    
+    // feedback and instruction images
+    var ins_img = ['assets/img/instructions/example_learning_trial.png', 'assets/img/instructions/example_recon_trial.png','assets/img/instructions/japanese_garden.jpg', 'assets/img/instructions/recon_dials.png'];
+    var feedback_img = ['assets/img/feedback/smile.png', 'assets/img/feedback/smile.png'];
+    var category_img = ['assets/img/sun.png', 'assets/img/cloud.png']
+
+    // category learning task
+    var fixation_time = 1000;
+    var stim_time = 3500;
+    var bkg_time = 500;
+    var feedback_time = 1000;
+    var stim_question = "Is this <i>sun-preferring</i> or <i>shade-preferring</i>?";
+    var pos_feedback_img = 'assets/img/feedback/smile.png';
+    var pos_feedback_aud = 'assets/audio/positive.wav';
+    var neg_feedback_img = 'assets/img/feedback/frown.png';
+    var neg_feedback_aud = 'assets/audio/negative.wav';
+
+    // old/new recognition task
+    var rec_time = 1500;
+    var rec_iti = 1000;
+    var rec_question = "Is this image old or new?";
+
+    // reconstruction task
+    var recon_time = 30000;
+    var recon_count_down = recon_time/1000;
+
+    // instructions 
+    var learning_ins = 'Welcome!<br> Your task in this experiment is to sort flowers into categories.<br><br>\
+                    In each trial, you will see a flower on top of a decorative mat for '+stim_time/1000+' seconds.<br>\
+                    The flower will then disappear and the mat will remain on screen for '+bkg_time/1000+' seconds.<br><br>\
+                    You will be asked if the flower prefers <i>sun</i> or <i>shade</i>.\
+                    <br>You have until the mat disappears ('+(bkg_time+stim_time)/1000+' seconds) to make your choice.<br><br>\
+                    <div style="display:flex; align-items:center; margin: 0% 25% 0% 25%;"">\
+                            <div style="float:left; width:15%; vertical-align: middle;">\
+                                <img src="assets/img/sun.png" style="width:110%; vertical-align: middle;"></img></div>\
+                            <div style="float:left; width:10%; vertical-align: middle;">\
+                                <p style="font-size:300%">&#8592;</p></div>\
+                            <div style="float:left; width:50%; vertical-align: middle;">\
+                                <img src="assets/img/instructions/example_learning_trial.png" style="width:80%; vertical-align: middle;"></img></div>\
+                            <div style="float:left; width:10%; vertical-align: middle;">\
+                                <p style="font-size:300%">&#8594;</p></div>\
+                            <div style="float:left; width:15%; vertical-align: middle;">\
+                                <img src="assets/img/cloud.png" style="width:110%; vertical-align: middle;"></img></div>\
+                    </div>\
+                    <br><div style="text-align: center; clear: both"> The decorative mat is not relevant to the category decision.<br>\
+                    Press "&#8592;" if you think the flower prefers <i>sun</i>.<br>\
+                    Press "&#8594;" if you think the flower prefers <i>shade</i>.<br><br>\
+                    You will receive feedback after responding to an image.<br>\
+                    At the beginning of the task, you will be mostly guessing. That is okay, make your best guess and use the feedback to learn.<br><br>\
+                    Please make your responses as quickly and accurately as possible.</div>';
+
+    var start_ins = '<br>Once you have finished reading the instructions, <br>please place your fingers on the "&#8592;" and "&#8594;" keys.<br><br> Press "&#8594;"" to begin.<br><br>';
+   
+    var learning_complete = "Great job! You have completed the category learning phase of this experiment.<br><br>\
+                              The computer will move on to the next task in 90 seconds.<br>";
+
+    var test_instructions = "The next part of this experiment is a memory test for <br>the decorative mats you saw behind the flowers.<br><br>";                          
+
+    var rec_instructions = 'In each trial, you will judge whether you saw the image as a decorative mat during the category learning phase.<br><br>\
+                            <div style="display:flex; align-items:center; margin: 0% 25% 0% 25%;">\
+                            <div style="float:left; width:33%; vertical-align: middle;">\
+                                <p style="font-size:200%">Old &#8592;</p>\
+                            </div>\
+                            <div style="float:left; width:33%; vertical-align: middle;">\
+                                <img src="assets/img/instructions/japanese_garden.jpg" style="width:100%; vertical-align: middle;"></img>\
+                            </div>\
+                            <div style="float:left; width:33%; vertical-align: middle;">\
+                                <p style="font-size:200%">&#8594; New</p>\
+                            </div>\
+                            </div>\
+                            <br><div style="text-align: center; clear: both"> If you have seen the exact same picture before in this experiment, press "&#8592;".<br>\
+                            If you have not seen this exact picture, press "&#8594;"".<br><br>\
+                            You will have '+rec_time/1000+' seconds to respond.<br><br>\
+                            Please make your responses as quickly and accurately as possible.<br><br></div>'; 
+
+    var rec_test_complete = "Good work! You have completed the decorative mat memory test.<br><br>\
+                            The computer will move on to the next task in 90 seconds.<br>";
+
+    var test2_instructions = "For the final part of this experiment, <br>we are going to test your memory for the <i>flower</i> you saw with each decorative mat.<br><br>";    
+
+    var recon_instructions = 'In each trial, you will see a flower on top of a decorative mat you saw during the category learning phase.</p>\
+                        Think back to the specific colour and shape of the flower you saw with this mat.<br>\
+                        Using your mouse to adjust the dials at the bottom of the screen, do your best to recreate the colour and shape of the flower you saw as closely as possible.<br><br>'+
+                        '<img src="assets/img/instructions/example_recon_trial.png" style="width:25%; vertical-align: middle;"></img>'+
+                        '<p>When you are finished, click "Next" with your mouse to save your answer and proceed to the next trial.</p>'+
+                        'You will have a maximum of '+recon_time/1000+' seconds to respond and a countdown will appear in the top right corner of the screen.<br>'+
+                        'If after a few seconds you cannot remember the flower, make your best guess.<br><br>'+
+                        "Please make your responses as precise as possible.<br><br>";
+
+    var recon_start_ins = '<br>Once you have finished reading the instructions, please press "Next" to begin.<br><br>';
+  
+    var recon_test_complete = "Great job! You have completed the experiment.<br><br>\
+                            Please proceed to the debriefing.<br><br>";
+
+    var next_trial_ins = 'Start the next task<br><br>';
+
+    // backgrounds in sets (for trials)
+    var backgrounds = [
+        [
+            ['assets/img/backgrounds/abbey.jpg','assets/img/backgrounds/airfield.jpg','assets/img/backgrounds/alcove.jpg','assets/img/backgrounds/amphitheatre.jpg','assets/img/backgrounds/amusement_park.jpg','assets/img/backgrounds/apartment_building.jpg','assets/img/backgrounds/aqueduct.jpg','assets/img/backgrounds/arch.jpg','assets/img/backgrounds/athletic_field.jpg','assets/img/backgrounds/badlands.jpg','assets/img/backgrounds/bamboo_forest.jpg','assets/img/backgrounds/barn.jpg','assets/img/backgrounds/baseball_field.jpg','assets/img/backgrounds/basilica.jpg','assets/img/backgrounds/bayou.jpg','assets/img/backgrounds/bazaar_outdoors.jpg','assets/img/backgrounds/beach_house.jpg','assets/img/backgrounds/beach.jpg','assets/img/backgrounds/beer_garden.jpg','assets/img/backgrounds/boardwalk.jpg','assets/img/backgrounds/boat_deck.jpg','assets/img/backgrounds/botanical_gardens.jpg','assets/img/backgrounds/bridge.jpg','assets/img/backgrounds/bull_ring.jpg', 'assets/img/backgrounds/archive.jpg','assets/img/backgrounds/arena_hockey.jpg','assets/img/backgrounds/art_studio.jpg','assets/img/backgrounds/artist_loft.jpg','assets/img/backgrounds/attic.jpg','assets/img/backgrounds/auditorium.jpg','assets/img/backgrounds/auto_factory.jpg','assets/img/backgrounds/auto_showroom.jpg','assets/img/backgrounds/bakery.jpg','assets/img/backgrounds/balcony_interior.jpg','assets/img/backgrounds/ball_pit.jpg','assets/img/backgrounds/ballroom.jpg','assets/img/backgrounds/banquet_hall.jpg','assets/img/backgrounds/bar.jpg','assets/img/backgrounds/basketball_court.jpg','assets/img/backgrounds/bathroom_public.jpg','assets/img/backgrounds/bay_window.jpg','assets/img/backgrounds/beauty_salon.jpg','assets/img/backgrounds/bedroom.jpg','assets/img/backgrounds/berth.jpg','assets/img/backgrounds/bistro_indoor.jpg','assets/img/backgrounds/bistro_outdoor.jpg','assets/img/backgrounds/boathouse.jpg','assets/img/backgrounds/bookstore.jpg'],
+            ['assets/img/backgrounds/abbey_2.jpg','assets/img/backgrounds/airfield_2.jpg','assets/img/backgrounds/alcove_2.jpg','assets/img/backgrounds/amphitheatre_2.jpg','assets/img/backgrounds/amusement_park_2.jpg','assets/img/backgrounds/apartment_building_2.jpg','assets/img/backgrounds/aqueduct_2.jpg','assets/img/backgrounds/arch_2.jpg','assets/img/backgrounds/athletic_field_2.jpg','assets/img/backgrounds/badlands_2.jpg','assets/img/backgrounds/bamboo_forest_2.jpg','assets/img/backgrounds/barn_2.jpg','assets/img/backgrounds/baseball_field_2.jpg','assets/img/backgrounds/basilica_2.jpg','assets/img/backgrounds/bayou_2.jpg','assets/img/backgrounds/bazaar_outdoors_2.jpg','assets/img/backgrounds/beach_house_2.jpg','assets/img/backgrounds/beach_2.jpg','assets/img/backgrounds/beer_garden_2.jpg','assets/img/backgrounds/boardwalk_2.jpg','assets/img/backgrounds/boat_deck_2.jpg','assets/img/backgrounds/botanical_gardens_2.jpg','assets/img/backgrounds/bridge_2.jpg','assets/img/backgrounds/bull_ring_2.jpg','assets/img/backgrounds/archive_2.jpg','assets/img/backgrounds/arena_hockey_2.jpg','assets/img/backgrounds/art_studio_2.jpg','assets/img/backgrounds/artist_loft_2.jpg','assets/img/backgrounds/attic_2.jpg','assets/img/backgrounds/auditorium_2.jpg','assets/img/backgrounds/auto_factory_2.jpg','assets/img/backgrounds/auto_showroom_2.jpg','assets/img/backgrounds/bakery_2.jpg','assets/img/backgrounds/balcony_interior_2.jpg','assets/img/backgrounds/ball_pit_2.jpg','assets/img/backgrounds/ballroom_2.jpg','assets/img/backgrounds/banquet_hall_2.jpg','assets/img/backgrounds/bar_2.jpg','assets/img/backgrounds/basketball_court_2.jpg','assets/img/backgrounds/bathroom_public_2.jpg','assets/img/backgrounds/bay_window_2.jpg','assets/img/backgrounds/beauty_salon_2.jpg','assets/img/backgrounds/bedroom_2.jpg','assets/img/backgrounds/berth_2.jpg','assets/img/backgrounds/bistro_indoor_2.jpg','assets/img/backgrounds/bistro_outdoor_2.jpg','assets/img/backgrounds/boathouse_2.jpg','assets/img/backgrounds/bookstore_2.jpg']
+        ],
+        [
+            ['assets/img/backgrounds/bus_station.jpg','assets/img/backgrounds/butte.jpg','assets/img/backgrounds/cabin.jpg','assets/img/backgrounds/campus.jpg','assets/img/backgrounds/canal_natural.jpg','assets/img/backgrounds/canyon.jpg','assets/img/backgrounds/carrousel.jpg','assets/img/backgrounds/castle.jpg','assets/img/backgrounds/chalet.jpg','assets/img/backgrounds/cliff.jpg','assets/img/backgrounds/construction_site.jpg','assets/img/backgrounds/convention_center.jpg','assets/img/backgrounds/coral_reef.jpg','assets/img/backgrounds/corn_field.jpg','assets/img/backgrounds/corral.jpg','assets/img/backgrounds/cottage_garden.jpg','assets/img/backgrounds/cottage.jpg','assets/img/backgrounds/courthouse.jpg','assets/img/backgrounds/courtyard.jpg','assets/img/backgrounds/creek.jpg','assets/img/backgrounds/crosswalk.jpg','assets/img/backgrounds/dam.jpg','assets/img/backgrounds/desert_road.jpg','assets/img/backgrounds/desert_vegetation.jpg','assets/img/backgrounds/boxing_ring.jpg','assets/img/backgrounds/bus_interior.jpg','assets/img/backgrounds/cafeteria.jpg','assets/img/backgrounds/candy_store.jpg','assets/img/backgrounds/car_back_seat.jpg','assets/img/backgrounds/catacombs.jpg','assets/img/backgrounds/cathedral_indoor.jpg','assets/img/backgrounds/childs_room.jpg','assets/img/backgrounds/classroom.jpg','assets/img/backgrounds/closet.jpg','assets/img/backgrounds/clothing_store.jpg','assets/img/backgrounds/cockpit.jpg','assets/img/backgrounds/coffee_shop.jpg','assets/img/backgrounds/conference_room.jpg','assets/img/backgrounds/cubicle.jpg','assets/img/backgrounds/deli.jpg','assets/img/backgrounds/dining_room.jpg','assets/img/backgrounds/elevator_lobby.jpg','assets/img/backgrounds/escilator.jpg','assets/img/backgrounds/fastfood_restaurant.jpg','assets/img/backgrounds/galley.jpg','assets/img/backgrounds/general_store_indoors.jpg','assets/img/backgrounds/greenhouse.jpg','assets/img/backgrounds/gymnsium.jpg'],
+            ['assets/img/backgrounds/bus_station_2.jpg','assets/img/backgrounds/butte_2.jpg','assets/img/backgrounds/cabin_2.jpg','assets/img/backgrounds/campus_2.jpg','assets/img/backgrounds/canal_natural_2.jpg','assets/img/backgrounds/canyon_2.jpg','assets/img/backgrounds/carrousel_2.jpg','assets/img/backgrounds/castle_2.jpg','assets/img/backgrounds/chalet_2.jpg','assets/img/backgrounds/cliff_2.jpg','assets/img/backgrounds/construction_site_2.jpg','assets/img/backgrounds/convention_center_2.jpg','assets/img/backgrounds/coral_reef_2.jpg','assets/img/backgrounds/corn_field_2.jpg','assets/img/backgrounds/corral_2.jpg','assets/img/backgrounds/cottage_garden_2.jpg','assets/img/backgrounds/cottage_2.jpg','assets/img/backgrounds/courthouse_2.jpg','assets/img/backgrounds/courtyard_2.jpg','assets/img/backgrounds/creek_2.jpg','assets/img/backgrounds/crosswalk_2.jpg','assets/img/backgrounds/dam_2.jpg','assets/img/backgrounds/desert_road_2.jpg','assets/img/backgrounds/desert_vegetation_2.jpg','assets/img/backgrounds/boxing_ring_2.jpg','assets/img/backgrounds/bus_interior_2.jpg','assets/img/backgrounds/cafeteria_2.jpg','assets/img/backgrounds/candy_store_2.jpg','assets/img/backgrounds/car_back_seat_2.jpg','assets/img/backgrounds/catacombs_2.jpg','assets/img/backgrounds/cathedral_indoor_2.jpg','assets/img/backgrounds/childs_room_2.jpg','assets/img/backgrounds/classroom_2.jpg','assets/img/backgrounds/closet_2.jpg','assets/img/backgrounds/clothing_store_2.jpg','assets/img/backgrounds/cockpit_2.jpg','assets/img/backgrounds/coffee_shop_2.jpg','assets/img/backgrounds/conference_room_2.jpg','assets/img/backgrounds/cubicle_2.jpg','assets/img/backgrounds/deli_2.jpg','assets/img/backgrounds/dining_room_2.jpg','assets/img/backgrounds/elevator_lobby_2.jpg','assets/img/backgrounds/escilator_2.jpg','assets/img/backgrounds/fastfood_restaurant_2.jpg','assets/img/backgrounds/galley_2.jpg','assets/img/backgrounds/general_store_indoors_2.jpg','assets/img/backgrounds/greenhouse_2.jpg','assets/img/backgrounds/gymnsium_2.jpg']
+        ]
+    ]
+    var back_copy = [[backgrounds[0][0].slice(), backgrounds[0][1].slice()], [backgrounds[1][0].slice(), backgrounds[1][1].slice()]];
+
+    // choose flower set (48 flower images)  
+    var flower_sets = ['set0','set60', 'set120', 'set180', 'set240', 'set300'];
+    var set_folder = jsPsych.randomization.sampleWithoutReplacement(flower_sets,1)[0];
+    //var set_folder = jsPsych.randomization.sampleWithoutReplacement(['set0','set60', 'set120', 'set180', 'set240', 'set300'], 1)[0];
+    //alert(set_folder)
+
+    var categories = all_categories[set_folder];
+    var group_condition = jsPsych.randomization.sampleWithoutReplacement([0, 1], 1)[0]; // 0: 'A'='sun', 1:'B'='sun'
+    
+    // choose background image set (48 originals, 48 lures) - 2 options
+    var background_set = jsPsych.randomization.sampleWithoutReplacement([0, 1], 1)[0]; 
+    var lure = jsPsych.randomization.sampleWithoutReplacement([0, 1], 1)[0]; //which list within the set is the lures 
+    
+    switch(set_folder) {
+        case 'set0':
+            flower_info = set0_flower_info;
+            break;
+        case 'set60':
+            flower_info = set60_flower_info;
+            break;
+        case 'set120':
+            flower_info = set120_flower_info;
+            break;
+        case 'set180':
+            flower_info = set180_flower_info;
+            break;
+        case 'set240':  
+            flower_info = set240_flower_info;
+            break;
+        case 'set300':
+            flower_info = set300_flower_info;
+            break;  
+        default:
+
+    }
+
+    // category learning stimuli (flower, sun/shade, background, lure)
+    var stimuli = []; 
+    var flowers = [];       
+    for (i = 0; i < num_trials; i+=4) {
+        for (x=0;x<4;x++) {
+            if ((categories[i+x]=='A' && group_condition==0) || (categories[i+x]=='B' && group_condition==1)){
+                var g = 'sun';
+            } else {
+                var g = 'shade';
+            }
+            var randomIndex = Math.floor(Math.random()*(num_trials-x-i)); // randomly select background image
+            // create if first of colour set or first of shape
+            var create = 1;
+            for (idx=0; idx<x; idx++){
+                if (categories[i+idx]==categories[i+x]) {
+                    create = 0;
+                }
+            }
+            stimuli.push(
+                {
+                    stimulus: 'assets/img/flowers/'+set_folder+'/flower'+(i+x+1).toString() +'.png',
+                    shape: flower_info[i+x]["shape"],
+                    colour: flower_info[i+x]["shade"],
+                    category: categories[i+x],
+                    group: g,
+                    create: create,
+                    background: back_copy[background_set][1-lure].splice(randomIndex, 1)[0],
+                    lure: back_copy[background_set][lure].splice(randomIndex, 1)[0]
+                }
+            )
+            flowers.push('assets/img/flowers/'+set_folder+'/flower'+(i+x+1).toString() +'.png');
+        }      
+    }
+
+    // stimuli for recognition test
+    var rec_backs = []
+    var novel_backs = jsPsych.randomization.sampleWithoutReplacement(backgrounds[1-background_set][1-lure], num_trials/2);
+    for (i=0;i<num_trials; i++) {
+
+        // 48 old
+       rec_backs.push({
+           background: stimuli[i].background,
+           lure: 0,
+           create: stimuli[i].create,
+        });
+
+        // 48 lure
+       rec_backs.push({
+           background: stimuli[i].lure,
+           lure: 1,
+           create: stimuli[i].create,
+       });
+
+       // 24 new
+       if (i<(num_trials/2)) {
+            rec_backs.push({
+                background: novel_backs[i],
+                lure: -1,
+                create: 0
+            });
+       }
+    }
+
+    // randomize order while making sure no lures are back to back with their originals
+    var rec_backs_shuffled = jsPsych.randomization.shuffle(rec_backs);
+    for (i=0;i<rec_backs_shuffled.length; i++) {
+        if (i>0) {
+            var cur = rec_backs_shuffled[i];
+            var prev = rec_backs_shuffled[i-1];
+            if ((cur.lure==1 && prev.lure==0) ||
+                (cur.lure==0 && prev.lure==1) ) {
+
+                    // if previous and current are a matched pair (lure + orig) shuffle again
+                    if (cur.background.match('[a-z/]+')[0] ==
+                        prev.background.match('[a-z/]+')[0]) {
+                            rec_backs_shuffled = jsPsych.randomization.shuffle(rec_backs_shuffled);
+                            i = 0;
+                    }
+                }
+        }
+    }
+    rec_backs = rec_backs_shuffled;
+
+    /**************************************************** subject ID ****************************************************/
+    
+    // Subject id = subject number + shape condition + orig-lure background set + lure list + start colour
+    function makeid() {
+        var id = '';
+
+        // subject number (15 digit code)
+        id += jsPsych.randomization.randomID(15);
+
+        // shape condition (0: sun = A or 1: shade = A)
+        id += group_condition.toString();
+
+        // orig-lure background set (0 or 1)
+        id += background_set.toString();
+
+        // lure list (0 or 1)
+        id += lure.toString();
+
+        // starting colour ()
+        id += set_folder.slice(3, set_folder.length);
+
+        return id;
+    }
+    var subject_id = makeid();
+    
+    /**************************************************** consent ****************************************************/
+    
+    // fullscreen
+    var fullscreen = {
+        type: 'fullscreen',
+        fullscreen_mode: true
+    };
+
+    // welcome
+    var start_trial = {
+        type: 'instructions',
+        pages: [learning_ins, start_ins],
+        show_clickable_nav: true,
+        show_page_number: true
+    };
+
+    // consent
+    var consent_inst = {
+        type: 'html-button-response',
+        stimulus: html='<p style="color: black; font-size: 20px;">'
+           +'We would like to get your consent before starting the experiment.</p>',
+        choices: ['Consent page'], 
+        data: {disp_type: 'consent-instruction'}
+    }
+    var check_consent = function(elem) {
+        if (document.getElementById('agree_checkbox').checked) {                             
+            return true;
+        } else {
+            alert("If you wish to participate, you must check the box next to the statement 'I agree.'");
+            return false;
+        }
+        return false;
+    };
+    var consent_page = {
+        type: 'external-html',
+        url: "assets/materials/consent.html",
+        cont_btn: "start",
+        check_fn: check_consent,
+        data: {disp_type: 'online_consent_form'}
+    }
+
+    var next_trial = {
+        type: 'html-button-response',
+        stimulus: '',
+        choices: ['Next'],
+        button_html: '<button class="jspsych-btn" style="width:125%; font-size:125%; text-align:center;">Next</button>'
+    }
+
+    /**************************************** PART I - category learning ******************************************/
+
+    // 1) fixation cross
+    var fixation = {  
+        type: 'html-keyboard-response',
+        stimulus: '+',
+        choices: jsPsych.NO_KEYS,
+        trial_duration: fixation_time,
+        data: {
+            exp_section: 'category_learning'
+        }
+    }
+
+    // 2) stimulus + background
+    var stim = {  
+        type: 'image-bkg-keyboard-response',
+        stimulus: jsPsych.timelineVariable('stimulus'),
+        background: jsPsych.timelineVariable('background'),
+        choices: [37, 39],
+        prompt: '<p class="prompt">'+stim_question+'</p>',
+        response_ends_trial: false,
+        trial_duration: stim_time+bkg_time,
+        stimulus_duration: stim_time,
+        options: ['Sun', 'Shade'],
+        option_img: category_img,
+        data: {
+            exp_section: 'category_learning',
+            stimulus_type: jsPsych.timelineVariable('group'),
+            category: jsPsych.timelineVariable('category'),
+            create: jsPsych.timelineVariable('create'),
+            background: jsPsych.timelineVariable('background'),
+            lure: jsPsych.timelineVariable('lure')
+        },
+        on_finish: function(data){
+            if( ( (data.key_press == 39) && (data.stimulus_type == 'shade') )
+                || ( (data.key_press == 37) && (data.stimulus_type == 'sun') ) ){
+                data.correct = true;
+            } else {
+                data.correct = false;
+            }
+        }
+    }
+
+    // 4) feedback
+    var feedback = {
+        type: 'html-keyboard-response',
+        stimulus: function() {
+            var last_trial_correct = jsPsych.data.get().last().values()[0].correct;
+            var html = "";
+
+            if(last_trial_correct){
+                html += "<p style='color:green; font-size:100px; line-height: 0.2; margin-top: 10%;'>Correct!<br><br><br><br>"+
+                        "<img src="+pos_feedback_img+" width='160'>"+
+                        '<audio autoplay>\
+                            <source src="'+pos_feedback_aud+'" type="audio/wav">\
+                            Your browser does not support the audio element.\
+                        </audio>';
+        
+            } else {
+                html += "<p style='color:red; font-size:100px; line-height: 0.2; margin-top: 10%;'>Wrong.<br><br><br><br>"+
+                        "<img src="+neg_feedback_img+" width='160'>"+
+                        '<audio autoplay>\
+                            <source src="'+neg_feedback_aud+'" type="audio/wav">\
+                            Your browser does not support the audio element.\
+                        </audio>';
+                      
+            }
+            
+            html += "<br><span style='color:black; font-size:75px; line-height: 1.5;'>This flower likes <i>"+jsPsych.data.get().last().values()[0].stimulus_type+"</i>.</span><br>";
+            
+            if(jsPsych.data.get().last().values()[0].stimulus_type == 'shade') {
+                html += "<img src='assets/img/cloud.png' width='300'>";
+            } else {
+                html += "<img src='assets/img/sun.png' width='300'>";
+            }
+
+            html += "</p>"
+            
+            return html;
+        },
+        choices: jsPsych.NO_KEYS,
+        trial_duration: feedback_time,
+        data: {
+            exp_section: 'category_learning'
+        },
+        on_finish: function(data) {
+            var curr_progress_bar_value = jsPsych.getProgressBarCompleted();
+            jsPsych.setProgressBar(curr_progress_bar_value + (1/stimuli.length));
+        }
+    }
+    
+    // entire categorization trial set
+    var categorization_trials = {
+        timeline : [fixation, stim, feedback],
+        timeline_variables: stimuli    
+    }
+
+    // draw instructions for ending learning phase
+    var draw_end_learning = {
+        type: 'html-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        stimulus: learning_complete,
+        trial_duration: instruction_time
+    };
+    
+    // draw timer
+    var timer_start = {
+        type: 'html-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        stimulus: function(){
+          return count_down;
+        },
+        trial_duration: 1000 // ms
+    };
+
+    var timer_loop = {
+        timeline: [timer_start],
+        loop_function: function(){
+            if (count_down == 0) {
+            count_down = waiting_time;
+            return false;
+            } else {
+            count_down -= 1;
+            return true;
+            };
+        }  
+    } 
+
+    /**************************************************** Break **************************************************** /
+    // 5 min sudoku
+
+    // 1) instructions
+
+    // 2) sudoku
+
+    /**************************************** PART II - Old/New Memory test  *********************************************/
+
+    // 1) Scene recognition
+
+    // Instructions for recognition task
+    var rec_instruction_trial = {
+        type: 'instructions',
+        pages: [test_instructions, rec_instructions, start_ins],
+        show_clickable_nav: true,
+        show_page_number: true,
+        on_start: function() {
+            // set progress bar to 0 at the start of experiment
+            jsPsych.setProgressBar(0);
+        }
+    };
+
+    // a) old/new recognition trial
+    var prev_img = '';
+    var prev_lure = -1;
+    var rec_background = {
+        type: 'image-bkg-keyboard-response',
+        background: jsPsych.timelineVariable('background'),
+        stimulus:'',
+        choices: [37, 39],
+        prompt: '<p class="prompt">'+rec_question+'</p>',
+        response_ends_trial: false,
+        trial_duration: rec_time,
+        options: ['Old', 'New'],
+        lure: jsPsych.timelineVariable('lure'),
+        data: {
+            exp_section: 'scene_recognition',
+            background: jsPsych.timelineVariable('background'),
+            create_trial: jsPsych.timelineVariable('create'),
+            lure: jsPsych.timelineVariable('lure')
+        },
+        on_finish: function(data){
+            // "old" and actually old (0), "new" and lure (1) or new (-1)
+            if( ( (data.key_press == 37) && (data.lure== 0) )
+                || ( (data.key_press == 39) && (data.lure == 1) ) 
+                || ( (data.key_press == 39) && (data.lure == -1) )){
+                data.correct = true;
+            } else {
+                data.correct = false;
+            }
+            var curr_progress_bar_value = jsPsych.getProgressBarCompleted();
+            jsPsych.setProgressBar(curr_progress_bar_value + (1/rec_backs.length));
+            prev_img = data.background;
+            prev_lure = data.lure;
+        }
+    }
+
+    // b) fixation
+    var rec_fixation = {  
+        type: 'html-keyboard-response',
+        stimulus: '+',
+        choices: jsPsych.NO_KEYS,
+        trial_duration: rec_iti,
+        data: {
+            exp_section: 'scene_recognition',
+        }
+    }
+
+    var recognition_trials = {
+        timeline: [rec_fixation, rec_background],
+        timeline_variables: rec_backs
+    }
+
+    // draw instructions for ending recognition phase
+    var draw_end_rec_test = {
+        type: 'html-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        stimulus: rec_test_complete,
+        trial_duration: instruction_time
+    };
+
+    /**************************************** PART II - Reconstruction Memory test  *********************************************/
+
+    // instructions
+    var recon_instruction_trial = {
+        type: 'instructions',
+        pages: [test2_instructions, recon_instructions, recon_start_ins],
+        show_clickable_nav: true,
+        show_page_number: true,
+        on_start: function() {
+            // set progress bar to 0 at the start of experiment
+            jsPsych.setProgressBar(0);
+        }
+    };
+
+    // reconstruction trial
+    var recon_trial = {
+        type: 'external-html-flower-recon',
+        url: 'flower_generator_index.html',
+        background: jsPsych.timelineVariable('background'), // only actually seen backgrounds
+        execute_script: true,
+        cont_btn: "next",
+        check_fn: function(elem) {
+            if ((document.getElementById('x1').getAttribute('clicked') == "false") &&
+                !(document.getElementById('countdown').innerHTML == "1" )){
+                return false;
+            }
+            return true;
+        },
+        trial_duration: recon_time,
+        data: {
+            exp_section: 'flower_reconstruction',
+            background: jsPsych.timelineVariable('background'),
+            create_trial: jsPsych.timelineVariable('create'),
+            stimulus: jsPsych.timelineVariable('stimulus')
+        },
+        on_finish: function(data){
+            var curr_progress_bar_value = jsPsych.getProgressBarCompleted();
+            jsPsych.setProgressBar(curr_progress_bar_value + (1/num_trials));
+        }
+    }
+
+    var reconstruction_trials = {
+        timeline: [rec_fixation, recon_trial],
+        timeline_variables: stimuli,
+        randomize_order: true
+    }
+
+    // draw instructions for ending recognition phase
+    var draw_end_recon_test = {
+        type: 'html-button-response',
+        choices: ['Continue'],
+        stimulus: recon_test_complete,
+        trial_duration: instruction_time
+    };
+
+    /********************************************* End *********************************************/
+
+    // debriefing
+    var debrief_page = {
+        type: 'external-html',
+        url: "assets/materials/debreifing_letter.html",
+        cont_btn: "finish",            
+        data: {disp_type: 'debriefing_page'},
+        on_finish: function(){
+            //jsPsych.data.displayData('json');
+            var end_time = new Date();
+            var duration = ((end_time - start_time)/60000).toFixed(2);
+
+            // organize data into sections
+            var learning_responses = jsPsych.data.get().filter([{trial_type: 'image-bkg-keyboard-response', exp_section: 'category_learning'}]);
+            var learning_data = {'phase': 'category_learning', 'data': learning_responses.values()};
+            var scene_responses = jsPsych.data.get().filter([{trial_type: 'image-bkg-keyboard-response', exp_section: 'scene_recognition'}]);
+            var scene_data = {'phase': 'scene_recognition', 'data': scene_responses.values()};
+            var recon_responses = jsPsych.data.get().filter([{trial_type: 'external-html-flower-recon', exp_section: 'flower_reconstruction'}]);
+            var recon_data = {'phase': 'flower_reconstruction', 'data': recon_responses.values()};
+
+            var data = {
+                prolific_id: prolific_ids.PROLIFIC_PID,
+                study_id: prolific_ids.STUDY_ID,
+                session_id: prolific_ids.SESSION_ID,
+                experiment: "category_learning_task",
+                repo: "mwoodb.github.io",
+                subject: subject_id,
+                duration: duration,
+                date: Date(),
+                flower_set: set_folder,
+                flower_shape_condition: group_condition,
+                background_img_set: background_set,
+                lure_img_set: lure,
+                data: [
+                    learning_data,
+                    scene_data,
+                    recon_data
+                ]
+            }
+            
+            // send data to savejs
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST','https://mwoodb-savejs.netlify.app/.netlify/functions/savejs');
+            xhr.setRequestHeader('Content-Type','application/json');
+            xhr.onload = function(){
+                if(xhr.status==200){
+                    var response=JSON.parse(xhr.responseText);
+                    console.log(response.success);
+                }
+                else {
+                    console.log("failed to send data");
+                }
+            };
+            xhr.send(JSON.stringify(data));
+            console.log("success sending data");
+        }
+    }    
+    
+    // thank you
+    var end_trial = {
+        type: 'html-keyboard-response',
+        stimulus: '<p style="font-size:300%; line-height:1.0">Thank you for your participation!</p><img src="'+pos_feedback_img+'"></img>',
+        trial_duration: 1000,
+        choices: jsPsych.ANY_KEYS
+    }
+
+    /******************************************************************************************/
+    timeline.push(fullscreen);
+    timeline.push(consent_inst);
+    timeline.push(consent_page);
+    timeline.push(start_trial);
+
+    timeline.push(categorization_trials);
+/*     timeline.push(draw_end_learning);
+    timeline.push(timer_loop);
+    timeline.push(next_trial);
+
+    timeline.push(rec_instruction_trial);
+    timeline.push(recognition_trials);
+    timeline.push(draw_end_rec_test);
+    timeline.push(timer_loop);
+    timeline.push(next_trial);
+
+    timeline.push(recon_instruction_trial);
+    timeline.push(reconstruction_trials);
+    timeline.push(draw_end_recon_test); */
+
+    timeline.push(debrief_page);
+    timeline.push(end_trial);
+
+    // run experiment
+    jsPsych.init({
+        timeline: timeline,
+        preload_images: [backgrounds[background_set].flat(), novel_backs, category_img, feedback_img, ins_img, flowers],
+        preload_audio: [neg_feedback_aud, pos_feedback_aud],
+        show_progress_bar: true,
+        auto_update_progress_bar: false,
+        message_progress_bar: '',
+        max_load_time: 180000,
+        on_finish: function() {
+          window.location.replace("https://www.google.com/");
+        },
+    })
+
+</script>
+</html>

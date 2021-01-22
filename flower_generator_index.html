@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Load the Paper.js library -->
+<script type="text/javascript" src="js/rgb2lab.js"></script>
+<script type="text/javascript" src="js/paper-full.min.js"></script>
+<script type="text/paperscript" src="js/flower_generator.js" canvas="myCanvas"></script>  
+<style type="text/css">
+    html,
+    body {
+        height: 100%;
+        font-size: 50%;
+    }
+    input, button {
+        font-size: 100%;
+    }
+    
+    /* Scale canvas with resize attribute to full size */
+    canvas[resize] {
+        width: 25%;
+        /*height: 30%;*/
+    }
+
+</style>
+</head>
+<body>
+    <div style="position: relative; top: 0; left: 0;">
+        <p style="position: absolute; right: 5%; top: -5%" id="countdown"></p>
+        <canvas id="myCanvas" style="position: absolute; left: 37.5%; top: 30%; z-index: 2; margin: auto;" width="25%" height="25%" resize="true" data-paper-scope="1"></canvas>
+        <img id="background" src="assets/img/backgrounds/alcove.jpg" style="top: 0; left: 0; max-width: 75%; max-height: 100vh; position: relative; z-index: 0"></img>
+    </div>
+    <div style="position: relative; width:89%; left: -3%; display: inline-block;">
+        <div class="slidecontainer"> 
+            colour
+            <input type="range" min="1" max="360" value="180" class="slider" id="x1" style="width: 85%; text-align:center;" clicked="false" onchange="javascript:update_flower()">
+        </div>
+        <div class="slidecontainer"> 
+            shape
+            <input type="range" min="1" max="360" value="180" class="slider" id="x2" style="width: 85%" clicked="false" onchange="javascript:update_flower()">
+        </div>
+    </div>
+    <div style="display: inline-block; width:30%; height: 50%;">
+        <button type="button" onclick="next()" id="next">Next</button>
+    </div>
+    <script type="text/javascript">
+        window.globals = {x1: -1, x2: 10, x3: 9};
+        function update_flower(){
+            globals.x1 = document.getElementById('x1').value;
+            globals.x2 = globals.deg2shape(document.getElementById('x2').value);
+            globals.drawFlower1(globals.x1,globals.x2,globals.x3);
+            document.getElementById('x1').setAttribute('clicked', "true");
+            document.getElementById('x2').setAttribute('clicked', "true");
+        }
+
+        function next() {
+            globals.drawFlower1(globals.x1,globals.x2,globals.x3);
+        }
+
+        window.onload = function(){
+            globals.x1 = -1;
+            globals.x2 = 10;
+            document.getElementById("x1").value = "180";
+            document.getElementById('x2').value = "180";
+            update_flower();
+            
+            // dowload flower set
+            /*var [file_header, file_data] = globals.flower_set(300);
+            globals.export_csv(file_header, file_data, ',', 'order');*/
+        }
+    </script>
+</body>
+
+</html>
