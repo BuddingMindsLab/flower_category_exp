@@ -15,9 +15,11 @@
 
     <script src="assets/img/flowers/set0/set0_order.js"></script>
     <script src="assets/img/flowers/set60/set60_order.js"></script>
+    <script src="assets/img/flowers/set60/set90_order.js"></script>
     <script src="assets/img/flowers/set120/set120_order.js"></script>
     <script src="assets/img/flowers/set180/set180_order.js"></script>
     <script src="assets/img/flowers/set240/set240_order.js"></script>
+    <script src="assets/img/flowers/set240/set270_order.js"></script>
     <script src="assets/img/flowers/set300/set300_order.js"></script>
 
     <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
@@ -162,10 +164,8 @@
     var back_copy = [[backgrounds[0][0].slice(), backgrounds[0][1].slice()], [backgrounds[1][0].slice(), backgrounds[1][1].slice()]];
 
     // choose flower set (48 flower images)  
-    var flower_sets = ['set0','set60', 'set120', 'set180', 'set240', 'set300'];
+    var flower_sets = ['set0','set60', 'set90', 'set120', 'set180', 'set240', 'set270', 'set300'];
     var set_folder = jsPsych.randomization.sampleWithoutReplacement(flower_sets,1)[0];
-    //var set_folder = jsPsych.randomization.sampleWithoutReplacement(['set0','set60', 'set120', 'set180', 'set240', 'set300'], 1)[0];
-    //alert(set_folder)
 
     var categories = all_categories[set_folder];
     var group_condition = jsPsych.randomization.sampleWithoutReplacement([0, 1], 1)[0]; // 0: 'A'='sun', 1:'B'='sun'
@@ -181,6 +181,9 @@
         case 'set60':
             flower_info = set60_flower_info;
             break;
+        case 'set90':
+            flower_info = set90_flower_info;
+            break;
         case 'set120':
             flower_info = set120_flower_info;
             break;
@@ -189,6 +192,9 @@
             break;
         case 'set240':  
             flower_info = set240_flower_info;
+            break;
+        case 'set270':  
+            flower_info = set270_flower_info;
             break;
         case 'set300':
             flower_info = set300_flower_info;
