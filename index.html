@@ -57,7 +57,7 @@
     var instruction_time = 5000;
     var waiting_time = 3;
     var count_down = waiting_time;
-    var num_trials = 8; // number of learning trials (multiple of 4) - usually 48
+    var num_trials = 48; // number of learning trials (multiple of 4) - usually 48
     
     // feedback and instruction images
     var ins_img = ['assets/img/instructions/example_learning_trial.png', 'assets/img/instructions/example_recon_trial.png','assets/img/instructions/japanese_garden.jpg', 'assets/img/instructions/recon_dials.png'];
@@ -661,8 +661,8 @@
                 prolific_id: prolific_ids.PROLIFIC_PID,
                 study_id: prolific_ids.STUDY_ID,
                 session_id: prolific_ids.SESSION_ID,
-                experiment: "category_learning_task",
-                repo: "mwoodb.github.io",
+                experiment: "flower_category_exp",
+                repo: "buddingmindslab.github.io",
                 subject: subject_id,
                 duration: duration,
                 date: Date(),
@@ -738,7 +738,7 @@
         message_progress_bar: '',
         max_load_time: 180000,
         on_finish: function() {
-          window.location.replace("https://www.google.com/");
+          //window.location.replace("https://app.prolific.co/submissions/complete?cc=8MW6M1R0");
         },
     })
 
