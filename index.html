@@ -633,17 +633,7 @@
         type: 'html-button-response',
         choices: ['Continue'],
         stimulus: recon_test_complete,
-        trial_duration: instruction_time
-    };
-
-    /********************************************* End *********************************************/
-
-    // debriefing
-    var debrief_page = {
-        type: 'external-html',
-        url: "assets/materials/debreifing_letter.html",
-        cont_btn: "finish",            
-        data: {disp_type: 'debriefing_page'},
+        trial_duration: instruction_time,
         on_finish: function(){
             //jsPsych.data.displayData('json');
             var end_time = new Date();
@@ -694,6 +684,16 @@
             xhr.send(JSON.stringify(data));
             console.log("success sending data");
         }
+    };
+
+    /********************************************* End *********************************************/
+
+    // debriefing
+    var debrief_page = {
+        type: 'external-html',
+        url: "assets/materials/debreifing_letter.html",
+        cont_btn: "finish",            
+        data: {disp_type: 'debriefing_page'}
     }    
     
     // thank you
@@ -755,7 +755,6 @@
                     break;
                 default:
             }
-          
           
         },
     })
