@@ -12,6 +12,7 @@
     <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-survey-multi-choice.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
     <script src="js/category_var.js"></script>
 
     <script src="assets/img/flowers/set0/set0_order.js"></script>
@@ -156,8 +157,11 @@
 
     var recon_start_ins = '<br>Once you have finished reading the instructions, please press "Next" to begin.<br><br>';
   
-    var recon_test_complete = "Great job! You have completed the experiment.<br><br>\
-                            Please proceed to the debriefing.<br><br>";
+    var recon_test_complete = "Great job! You have almost completed the experiment.<br><br>\
+                                Now you will be redirected to a brief survey.<br>\
+                                You will receive your compensation only after completing the survey.<br><br>";
+
+    var test_complete = "You have completed the experiment!<br><br> Please proceed to the debriefing.<br><br>";
 
     var next_trial_ins = 'Start the next task<br><br>';
 
@@ -426,6 +430,9 @@
             }
             data.num_correct = num_correct;
             
+        },
+        data: {
+            exp_section: 'instruction_quiz'
         }
     };
 
@@ -755,24 +762,53 @@
         randomize_order: true
     }
 
-    // draw instructions for ending recognition phase
+    // draw instructions for ending reconstruction phase
     var draw_end_recon_test = {
-        type: 'html-button-response',
-        choices: ['Continue'],
+        type: 'html-keyboard-response',
+        choices: jsPsych.NO_KEYS,
         stimulus: recon_test_complete,
-        trial_duration: instruction_time,
+        trial_duration: instruction_time
+    };
+
+    /********************************************* Survey *********************************************/
+
+    var survey = {
+        type: 'survey-text',
+        questions: [
+            {prompt: "What strategies did you use to categorize the flowers during the learning phase?", name: 'strat', rows: 5, columns:50, required:true}
+        ],
+        preamble: '<b>Survey</b>',
+        data: {
+            exp_section: 'survey'
+        },
+        button_label: 'Submit'
+    }
+
+    /********************************************* send data *********************************************/
+
+    var send_data = {
+        type: 'html-keyboard-response',
+        stimulus: 'Saving responses...',
+        choices: jsPsych.NO_KEYS,
+        trial_duration: 1000,
         on_finish: function(){
             //jsPsych.data.displayData('json');
             var end_time = new Date();
             var duration = ((end_time - start_time)/60000).toFixed(2);
 
             // organize data into sections
+            var quiz_responses = jsPsych.data.get().filter([{exp_section: 'instruction_quiz'}]);
+            var quiz_data = {'phase': 'instruction_quiz', 'data': quiz_responses.values()};
+
             var learning_responses = jsPsych.data.get().filter([{trial_type: 'image-bkg-keyboard-response', exp_section: 'category_learning'}]);
             var learning_data = {'phase': 'category_learning', 'data': learning_responses.values()};
             var scene_responses = jsPsych.data.get().filter([{trial_type: 'image-bkg-keyboard-response', exp_section: 'scene_recognition'}]);
             var scene_data = {'phase': 'scene_recognition', 'data': scene_responses.values()};
             var recon_responses = jsPsych.data.get().filter([{trial_type: 'external-html-flower-recon', exp_section: 'flower_reconstruction'}]);
             var recon_data = {'phase': 'flower_reconstruction', 'data': recon_responses.values()};
+
+            var survey_responses = jsPsych.data.get().filter([{exp_section: 'survey'}]);
+            var survey_data = {'phase': 'survey', 'data': survey_responses.values()};
 
             var data = {
                 prolific_id: prolific_ids.PROLIFIC_PID,
@@ -791,7 +827,9 @@
                 data: [
                     learning_data,
                     scene_data,
-                    recon_data
+                    recon_data,
+                    quiz_data,
+                    survey_data
                 ]
             }
             
@@ -811,9 +849,16 @@
             xhr.send(JSON.stringify(data));
             console.log("success sending data");
         }
-    };
+    }
 
-    /********************************************* End *********************************************/
+
+    var draw_end = {
+        type: 'html-button-response',
+        choices: ['Continue'],
+        stimulus: test_complete,
+        trial_duration: instruction_time,
+    };
+    /********************************************* Debriefing *********************************************/
 
     // debriefing
     var debrief_page = {
@@ -831,12 +876,12 @@
         choices: jsPsych.ANY_KEYS
     }
 
-    /******************************************************************************************/
+    /********************************************** End ********************************************/
     
     timeline.push(fullscreen);
     timeline.push(consent_inst);
     timeline.push(consent_page);
-    timeline.push(start_trial);
+    timeline.push(start_trial); 
     
     timeline.push(ins_quiz);
     timeline.push(ins_quiz2);
@@ -856,8 +901,12 @@
 
     timeline.push(recon_instruction_trial);
     timeline.push(reconstruction_trials);
-    timeline.push(draw_end_recon_test); 
+    timeline.push(draw_end_recon_test);
 
+    timeline.push(survey);
+
+    timeline.push(send_data);
+    timeline.push(draw_end); 
     timeline.push(debrief_page);
     timeline.push(end_trial);
 
