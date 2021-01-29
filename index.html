@@ -11,6 +11,7 @@
     <script src="jspsych-6.1.0/plugins/jspsych-external-html-flower-recon.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-survey-multi-choice.js"></script>
     <script src="js/category_var.js"></script>
 
     <script src="assets/img/flowers/set0/set0_order.js"></script>
@@ -85,31 +86,35 @@
     var recon_count_down = recon_time/1000;
 
     // instructions 
-    var learning_ins = 'Welcome!<br> Your task in this experiment is to sort flowers into categories.<br><br>\
+    var learning_ins_start = '<font size="+5">Welcome!</font><br><br>Thank you for participating in our study. <br><br>\
+                            Please read the following instructions carefully, as you will be <b>quizzed</b> on your understanding before you begin the experiment.<br><br>'
+    
+    var overall_ins = 'There will be <b>three</b> parts to complete in this experiment.<br><br>The first task will take 6 minutes, the second task will take 5 minutes, <br>\
+                        and the last task is expected to take about 12 minutes.<br><br>\
+                        It is important that you pay attention and try your best throughout each task.<br><br>'
+
+    var learning_ins = 'Your first task in this experiment is to <b>sort flowers into categories</b>.<br><br>\
                     In each trial, you will see a flower on top of a decorative mat for '+stim_time/1000+' seconds.<br>\
                     The flower will then disappear and the mat will remain on screen for '+bkg_time/1000+' seconds.<br><br>\
                     You will be asked if the flower prefers <i>sun</i> or <i>shade</i>.\
-                    <br>You have until the mat disappears ('+(bkg_time+stim_time)/1000+' seconds) to make your choice.<br><br>\
+                    <br>You have until the mat disappears (<b>'+(bkg_time+stim_time)/1000+' seconds</b>) to make your choice.<br><br>\
+                    <p style="text-align:left; margin: 0% 32% 0% 32%;">EX:<font>\
                     <div style="display:flex; align-items:center; margin: 0% 25% 0% 25%;"">\
-                            <div style="float:left; width:15%; vertical-align: middle;">\
-                                <img src="assets/img/sun.png" style="width:110%; vertical-align: middle;"></img></div>\
-                            <div style="float:left; width:10%; vertical-align: middle;">\
-                                <p style="font-size:300%">&#8592;</p></div>\
-                            <div style="float:left; width:50%; vertical-align: middle;">\
+                            <div style="float:left; width:100%; vertical-align: middle;">\
                                 <img src="assets/img/instructions/example_learning_trial.png" style="width:80%; vertical-align: middle;"></img></div>\
-                            <div style="float:left; width:10%; vertical-align: middle;">\
-                                <p style="font-size:300%">&#8594;</p></div>\
-                            <div style="float:left; width:15%; vertical-align: middle;">\
-                                <img src="assets/img/cloud.png" style="width:110%; vertical-align: middle;"></img></div>\
                     </div>\
-                    <br><div style="text-align: center; clear: both"> The decorative mat is not relevant to the category decision.<br>\
-                    Press "&#8592;" if you think the flower prefers <i>sun</i>.<br>\
-                    Press "&#8594;" if you think the flower prefers <i>shade</i>.<br><br>\
+                    <br><div style="text-align: center; clear: both"> The decorative mat is NOT relevant to the category decision.<br><br>\
+                    Use the <b>arrow keys</b> on your keyboard to respond.<br>\
+                    Press the left (&#8592;) key if you think the flower prefers <i>sun</i>.<br>\
+                    Press the right (&#8594;) key if you think the flower prefers <i>shade</i>.<br><br>\
                     You will receive feedback after responding to an image.<br>\
                     At the beginning of the task, you will be mostly guessing. That is okay, make your best guess and use the feedback to learn.<br><br>\
-                    Please make your responses as quickly and accurately as possible.</div>';
+                    Please make your responses as <b>quickly and accurately</b> as possible.</div>';
 
-    var start_ins = '<br>Once you have finished reading the instructions, <br>please place your fingers on the "&#8592;" and "&#8594;" keys.<br><br> Press "&#8594;"" to begin.<br><br>';
+    var start_ins = '<br>Once you have finished reading the instructions, please press "Next" to begin the instructions quiz.<br><br>\
+                    After you have successfully completed the quiz, you may begin the first task.<br><br>'                
+
+    var rec_start_ins = '<br>Once you have finished reading the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the first task.<br><br>';
    
     var learning_complete = "Great job! You have completed the category learning phase of this experiment.<br><br>\
                               The computer will move on to the next task in 90 seconds.<br>";
@@ -129,7 +134,7 @@
                             </div>\
                             </div>\
                             <br><div style="text-align: center; clear: both"> If you have seen the exact same picture before in this experiment, press "&#8592;".<br>\
-                            If you have not seen this exact picture, press "&#8594;"".<br><br>\
+                            If you have not seen this exact picture, press "&#8594;".<br><br>\
                             You will have '+rec_time/1000+' seconds to respond while the picture is on the screen.<br>\
                             You should try to repond for every single picture.<br><br>\
                             Please make your responses as quickly and accurately as possible.<br><br>\
@@ -333,14 +338,6 @@
         fullscreen_mode: true
     };
 
-    // welcome
-    var start_trial = {
-        type: 'instructions',
-        pages: [learning_ins, start_ins],
-        show_clickable_nav: true,
-        show_page_number: true
-    };
-
     // consent
     var consent_inst = {
         type: 'html-button-response',
@@ -372,6 +369,134 @@
         choices: ['Next'],
         button_html: '<button class="jspsych-btn" style="width:125%; font-size:125%; text-align:center;">Next</button>'
     }
+
+     /**************************************************** Instructions and quiz ****************************************************/
+    
+     // welcome and instructions
+    var start_trial = {
+        type: 'instructions',
+        pages: [learning_ins_start, overall_ins, learning_ins, start_ins],
+        show_clickable_nav: true,
+        show_page_number: true
+    };
+
+    // instruction quiz
+    var q1_prompt = "1) The goal of the first task is to...";
+    var q1_options = ["learn to categorize decorative mats.", "learn to respond as fast as possible.", "learn to categorize flowers."];
+    
+    var q2_prompt = "2) In each trial, I should ______ to respond.";
+    var q2_options = ["click the sun or cloud with my mouse", "press the left or right shift key", "press the left or right arrow key", "right click or left click with my mouse"];
+    
+    var q3_prompt = "3) TRUE or FALSE: The decorative mat shown behind the flower is relevant to the category choice.";
+    var q3_options = ["True", "False"];
+    
+    var q4_prompt = "4) TRUE or FALSE: For each trial, I have until the decorative mat disappears to make a choice."
+    var q4_options = ["True", "False"];
+
+    var num_quiz_qs = 4;
+
+    var ins_quiz = {
+        type: 'survey-multi-choice',
+        questions: [
+            {prompt: q1_prompt, name: 'goal', options: q1_options, required: true, horizontal:false},
+            {prompt: q2_prompt, name: 'respond', options: q2_options, required: true, horizontal:false},
+            {prompt: q3_prompt, name: 'mat', options: q3_options, required: true, horizontal:false},
+            {prompt: q4_prompt, name: 'time', options: q4_options, required: true, horizontal:false}
+        ],
+        preamble: '<b>Example trial:</b><br>\
+                    <div style="display:flex; align-items:center; margin: 0% 25% 0% 25%;"">\
+                            <div style="float:left; width:100%; vertical-align: middle;">\
+                                <img src="assets/img/instructions/example_learning_trial.png" style="width:80%; vertical-align: middle;"></img></div>\
+                    </div>\
+                    <br><br><b>Questions:</b>',
+        button_label: 'Submit',
+        on_finish: function(data) {
+            var num_correct = 0;
+            if (JSON.parse(data.responses).goal == q1_options[2]) {
+                num_correct += 1;
+            }
+            if (JSON.parse(data.responses).respond == q2_options[2]) {
+                num_correct += 1;
+            }
+            if (JSON.parse(data.responses).mat == q3_options[1]) {
+                num_correct += 1;
+            }
+            if (JSON.parse(data.responses).time == q4_options[0]) {
+                num_correct += 1;
+            }
+            data.num_correct = num_correct;
+            
+        }
+    };
+
+    // repeat quiz if below 100% performance
+    var quiz_wrong = {    
+        type: 'html-button-response',
+        stimulus: function() {
+            return 'Your score was '+jsPsych.data.get().last(1).values()[0].num_correct+'/'+num_quiz_qs+'.<br><br>\
+                    Please review the instructions again and repeat the quiz.<br><br>\
+                    Once you have successfully completed the instructions quiz, you may proceed to the first task.<br><br>';
+        },
+        choices: ['Review instructions'],
+    } 
+
+    var repeat_ins = {
+        type: 'instructions',
+        pages: [overall_ins, learning_ins, start_ins],
+        show_clickable_nav: true,
+        show_page_number: true
+    };
+    
+    var ins_quiz2 = {
+        timeline: [quiz_wrong, repeat_ins, ins_quiz],
+        conditional_function: function(){
+            var data = jsPsych.data.get().last(1).values()[0];
+            if(data.num_correct == num_quiz_qs){
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    // if <100%, show answers
+    var quiz_answers = {
+        type: 'html-button-response',
+        stimulus: function() {
+            return 'Your score was '+jsPsych.data.get().last(1).values()[0].num_correct+'/'+num_quiz_qs+'.<br><br>\
+                        <br><b>Answers</b><br><br>\
+                        <div>'+q1_prompt+' <b>'+q1_options[2]+'</b></div>\
+                        <div>'+q2_prompt.split("______")[0]+'  <b>'+q2_options[2]+'</b>  '+q2_prompt.split("______")[1]+'</div>\
+                        <div>'+q3_prompt+' <b>'+q3_options[1]+'</b></div>\
+                        <div>'+q4_prompt+' <b>'+q4_options[0]+'</b></div>\
+                        <br><br>\
+                        Click "Next" to proceed.<br><br>';
+        },
+        choices: ['Next']
+    }
+
+    var quiz_end_wrong = {
+        timeline: [quiz_answers],
+        conditional_function: function(){
+            var data = jsPsych.data.get().last(1).values()[0];
+            if(data.num_correct == num_quiz_qs){
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    // end of quiz
+    var start_task_ins = {
+        type: 'instructions',
+        pages: ['Congratulations!<br><br>You have successfully completed the instructions quiz.<br><br>\
+                You may now proceed to the first task.<br><br>',
+                'Please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin.<br><br>'],
+        show_clickable_nav: true,
+        show_page_number: true
+    }
+
 
     /**************************************** PART I - category learning ******************************************/
 
@@ -515,7 +640,7 @@
     // Instructions for recognition task
     var rec_instruction_trial = {
         type: 'instructions',
-        pages: [test_instructions, rec_instructions, start_ins],
+        pages: [test_instructions, rec_instructions, rec_start_ins],
         show_clickable_nav: true,
         show_page_number: true,
         on_start: function() {
@@ -712,6 +837,11 @@
     timeline.push(consent_inst);
     timeline.push(consent_page);
     timeline.push(start_trial);
+    
+    timeline.push(ins_quiz);
+    timeline.push(ins_quiz2);
+    timeline.push(quiz_end_wrong);
+    timeline.push(start_task_ins);
 
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
