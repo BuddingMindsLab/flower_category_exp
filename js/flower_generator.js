@@ -348,9 +348,9 @@ function flower_set(startColour){
     var centA = 5;
     var centB = 15;
     for (var c = 0; c < num_col; c++) {
-        var devA = (Math.random()*(dev_max-dev_min) + dev_min);
-        var devB = (Math.random()*(dev_max-dev_min) + dev_min);
-        shapes.push([(centA-devA).toFixed(1), (centA+devA).toFixed(1), (centB-devB).toFixed(1), (centB+devB).toFixed(1)]);
+        var devA = Math.round(Math.random()*(dev_max-dev_min) + dev_min);
+        var devB = Math.round(Math.random()*(dev_max-dev_min) + dev_min);
+        shapes.push([(centA-devA), (centA+devA), (centB-devB), (centB+devB)]);
     }
     //alert("shapes"+shapes);
 
@@ -374,6 +374,21 @@ function flower_set(startColour){
         order.push(s);
     }
 
+    // counterbalance create trial (cat A or B)
+    var start_cat = [];
+    var order_cat = [];
+    for (var c = 0; c < num_col/2; c++) {
+        start_cat.push(0)
+    }
+    for (var c = 0; c < num_col/2; c++) {
+        start_cat.push(1)
+    }
+    for (var c = 0; c < num_col; c++) {
+        var randomIndex = Math.floor(Math.random()*(start_cat.length-c));
+        var s = start_cat.splice(randomIndex, 1)[0];
+        order_cat.push(s);
+    }
+
     var counter = 1;
     for (var c = 0; c < num_col; c++) {
         alert(c); 
@@ -383,12 +398,14 @@ function flower_set(startColour){
 
                 // colour start trial is to the left of its category centroid
                 if (order[c]==0) {
-                    var idx = Math.random() < 0.5 ? 0 : 2;
+                    //var idx = Math.random() < 0.5 ? 0 : 2;
+                    var idx = order_cat[c]==0 ? 0 : 2;
                     var s = shapes[c].splice(idx, 1)[0];
 
                 // colour start trial is to the right of its category centroid
                 } else {
-                    var idx = Math.random() < 0.5 ? 1 : 3;
+                    //var idx = Math.random() < 0.5 ? 1 : 3;
+                    var idx = order_cat[c]==0 ? 1 : 3;
                     var s = shapes[c].splice(idx, 1)[0];
                 }
 

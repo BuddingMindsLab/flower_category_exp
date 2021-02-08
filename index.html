@@ -13,7 +13,6 @@
     <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-survey-multi-choice.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
-    <script src="js/category_var.js"></script>
 
     <script src="assets/img/flowers/set0/set0_order.js"></script>
     <script src="assets/img/flowers/set60/set60_order.js"></script>
@@ -240,7 +239,7 @@
         default:
             break;
     }   
-    var categories = all_categories[set_folder];
+    var categories = flower_info.map(a=>a.category);
 
     // category learning stimuli (flower, sun/shade, background, lure)
     var stimuli = []; 
@@ -532,7 +531,7 @@
     // end of quiz
     var start_task_ins = {
         type: 'instructions',
-        pages: ['Congratulations!<br><br>You have successfully completed the instructions quiz.<br><br>\
+        pages: ['<p style="color:yellow; font-size: 100px; line-height: 0;";>&star;</p>Congratulations!<br><br> You have successfully completed the instructions quiz.<br><br>\
                 You may now proceed to the first task.<br><br>',
                 'Please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin.<br><br>'],
         show_clickable_nav: true,
@@ -1033,7 +1032,7 @@
     timeline.push(fullscreen);
     timeline.push(consent_inst);
     timeline.push(consent_page);
-    timeline.push(start_trial); 
+    timeline.push(start_trial);
     
     timeline.push(ins_quiz);
     timeline.push(ins_quiz2);
