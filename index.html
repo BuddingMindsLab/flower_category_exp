@@ -523,7 +523,7 @@
         type: 'image-bkg-keyboard-response',
         stimulus: jsPsych.timelineVariable('stimulus'),
         background: jsPsych.timelineVariable('background'),
-        choices: [37, 39],
+        choices: jsPsych.ALL_KEYS,
         prompt: '<p class="prompt">'+stim_question+'</p>',
         response_ends_trial: false,
         trial_duration: stim_time+bkg_time,
@@ -657,13 +657,11 @@
     };
 
     // a) old/new recognition trial
-    var prev_img = '';
-    var prev_lure = -1;
     var rec_background = {
         type: 'image-bkg-keyboard-response',
         background: jsPsych.timelineVariable('background'),
         stimulus:'',
-        choices: [37, 39],
+        choices: jsPsych.ALL_KEYS,
         prompt: '<p class="prompt">'+rec_question+'</p>',
         response_ends_trial: false,
         trial_duration: rec_time,
@@ -686,8 +684,6 @@
             }
             var curr_progress_bar_value = jsPsych.getProgressBarCompleted();
             jsPsych.setProgressBar(curr_progress_bar_value + (1/rec_backs.length));
-            prev_img = data.background;
-            prev_lure = data.lure;
         }
     }
 
@@ -695,16 +691,36 @@
     var rec_fixation = {  
         type: 'html-keyboard-response',
         stimulus: '+',
-        choices: jsPsych.NO_KEYS,
+        choices: jsPsych.ALL_KEYS,
         trial_duration: rec_iti,
+        response_ends_trial: false,
         data: {
             exp_section: 'scene_recognition',
+        },
+        on_finish: function(data){
+            if (jsPsych.data.get().last(2).values()[0]) {
+                var lure = jsPsych.data.get().last(2).values()[0].lure;
+
+                // "old" and actually old (0), "new" and lure (1) or new (-1)
+                if( ( (data.key_press == 37) && (lure== 0) )
+                    || ( (data.key_press == 39) && (lure == 1) ) 
+                    || ( (data.key_press == 39) && (lure == -1) )){
+                    data.correct = true;
+                } else if (data.key_press) {
+                    data.correct = false;
+                }
+
+                data.background = jsPsych.data.get().last(2).values()[0].background;
+                data.create_trial = jsPsych.data.get().last(2).values()[0].create_trial;
+                data.lure = jsPsych.data.get().last(2).values()[0].lure;
+            }
+            
         }
     }
 
     var recognition_trials = {
         timeline: [rec_fixation, rec_background],
-        timeline_variables: rec_backs
+        timeline_variables: [rec_backs[1], rec_backs[2], rec_backs[3]]
     }
 
     // draw instructions for ending recognition phase
@@ -802,7 +818,7 @@
 
             var learning_responses = jsPsych.data.get().filter([{trial_type: 'image-bkg-keyboard-response', exp_section: 'category_learning'}]);
             var learning_data = {'phase': 'category_learning', 'data': learning_responses.values()};
-            var scene_responses = jsPsych.data.get().filter([{trial_type: 'image-bkg-keyboard-response', exp_section: 'scene_recognition'}]);
+            var scene_responses = jsPsych.data.get().filter([{exp_section: 'scene_recognition'}]);
             var scene_data = {'phase': 'scene_recognition', 'data': scene_responses.values()};
             var recon_responses = jsPsych.data.get().filter([{trial_type: 'external-html-flower-recon', exp_section: 'flower_reconstruction'}]);
             var recon_data = {'phase': 'flower_reconstruction', 'data': recon_responses.values()};
@@ -878,7 +894,7 @@
 
     /********************************************** End ********************************************/
     
-    timeline.push(fullscreen);
+/*     timeline.push(fullscreen);
     timeline.push(consent_inst);
     timeline.push(consent_page);
     timeline.push(start_trial); 
@@ -886,16 +902,16 @@
     timeline.push(ins_quiz);
     timeline.push(ins_quiz2);
     timeline.push(quiz_end_wrong);
-    timeline.push(start_task_ins);
+    timeline.push(start_task_ins); 
 
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
     timeline.push(timer_loop);
     timeline.push(next_trial);
 
-    timeline.push(rec_instruction_trial);
+    timeline.push(rec_instruction_trial);*/
     timeline.push(recognition_trials);
-    timeline.push(draw_end_rec_test);
+    /* timeline.push(draw_end_rec_test);
     timeline.push(timer_loop);
     timeline.push(next_trial);
 
@@ -903,13 +919,13 @@
     timeline.push(reconstruction_trials);
     timeline.push(draw_end_recon_test);
 
-    timeline.push(survey);
+    timeline.push(survey);*/
 
     timeline.push(send_data);
     timeline.push(draw_end); 
     timeline.push(debrief_page);
-    timeline.push(end_trial);
-
+    //timeline.push(end_trial);
+ 
     // run experiment
     jsPsych.init({
         timeline: timeline,
