@@ -720,7 +720,7 @@
 
     var recognition_trials = {
         timeline: [rec_fixation, rec_background],
-        timeline_variables: [rec_backs[1], rec_backs[2], rec_backs[3]]
+        timeline_variables: rec_backs
     }
 
     // draw instructions for ending recognition phase
@@ -893,8 +893,8 @@
     }
 
     /********************************************** End ********************************************/
-    
-/*     timeline.push(fullscreen);
+  
+    timeline.push(fullscreen);
     timeline.push(consent_inst);
     timeline.push(consent_page);
     timeline.push(start_trial); 
@@ -909,9 +909,9 @@
     timeline.push(timer_loop);
     timeline.push(next_trial);
 
-    timeline.push(rec_instruction_trial);*/
+    timeline.push(rec_instruction_trial);
     timeline.push(recognition_trials);
-    /* timeline.push(draw_end_rec_test);
+    timeline.push(draw_end_rec_test);
     timeline.push(timer_loop);
     timeline.push(next_trial);
 
@@ -919,12 +919,12 @@
     timeline.push(reconstruction_trials);
     timeline.push(draw_end_recon_test);
 
-    timeline.push(survey);*/
+    timeline.push(survey);
 
     timeline.push(send_data);
     timeline.push(draw_end); 
     timeline.push(debrief_page);
-    //timeline.push(end_trial);
+    timeline.push(end_trial);
  
     // run experiment
     jsPsych.init({
