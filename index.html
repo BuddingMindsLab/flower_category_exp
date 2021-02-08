@@ -106,23 +106,24 @@
                     </div>\
                     <br><div style="text-align: center; clear: both"> The decorative mat is NOT relevant to the category decision.<br><br>\
                     Use the <b>arrow keys</b> on your keyboard to respond.<br>\
-                    Press the left (&#8592;) key if you think the flower prefers <i>sun</i>.<br>\
-                    Press the right (&#8594;) key if you think the flower prefers <i>shade</i>.<br><br>\
+                    Press the left (&#8592;) arrow key if you think the flower prefers <i>sun</i>.<br>\
+                    Press the right (&#8594;) arrow key if you think the flower prefers <i>shade</i>.<br><br>\
                     You will receive feedback after responding to an image.<br>\
                     At the beginning of the task, you will be mostly guessing. That is okay, make your best guess and use the feedback to learn.<br><br>\
                     Please make your responses as <b>quickly and accurately</b> as possible.</div>';
 
-    var start_ins = '<br>Once you have finished reading the instructions, please press "Next" to begin the instructions quiz.<br><br>\
+    var start_ins = '<br>Once you have finished reading the instructions, please press <i>Next>/i> to begin the instructions quiz.<br><br>\
                     After you have successfully completed the quiz, you may begin the first task.<br><br>'                
 
-    var rec_start_ins = '<br>Once you have finished reading the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the first task.<br><br>';
+    var rec_start_ins = '<br>Once you have finished reading the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the main task.<br><br>';
    
     var learning_complete = "Great job! You have completed the category learning phase of this experiment.<br><br>\
                               The computer will move on to the next task in 90 seconds.<br>";
 
-    var test_instructions = "The next part of this experiment is a memory test for <br>the decorative mats you saw behind the flowers.<br><br>";                          
+    var test_instructions = "The next part of this experiment is a memory test for <br>the <b>decorative mats</b> you saw behind the flowers.<br><br>";                          
 
-    var rec_instructions = 'In each trial, you will judge whether you saw the image as a decorative mat during the category learning phase.<br><br>\
+    var rec_instructions = 'This task will take 5 minutes to complete.<br><br>\
+                            In each trial, you will <b>judge whether you saw the image</b> as a decorative mat during the category learning phase.<br><br>\
                             <div style="display:flex; align-items:center; margin: 0% 25% 0% 25%;">\
                             <div style="float:left; width:33%; vertical-align: middle;">\
                                 <p style="font-size:200%">Old &#8592;</p>\
@@ -134,28 +135,41 @@
                                 <p style="font-size:200%">&#8594; New</p>\
                             </div>\
                             </div>\
-                            <br><div style="text-align: center; clear: both"> If you have seen the exact same picture before in this experiment, press "&#8592;".<br>\
-                            If you have not seen this exact picture, press "&#8594;".<br><br>\
-                            You will have '+rec_time/1000+' seconds to respond while the picture is on the screen.<br>\
+                            <br><div style="text-align: center; clear: both"> If you have seen the exact same picture before in this experiment, press the <b>left (&#8592;)</b> arrow key.<br>\
+                            If you have not seen this exact picture, press the <b>right (&#8594;)</b> arrow key.<br><br>\
+                            You will have <b>'+rec_time/1000+' seconds</b> to respond while the picture is on the screen.<br>\
                             You should try to repond for every single picture.<br><br>\
-                            Please make your responses as quickly and accurately as possible.<br><br>\
+                            Please make your responses as <b>quickly and accurately</b> as possible.<br><br>\
                             </div>'; 
+
+    var rec_practice_ins = "<br>Before starting the main task, please complete a brief <b>practice session</b>.<br><br>In this session, practice using the arrow keys to repond to each image.\
+                            <br>Unlike the main task, all of the decorative mats shown in this practice session have never been displayed before.\
+                            <br><br>";
+                            
+    var rec_practice_begin = "<br>Once you understand the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the practice trials.<br><br>";
+
+    var rec_practice_reminder = '<b>Remember:</b><br>\
+                                If you have seen the exact same picture before in this experiment, press the <b>left (&#8592;)</b> arrow key.<br>\
+                                If you have not seen this exact picture, press the <b>right (&#8594;)</b> arrow key.<br><br>'
+
+    var rec_practice_complete = 'Practice trials are done!<br><br>Review the instructions if necessary before moving on to the <b>main</b> decorative mat memory test.<br><br>';
 
     var rec_test_complete = "Good work! You have completed the decorative mat memory test.<br><br>\
                             The computer will move on to the next task in 90 seconds.<br>";
 
-    var test2_instructions = "For the final part of this experiment, <br>we are going to test your memory for the <i>flower</i> you saw with each decorative mat.<br><br>";    
+    var test2_instructions = "For the final part of this experiment, <br>we are going to test your memory for the <b>flower</b> you saw with each decorative mat.<br><br>";    
 
-    var recon_instructions = 'In each trial, you will see a flower on top of a decorative mat you saw during the category learning phase.</p>\
+    var recon_instructions = 'This task is expected to take 12 minutes to complete.<br><br>\
+                        In each trial, you will see a flower on top of a decorative mat you saw during the category learning phase.</p>\
                         Think back to the specific colour and shape of the flower you saw with this mat.<br>\
-                        Using your mouse to adjust the dials at the bottom of the screen, do your best to recreate the colour and shape of the flower you saw as closely as possible.<br><br>'+
+                        Using your mouse to adjust the dials at the bottom of the screen, do your best to <b>recreate</b> the colour and shape of the flower you saw as closely as possible.<br><br>'+
                         '<img src="assets/img/instructions/example_recon_trial.png" style="width:25%; vertical-align: middle;"></img>'+
-                        '<p>When you are finished, click "Next" with your mouse to save your answer and proceed to the next trial.</p>'+
-                        'You will have a maximum of '+recon_time/1000+' seconds to respond and a countdown will appear in the top right corner of the screen.<br>'+
+                        '<p>When you are finished, click <i>Next</i> with your mouse to save your answer and proceed to the next trial.</p>'+
+                        'You will have a maximum of <b>'+recon_time/1000+' seconds</b> to respond and a countdown will appear in the top right corner of the screen.<br>'+
                         'If after a few seconds you cannot remember the flower, make your best guess.<br><br>'+
-                        "Please make your responses as precise as possible.<br><br>";
+                        "Please make your responses as <b>precise</b> as possible.<br><br>";
 
-    var recon_start_ins = '<br>Once you have finished reading the instructions, please press "Next" to begin.<br><br>';
+    var recon_start_ins = '<br>Once you have finished reading the instructions, please press <i>Next</i> to begin.<br><br>';
   
     var recon_test_complete = "Great job! You have almost completed the experiment.<br><br>\
                                 Now you will be redirected to a brief survey.<br>\
@@ -270,6 +284,7 @@
            background: stimuli[i].background,
            lure: 0,
            create: stimuli[i].create,
+            exp_sub_section: 'main'
         });
 
         // 48 lure
@@ -277,6 +292,7 @@
            background: stimuli[i].lure,
            lure: 1,
            create: stimuli[i].create,
+           exp_sub_section: 'main'
        });
 
        // 24 new
@@ -284,7 +300,8 @@
             rec_backs.push({
                 background: novel_backs[i],
                 lure: -1,
-                create: 0
+                create: 0,
+                exp_sub_section: 'main'
             });
        }
     }
@@ -308,6 +325,21 @@
         }
     }
     rec_backs = rec_backs_shuffled;
+
+    var rec_backs_practice = [];
+    var num_practice_trials = 5;
+    for (i=0; i<(num_practice_trials*2); i++) {
+        var n = jsPsych.randomization.sampleWithoutReplacement(backgrounds[1-background_set][1-lure], 1)[0];
+        while (rec_backs_practice.map(a => a.background).includes(n) || rec_backs.map(a => a.background).includes(n)) {
+            n = jsPsych.randomization.sampleWithoutReplacement(backgrounds[1-background_set][1-lure], 1)[0]
+        }
+        rec_backs_practice.push({
+                background: n,
+                lure: -1,
+                create: 0,
+                exp_sub_section: 'practice'
+        });
+    }
 
     /**************************************************** subject ID ****************************************************/
     
@@ -477,7 +509,7 @@
                         <div>'+q3_prompt+' <b>'+q3_options[1]+'</b></div>\
                         <div>'+q4_prompt+' <b>'+q4_options[0]+'</b></div>\
                         <br><br>\
-                        Click "Next" to proceed.<br><br>';
+                        Click <i>Next</i> to proceed.<br><br>';
         },
         choices: ['Next']
     }
@@ -647,7 +679,18 @@
     // Instructions for recognition task
     var rec_instruction_trial = {
         type: 'instructions',
-        pages: [test_instructions, rec_instructions, rec_start_ins],
+        pages: [test_instructions, rec_instructions, rec_practice_ins, rec_practice_begin],
+        show_clickable_nav: true,
+        show_page_number: true,
+        on_start: function() {
+            // set progress bar to 0 at the start of experiment
+            jsPsych.setProgressBar(0);
+        }
+    };
+
+    var rec_instruction_trial2 = {
+        type: 'instructions',
+        pages: [rec_practice_complete, rec_instructions, rec_start_ins],
         show_clickable_nav: true,
         show_page_number: true,
         on_start: function() {
@@ -671,7 +714,8 @@
             exp_section: 'scene_recognition',
             background: jsPsych.timelineVariable('background'),
             create_trial: jsPsych.timelineVariable('create'),
-            lure: jsPsych.timelineVariable('lure')
+            lure: jsPsych.timelineVariable('lure'),
+            exp_sub_section: jsPsych.timelineVariable('exp_sub_section')
         },
         on_finish: function(data){
             // "old" and actually old (0), "new" and lure (1) or new (-1)
@@ -684,6 +728,39 @@
             }
             var curr_progress_bar_value = jsPsych.getProgressBarCompleted();
             jsPsych.setProgressBar(curr_progress_bar_value + (1/rec_backs.length));
+        }
+    }
+
+    // a) PRACTICE old/new recognition trial
+    var rec_background_practice = {
+        type: 'image-bkg-keyboard-response',
+        background: jsPsych.timelineVariable('background'),
+        stimulus:'',
+        choices: jsPsych.ALL_KEYS,
+        prompt: '<p class="prompt">'+rec_question+'</p>',
+        practice: true,
+        response_ends_trial: false,
+        trial_duration: rec_time,
+        options: ['Old', 'New'],
+        lure: jsPsych.timelineVariable('lure'),
+        data: {
+            exp_section: 'scene_recognition',
+            background: jsPsych.timelineVariable('background'),
+            create_trial: jsPsych.timelineVariable('create'),
+            lure: jsPsych.timelineVariable('lure'),
+            exp_sub_section: jsPsych.timelineVariable('exp_sub_section')
+        },
+        on_finish: function(data){
+            // "old" and actually old (0), "new" and lure (1) or new (-1)
+            if( ( (data.key_press == 37) && (data.lure== 0) )
+                || ( (data.key_press == 39) && (data.lure == 1) ) 
+                || ( (data.key_press == 39) && (data.lure == -1) )){
+                data.correct = true;
+            } else {
+                data.correct = false;
+            }
+            var curr_progress_bar_value = jsPsych.getProgressBarCompleted();
+            jsPsych.setProgressBar(curr_progress_bar_value + (1/num_practice_trials));
         }
     }
 
@@ -713,11 +790,50 @@
                 data.background = jsPsych.data.get().last(2).values()[0].background;
                 data.create_trial = jsPsych.data.get().last(2).values()[0].create_trial;
                 data.lure = jsPsych.data.get().last(2).values()[0].lure;
+                data.exp_sub_section = jsPsych.data.get().last(2).values()[0].exp_sub_section
             }
             
         }
     }
 
+    // practice
+    var recognition_practice_trials = {
+        timeline: [rec_fixation, rec_background_practice],
+        timeline_variables: rec_backs_practice.slice(0,num_practice_trials)
+    }
+
+    // practice 2 (conditional on practice 1 performance)
+    var rec_practice_reminder = {
+        type: 'html-button-response',
+        choices: ['Continue practice session'],
+        stimulus: rec_practice_reminder
+    };
+
+    var recognition_practice_trials2 = {
+        timeline: [
+            rec_practice_reminder,
+            {
+            timeline: [rec_fixation, rec_background_practice],
+            timeline_variables: rec_backs_practice.slice(num_practice_trials)
+            }, 
+            rec_fixation
+        ],
+        on_start: function() {
+            // set progress bar to 0 at the start of experiment
+            jsPsych.setProgressBar(0);
+        },    
+        conditional_function: function(){
+            var keypress_data = jsPsych.data.get().filter([{exp_section: 'scene_recognition', stimulus: ""}]).values().map(a=>a.key_press);
+            
+            // skip second practice if respond to more than 2 with arrow keys
+            if (keypress_data.map(a=>a==39||a==37).filter(Boolean).length > 2) {
+                return false;
+            }
+            return true;
+        }
+    }
+
+    // real
     var recognition_trials = {
         timeline: [rec_fixation, rec_background],
         timeline_variables: rec_backs
@@ -751,7 +867,7 @@
         url: 'flower_generator_index.html',
         background: jsPsych.timelineVariable('background'), // only actually seen backgrounds
         execute_script: true,
-        cont_btn: "next",
+        cont_btn: "Next",
         check_fn: function(elem) {
             if ((document.getElementById('x1').getAttribute('clicked') == "false") &&
                 !(document.getElementById('countdown').innerHTML == "1" )){
@@ -908,9 +1024,15 @@
     timeline.push(draw_end_learning);
     timeline.push(timer_loop);
     timeline.push(next_trial);
-
+ 
     timeline.push(rec_instruction_trial);
+    timeline.push(recognition_practice_trials);
+    timeline.push(rec_fixation);
+    timeline.push(recognition_practice_trials2);
+    timeline.push(rec_instruction_trial2);
+
     timeline.push(recognition_trials);
+    timeline.push(rec_fixation);
     timeline.push(draw_end_rec_test);
     timeline.push(timer_loop);
     timeline.push(next_trial);
@@ -929,7 +1051,7 @@
     // run experiment
     jsPsych.init({
         timeline: timeline,
-        preload_images: [backgrounds[background_set].flat(), novel_backs, category_img, feedback_img, ins_img, flowers],
+        preload_images: [rec_backs.map(a => a.background), rec_backs_practice.map(a => a.background), category_img, feedback_img, ins_img, flowers],
         preload_audio: [neg_feedback_aud, pos_feedback_aud],
         show_progress_bar: true,
         auto_update_progress_bar: false,

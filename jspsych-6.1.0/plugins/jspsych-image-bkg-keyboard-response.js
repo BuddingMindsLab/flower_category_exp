@@ -104,12 +104,23 @@ jsPsych.plugins["image-bkg-keyboard-response"] = (function() {
           default: true,
           description: 'If true, trial will end when subject makes a response.'
         },
+        practice: {
+          type: jsPsych.plugins.parameterType.BOOL,
+          pretty_name: 'Practice trial',
+          default: false,
+          description: 'If true, trial include a practice trial header.'
+        }
       }
     }
   
     plugin.trial = function(display_element, trial) {
   
-      var html = '<div style="display:flex; align-items:center; margin: 0% 0% 0% 0%;">';
+      var html = '';
+      if (trial.practice) {
+        html += '<h3>Practice session</h3>';
+      }
+      
+      html += '<div style="display:flex; align-items:center; margin: 0% 0% 0% 0%;">';
       
       if (trial.option_img != null) {
         html +=     '<div style="float:left; width:15%; vertical-align: middle;">\
