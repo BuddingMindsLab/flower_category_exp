@@ -115,11 +115,14 @@
     var start_ins = '<br>Once you have finished reading the instructions, please press <i>Next</i> to begin the instructions quiz.<br><br>\
                     After you have successfully completed the quiz, you may begin the first task.<br><br>'                
 
-    var rec_start_ins = '<br>Once you have finished reading the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the main task.<br><br>';
-   
+    var learning_halfway = "<p style='font-size: 20px;'><b>You are halfway!</b></p>\
+                            <p style='color:yellow; font-size: 100px; line-height: 0;';>&star;</p><p style='font-size: 20px;'><b>Keep up the good work!<b></p>";
+                    
     var learning_complete = "Great job! You have completed the category learning phase of this experiment.<br><br>\
                               The computer will move on to the next task in 90 seconds.<br>";
 
+    var rec_start_ins = '<br>Once you have finished reading the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the main task.<br><br>';
+   
     var test_instructions = "The next part of this experiment is a memory test for <br>the <b>decorative mats</b> you saw behind the flowers.<br><br>";                          
 
     var rec_instructions = 'This task will take 5 minutes to complete.<br><br>\
@@ -627,11 +630,28 @@
             jsPsych.setProgressBar(curr_progress_bar_value + (1/stimuli.length));
         }
     }
+
+    // halfway notification
+    var halfway_notif = {
+        type: 'html-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        stimulus: learning_halfway,
+        trial_duration: instruction_time
+    }
     
     // entire categorization trial set
     var categorization_trials = {
-        timeline : [fixation, stim, feedback],
-        timeline_variables: stimuli    
+        timeline: [
+            {
+            timeline : [fixation, stim, feedback],
+            timeline_variables: stimuli.slice(0, num_trials/2)    
+            },
+            halfway_notif,
+            {
+            timeline : [fixation, stim, feedback],
+            timeline_variables: stimuli.slice(num_trials/2)    
+            }
+        ]
     }
 
     // draw instructions for ending learning phase
