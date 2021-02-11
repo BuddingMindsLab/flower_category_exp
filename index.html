@@ -63,14 +63,14 @@
     // feedback and instruction images
     var ins_img = ['assets/img/instructions/example_learning_trial.png', 'assets/img/instructions/example_recon_trial.png','assets/img/instructions/japanese_garden.jpg', 'assets/img/instructions/recon_dials.png'];
     var feedback_img = ['assets/img/feedback/smile.png', 'assets/img/feedback/smile.png'];
-    var category_img = ['assets/img/sun.png', 'assets/img/cloud.png']
+    var category_img = ['assets/img/bee.png', 'assets/img/hummingbird.png']
 
     // category learning task
     var fixation_time = 1000;
     var stim_time = 3500;
     var bkg_time = 500;
     var feedback_time = 1000;
-    var stim_question = "Is this <i>sun-preferring</i> or <i>shade-preferring</i>?";
+    var stim_question = "Does this flower feed <i>bees</i> or <i>hummingbirds</i>?";
     var pos_feedback_img = 'assets/img/feedback/smile.png';
     var pos_feedback_aud = 'assets/audio/positive.wav';
     var neg_feedback_img = 'assets/img/feedback/frown.png';
@@ -96,8 +96,9 @@
     var learning_ins = 'Your first task in this experiment is to <b>sort flowers into categories</b>.<br><br>\
                     In each trial, you will see a flower on top of a decorative mat for '+stim_time/1000+' seconds.<br>\
                     The flower will then disappear and the mat will remain on screen for '+bkg_time/1000+' seconds.<br><br>\
-                    You will be asked if the flower prefers <i>sun</i> or <i>shade</i>.\
-                    <br>You have until the mat disappears (<b>'+(bkg_time+stim_time)/1000+' seconds</b>) to make your choice.<br><br>\
+                    You will be asked if the flower feeds <i>bees</i> or <i>hummingbirds</i>.<br>\
+                    <br>You have until the mat disappears (<b>'+(bkg_time+stim_time)/1000+' seconds</b>) to make your choice.<br>\
+                    You can respond at any point during the trial.<br><br>\
                     <p style="text-align:left; margin: 0% 32% 0% 32%;">EX:<font>\
                     <div style="display:flex; align-items:center; margin: 0% 25% 0% 25%;"">\
                             <div style="float:left; width:100%; vertical-align: middle;">\
@@ -105,8 +106,8 @@
                     </div>\
                     <br><div style="text-align: center; clear: both"> The decorative mat is NOT relevant to the category decision.<br><br>\
                     Use the <b>arrow keys</b> on your keyboard to respond.<br>\
-                    Press the left (&#8592;) arrow key if you think the flower prefers <i>sun</i>.<br>\
-                    Press the right (&#8594;) arrow key if you think the flower prefers <i>shade</i>.<br><br>\
+                    Press the left (&#8592;) arrow key if you think the flower feeds <i>bees</i>.<br>\
+                    Press the right (&#8594;) arrow key if you think the flower feeds <i>hummingbirds</i>.<br><br>\
                     You will receive feedback after responding to an image.<br>\
                     At the beginning of the task, you will be mostly guessing. That is okay, make your best guess and use the feedback to learn.<br><br>\
                     Please make your responses as <b>quickly and accurately</b> as possible.</div>';
@@ -145,7 +146,7 @@
                             </div>'; 
 
     var rec_practice_ins = "<br>Before starting the main task, please complete a brief <b>practice session</b>.<br><br>In this session, practice using the arrow keys to repond to each image.\
-                            <br>Unlike the main task, all of the decorative mats shown in this practice session have never been displayed before.\
+                            <br><br>Unlike the main task, none of the decorative mats shown in this practice session have been displayed before.\
                             <br><br>";
                             
     var rec_practice_begin = "<br>Once you understand the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the practice trials.<br><br>";
@@ -247,9 +248,9 @@
     for (i = 0; i < num_trials; i+=4) {
         for (x=0;x<4;x++) {
             if ((categories[i+x]=='A' && group_condition==0) || (categories[i+x]=='B' && group_condition==1)){
-                var g = 'sun';
+                var g = 'bee';
             } else {
-                var g = 'shade';
+                var g = 'hummingbird';
             }
             var randomIndex = Math.floor(Math.random()*(num_trials-x-i)); // randomly select background image
             
@@ -423,7 +424,7 @@
     var q1_options = ["learn to categorize decorative mats.", "learn to respond as fast as possible.", "learn to categorize flowers."];
     
     var q2_prompt = "2) In each trial, I should ______ to respond.";
-    var q2_options = ["click the sun or cloud with my mouse", "press the left or right shift key", "press the left or right arrow key", "right click or left click with my mouse"];
+    var q2_options = ["click the bee or hummingbird with my mouse", "press the left or right shift key", "press the left or right arrow key", "right click or left click with my mouse"];
     
     var q3_prompt = "3) TRUE or FALSE: The decorative mat shown behind the flower is relevant to the category choice.";
     var q3_options = ["True", "False"];
@@ -562,7 +563,7 @@
         response_ends_trial: false,
         trial_duration: stim_time+bkg_time,
         stimulus_duration: stim_time,
-        options: ['Sun', 'Shade'],
+        options: ['Bees', 'Hummingbirds'],
         option_img: category_img,
         data: {
             exp_section: 'category_learning',
@@ -573,8 +574,8 @@
             lure: jsPsych.timelineVariable('lure')
         },
         on_finish: function(data){
-            if( ( (data.key_press == 39) && (data.stimulus_type == 'shade') )
-                || ( (data.key_press == 37) && (data.stimulus_type == 'sun') ) ){
+            if( ( (data.key_press == 39) && (data.stimulus_type == 'hummingbird') )
+                || ( (data.key_press == 37) && (data.stimulus_type == 'bee') ) ){
                 data.correct = true;
             } else {
                 data.correct = false;
@@ -590,16 +591,16 @@
             var html = "";
 
             if(last_trial_correct){
-                html += "<p style='color:green; font-size:100px; line-height: 0.2; margin-top: 10%;'>Correct!<br><br><br><br>"+
-                        "<img src="+pos_feedback_img+" width='160'>"+
+                html += "<p style='color:green; font-size:90px; line-height: 0.2; margin-top: 5%;'>Correct! &nbsp;"+
+                        "<img style='vertical-align:middle;' src="+pos_feedback_img+" width='160'>"+
                         '<audio autoplay>\
                             <source src="'+pos_feedback_aud+'" type="audio/wav">\
                             Your browser does not support the audio element.\
                         </audio>';
         
             } else {
-                html += "<p style='color:red; font-size:100px; line-height: 0.2; margin-top: 10%;'>Wrong.<br><br><br><br>"+
-                        "<img src="+neg_feedback_img+" width='160'>"+
+                html += "<p style='color:red; font-size:90px; line-height: 0.2; margin-top: 5%;'>Wrong. &nbsp;"+
+                        "<img style='vertical-align:middle;' src="+neg_feedback_img+" width='160'>"+
                         '<audio autoplay>\
                             <source src="'+neg_feedback_aud+'" type="audio/wav">\
                             Your browser does not support the audio element.\
@@ -607,12 +608,12 @@
                       
             }
             
-            html += "<br><span style='color:black; font-size:75px; line-height: 1.5;'>This flower likes <i>"+jsPsych.data.get().last().values()[0].stimulus_type+"</i>.</span><br>";
+            html += "<br><span style='color:black; font-size:68px; line-height: 1.5;'>This flower feeds <i>"+jsPsych.data.get().last().values()[0].stimulus_type+"s</i>.</span><br>";
             
-            if(jsPsych.data.get().last().values()[0].stimulus_type == 'shade') {
-                html += "<img src='assets/img/cloud.png' width='300'>";
+            if(jsPsych.data.get().last().values()[0].stimulus_type == 'hummingbird') {
+                html += "<img src='assets/img/hummingbird.png' width='300'>";
             } else {
-                html += "<img src='assets/img/sun.png' width='300'>";
+                html += "<img src='assets/img/bee.png' width='300'>";
             }
 
             html += "</p>"
@@ -1037,7 +1038,7 @@
     timeline.push(ins_quiz);
     timeline.push(ins_quiz2);
     timeline.push(quiz_end_wrong);
-    timeline.push(start_task_ins); 
+    timeline.push(start_task_ins);
 
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
