@@ -91,14 +91,13 @@
     
     var overall_ins = 'There will be <b>three</b> parts to complete in this experiment.<br><br>The first task will take 6 minutes, the second task will take 5 minutes, <br>\
                         and the last task is expected to take about 12 minutes.<br><br>\
-                        It is important that you pay attention and try your best throughout each task.<br><br>'
+                        It is important that you pay attention and try your best throughout each task.<br>If you do well, you will be able to earn <b>$1 in bonus pay</b> beyond the usual rate.<br><br>'
 
     var learning_ins = 'Your first task in this experiment is to <b>sort flowers into categories</b>.<br><br>\
-                    In each trial, you will see a flower on top of a decorative mat for '+stim_time/1000+' seconds.<br>\
+                    In each trial, you will see a flower with a different petal shape and colour appear on top of a decorative mat for '+stim_time/1000+' seconds.<br>\
                     The flower will then disappear and the mat will remain on screen for '+bkg_time/1000+' seconds.<br><br>\
-                    You will be asked if the flower feeds <i>bees</i> or <i>hummingbirds</i>.<br>\
-                    <br>You have until the mat disappears (<b>'+(bkg_time+stim_time)/1000+' seconds</b>) to make your choice.<br>\
-                    You can respond at any point during the trial.<br><br>\
+                    For each flower, you should indicate whether it feeds <i>bees</i> or <i>hummingbirds</i>.<br>\
+                    <br>You can respond as soon as the flower appears, and you have until the mat disappears to make your choice.<br> That gives you a total of <b>'+(bkg_time+stim_time)/1000+' seconds</b> to decide.<br><br>\
                     <p style="text-align:left; margin: 0% 32% 0% 32%;">EX:<font>\
                     <div style="display:flex; align-items:center; margin: 0% 25% 0% 25%;"">\
                             <div style="float:left; width:100%; vertical-align: middle;">\
@@ -114,6 +113,12 @@
 
     var start_ins = '<br>Once you have finished reading the instructions, please press <i>Next</i> to begin the instructions quiz.<br><br>\
                     After you have successfully completed the quiz, you may begin the first task.<br><br>'                
+
+    var quiz_end1 = '<p style="color:yellow; font-size: 100px; line-height: 0;";>&star;</p>Congratulations!<br><br> You have successfully completed the instructions quiz.<br><br>\
+                You may now proceed to the first task.<br><br>';
+
+    var quiz_end2 = 'Remember to try your best!<br>You can receive bonus payment depending on how well you learn the categories.<br><br>\
+                    Please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br>Press right (&#8594;) to begin.<br><br>';      
 
     var learning_halfway = "<p style='font-size: 20px;'><b>You are halfway!</b></p>\
                             <p style='color:yellow; font-size: 100px; line-height: 0;';>&star;</p><p style='font-size: 20px;'><b>Keep up the good work!<b></p>";
@@ -141,12 +146,11 @@
                             <br><div style="text-align: center; clear: both"> If you have seen the exact same picture before in this experiment, press the <b>left (&#8592;)</b> arrow key.<br>\
                             If you have not seen this exact picture, press the <b>right (&#8594;)</b> arrow key.<br><br>\
                             You will have <b>'+rec_time/1000+' seconds</b> to respond while the picture is on the screen.<br>\
-                            You should try to repond for every single picture.<br><br>\
+                            You should try to respond for every single picture. It is okay if you are not sure; just make your best guess!<br><br>\
                             Please make your responses as <b>quickly and accurately</b> as possible.<br><br>\
                             </div>'; 
 
-    var rec_practice_ins = "<br>Before starting the main task, please complete a brief <b>practice session</b>.<br><br>In this session, practice using the arrow keys to repond to each image.\
-                            <br><br>Unlike the main task, none of the decorative mats shown in this practice session have been displayed before.\
+    var rec_practice_ins = "<br>Before starting the main task, please complete a brief <b>practice session</b>.<br><br>In this session, practice responding based on what you saw in the instructions.\
                             <br><br>";
                             
     var rec_practice_begin = "<br>Once you understand the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the practice trials.<br><br>";
@@ -155,7 +159,9 @@
                                 If you have seen the exact same picture before in this experiment, press the <b>left (&#8592;)</b> arrow key.<br>\
                                 If you have not seen this exact picture, press the <b>right (&#8594;)</b> arrow key.<br><br>'
 
-    var rec_practice_complete = 'Practice trials are done!<br><br>Review the instructions if necessary before moving on to the <b>main</b> decorative mat memory test.<br><br>';
+    var rec_practice_complete = 'Practice trials are done. Great job!<br><br>\
+                                You should have responded "old" for the picture with the red garden because it was shown earlier in the instructions.<br>The other pictures were “new".\
+                                <br><br>Review the instructions if necessary before moving on to the <b>main</b> decorative mat memory test.<br><br>';
 
     var rec_test_complete = "Good work! You have completed the decorative mat memory test.<br><br>\
                             The computer will move on to the next task in 90 seconds.<br>";
@@ -181,6 +187,11 @@
     var test_complete = "You have completed the experiment!<br><br> Please proceed to the debriefing.<br><br>";
 
     var next_trial_ins = 'Start the next task<br><br>';
+
+    var survey_q1 = "What strategies did you use to categorize the flowers during the learning phase?";
+    var survey_q2 = "During the category learning phase, were the decorative mats distracting or were you able to ignore them?";
+    var survey_q3 = "Which part of the task did you find the most difficult?";
+    var survey_q4 = "Do you have any general comments about the experiment?";
 
     // backgrounds in sets (for trials)
     var backgrounds = [
@@ -303,7 +314,7 @@
             rec_backs.push({
                 background: novel_backs[i],
                 lure: -1,
-                create: 0,
+                create: -1,
                 exp_sub_section: 'main'
             });
        }
@@ -329,9 +340,14 @@
     }
     rec_backs = rec_backs_shuffled;
 
-    var rec_backs_practice = [];
+    var rec_backs_practice = [{
+                background: 'assets/img/instructions/japanese_garden.jpg',
+                lure: -1,
+                create: -1,
+                exp_sub_section: 'practice'
+    }];
     var num_practice_trials = 5;
-    for (i=0; i<(num_practice_trials*2); i++) {
+    for (i=0; i<(num_practice_trials*2-1); i++) {
         var n = jsPsych.randomization.sampleWithoutReplacement(backgrounds[1-background_set][1-lure], 1)[0];
         while (rec_backs_practice.map(a => a.background).includes(n) || rec_backs.map(a => a.background).includes(n)) {
             n = jsPsych.randomization.sampleWithoutReplacement(backgrounds[1-background_set][1-lure], 1)[0]
@@ -339,7 +355,7 @@
         rec_backs_practice.push({
                 background: n,
                 lure: -1,
-                create: 0,
+                create: -1,
                 exp_sub_section: 'practice'
         });
     }
@@ -532,9 +548,8 @@
     // end of quiz
     var start_task_ins = {
         type: 'instructions',
-        pages: ['<p style="color:yellow; font-size: 100px; line-height: 0;";>&star;</p>Congratulations!<br><br> You have successfully completed the instructions quiz.<br><br>\
-                You may now proceed to the first task.<br><br>',
-                'Please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin.<br><br>'],
+        pages: [quiz_end1,
+                quiz_end2],
         show_clickable_nav: true,
         show_page_number: true
     }
@@ -819,14 +834,19 @@
     // practice
     var recognition_practice_trials = {
         timeline: [rec_fixation, rec_background_practice],
-        timeline_variables: rec_backs_practice.slice(0,num_practice_trials)
+        timeline_variables: rec_backs_practice.slice(0,num_practice_trials),
+        randomize_order: true
     }
 
     // practice 2 (conditional on practice 1 performance)
     var rec_practice_reminder = {
         type: 'html-button-response',
         choices: ['Continue practice session'],
-        stimulus: rec_practice_reminder
+        stimulus: rec_practice_reminder,
+        on_start: function() {
+            // set progress bar to 0 at the start of experiment
+            jsPsych.setProgressBar(0);
+        }
     };
 
     var recognition_practice_trials2 = {
@@ -837,11 +857,7 @@
             timeline_variables: rec_backs_practice.slice(num_practice_trials)
             }, 
             rec_fixation
-        ],
-        on_start: function() {
-            // set progress bar to 0 at the start of experiment
-            jsPsych.setProgressBar(0);
-        },    
+        ],  
         conditional_function: function(){
             var keypress_data = jsPsych.data.get().filter([{exp_section: 'scene_recognition', stimulus: ""}]).values().map(a=>a.key_press);
             
@@ -927,7 +943,10 @@
     var survey = {
         type: 'survey-text',
         questions: [
-            {prompt: "What strategies did you use to categorize the flowers during the learning phase?", name: 'strat', rows: 5, columns:50, required:true}
+            {prompt: survey_q1, name: 'strategy', rows: 5, columns:50, required:true},
+            {prompt: survey_q2, name: 'mats', rows: 5, columns:50, required:true},
+            {prompt: survey_q3, name: 'difficult', rows: 5, columns:50, required:true},
+            {prompt: survey_q4, name: 'general', rows: 5, columns:50, required:false}
         ],
         preamble: '<b>Survey</b>',
         data: {
