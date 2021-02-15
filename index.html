@@ -91,7 +91,7 @@
     
     var overall_ins = 'There will be <b>three</b> parts to complete in this experiment.<br><br>The first task will take 6 minutes, the second task will take 5 minutes, <br>\
                         and the last task is expected to take about 12 minutes.<br><br>\
-                        It is important that you pay attention and try your best throughout each task.<br>If you do well, you will be able to earn <b>$1 in bonus pay</b> beyond the usual rate.<br><br>'
+                        It is important that you pay attention and try your best throughout each task.<br>If you do well, you will be able to earn up to <b>$1 in bonus pay</b> beyond the usual rate.<br><br>'
 
     var learning_ins = 'Your first task in this experiment is to <b>sort flowers into categories</b>.<br><br>\
                     In each trial, you will see a flower with a different petal shape and colour appear on top of a decorative mat for '+stim_time/1000+' seconds.<br>\
@@ -924,8 +924,16 @@
         }
     }
 
+    var recon_fixation = {  
+        type: 'html-keyboard-response',
+        stimulus: '+',
+        choices: jsPsych.ALL_KEYS,
+        trial_duration: rec_iti,
+        response_ends_trial: false
+    }
+
     var reconstruction_trials = {
-        timeline: [rec_fixation, recon_trial],
+        timeline: [recon_fixation, recon_trial],
         timeline_variables: stimuli,
         randomize_order: true
     }
