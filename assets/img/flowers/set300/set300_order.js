@@ -1,59 +1,59 @@
-var set300_flower_info = [
+var set300_flower_info =[
   {
     "order": 1,
     "name": "flower1.png",
     "colour": 300,
-    "shade": 301,
-    "category": "B",
-    "shape": 12.8
+    "shade": 292,
+    "category": "A",
+    "shape": 6
   },
   {
     "order": 2,
     "name": "flower2.png",
     "colour": 300,
-    "shade": 294,
-    "category": "A",
-    "shape": 6.7
+    "shade": 289,
+    "category": "B",
+    "shape": 16
   },
   {
     "order": 3,
     "name": "flower3.png",
     "colour": 300,
-    "shade": 295,
+    "shade": 288,
     "category": "B",
-    "shape": 17.2
+    "shape": 14
   },
   {
     "order": 4,
     "name": "flower4.png",
     "colour": 300,
-    "shade": 300,
+    "shade": 295,
     "category": "A",
-    "shape": 3.3
+    "shape": 4
   },
   {
     "order": 5,
     "name": "flower5.png",
     "colour": 330,
-    "shade": 328,
+    "shade": 320,
     "category": "B",
-    "shape": 16.8
+    "shape": 12
   },
   {
     "order": 6,
     "name": "flower6.png",
     "colour": 330,
-    "shade": 341,
-    "category": "A",
-    "shape": 2.3
+    "shade": 329,
+    "category": "B",
+    "shape": 18
   },
   {
     "order": 7,
     "name": "flower7.png",
     "colour": 330,
-    "shade": 334,
-    "category": "B",
-    "shape": 13.2
+    "shade": 327,
+    "category": "A",
+    "shape": 4
   },
   {
     "order": 8,
@@ -61,47 +61,47 @@ var set300_flower_info = [
     "colour": 330,
     "shade": 330,
     "category": "A",
-    "shape": 7.7
+    "shape": 6
   },
   {
     "order": 9,
     "name": "flower9.png",
     "colour": 0,
     "shade": 9,
-    "category": "A",
-    "shape": 6
+    "category": "B",
+    "shape": 13
   },
   {
     "order": 10,
     "name": "flower10.png",
     "colour": 0,
     "shade": 11,
-    "category": "B",
-    "shape": 16.1
+    "category": "A",
+    "shape": 3
   },
   {
     "order": 11,
     "name": "flower11.png",
     "colour": 0,
-    "shade": 7,
+    "shade": 1,
     "category": "B",
-    "shape": 13.9
+    "shape": 17
   },
   {
     "order": 12,
     "name": "flower12.png",
     "colour": 0,
-    "shade": 1,
+    "shade": 355,
     "category": "A",
-    "shape": 4
+    "shape": 7
   },
   {
     "order": 13,
     "name": "flower13.png",
     "colour": 30,
-    "shade": 33,
+    "shade": 29,
     "category": "A",
-    "shape": 3.6
+    "shape": 3
   },
   {
     "order": 14,
@@ -109,63 +109,63 @@ var set300_flower_info = [
     "colour": 30,
     "shade": 40,
     "category": "B",
-    "shape": 12.7
+    "shape": 18
   },
   {
     "order": 15,
     "name": "flower15.png",
     "colour": 30,
-    "shade": 35,
+    "shade": 27,
     "category": "A",
-    "shape": 6.4
+    "shape": 7
   },
   {
     "order": 16,
     "name": "flower16.png",
     "colour": 30,
-    "shade": 23,
+    "shade": 21,
     "category": "B",
-    "shape": 17.3
+    "shape": 12
   },
   {
     "order": 17,
     "name": "flower17.png",
     "colour": 60,
-    "shade": 50,
-    "category": "B",
-    "shape": 13.2
+    "shade": 48,
+    "category": "A",
+    "shape": 7
   },
   {
     "order": 18,
     "name": "flower18.png",
     "colour": 60,
-    "shade": 58,
-    "category": "B",
-    "shape": 16.8
+    "shade": 54,
+    "category": "A",
+    "shape": 3
   },
   {
     "order": 19,
     "name": "flower19.png",
     "colour": 60,
-    "shade": 62,
-    "category": "A",
-    "shape": 2.3
+    "shade": 48,
+    "category": "B",
+    "shape": 13
   },
   {
     "order": 20,
     "name": "flower20.png",
     "colour": 60,
-    "shade": 72,
-    "category": "A",
-    "shape": 7.7
+    "shade": 60,
+    "category": "B",
+    "shape": 17
   },
   {
     "order": 21,
     "name": "flower21.png",
     "colour": 90,
-    "shade": 96,
+    "shade": 84,
     "category": "A",
-    "shape": 2.1
+    "shape": 2
   },
   {
     "order": 22,
@@ -173,207 +173,207 @@ var set300_flower_info = [
     "colour": 90,
     "shade": 96,
     "category": "B",
-    "shape": 13.5
+    "shape": 16
   },
   {
     "order": 23,
     "name": "flower23.png",
     "colour": 90,
-    "shade": 94,
+    "shade": 99,
     "category": "A",
-    "shape": 7.9
+    "shape": 8
   },
   {
     "order": 24,
     "name": "flower24.png",
     "colour": 90,
-    "shade": 97,
+    "shade": 88,
     "category": "B",
-    "shape": 16.5
+    "shape": 14
   },
   {
     "order": 25,
     "name": "flower25.png",
     "colour": 120,
-    "shade": 127,
+    "shade": 115,
     "category": "A",
-    "shape": 3.8
+    "shape": 3
   },
   {
     "order": 26,
     "name": "flower26.png",
     "colour": 120,
-    "shade": 120,
-    "category": "A",
-    "shape": 6.2
+    "shade": 124,
+    "category": "B",
+    "shape": 12
   },
   {
     "order": 27,
     "name": "flower27.png",
     "colour": 120,
-    "shade": 127,
-    "category": "B",
-    "shape": 13.7
+    "shade": 119,
+    "category": "A",
+    "shape": 7
   },
   {
     "order": 28,
     "name": "flower28.png",
     "colour": 120,
-    "shade": 122,
+    "shade": 108,
     "category": "B",
-    "shape": 16.3
+    "shape": 18
   },
   {
     "order": 29,
     "name": "flower29.png",
     "colour": 150,
-    "shade": 160,
-    "category": "A",
-    "shape": 6.6
+    "shade": 143,
+    "category": "B",
+    "shape": 18
   },
   {
     "order": 30,
     "name": "flower30.png",
     "colour": 150,
-    "shade": 145,
-    "category": "B",
-    "shape": 16
+    "shade": 142,
+    "category": "A",
+    "shape": 6
   },
   {
     "order": 31,
     "name": "flower31.png",
     "colour": 150,
-    "shade": 144,
-    "category": "B",
-    "shape": 14
+    "shade": 158,
+    "category": "A",
+    "shape": 4
   },
   {
     "order": 32,
     "name": "flower32.png",
     "colour": 150,
-    "shade": 157,
-    "category": "A",
-    "shape": 3.4
+    "shade": 155,
+    "category": "B",
+    "shape": 12
   },
   {
     "order": 33,
     "name": "flower33.png",
     "colour": 180,
-    "shade": 190,
+    "shade": 188,
     "category": "A",
-    "shape": 6.9
+    "shape": 8
   },
   {
     "order": 34,
     "name": "flower34.png",
     "colour": 180,
-    "shade": 181,
+    "shade": 174,
     "category": "B",
-    "shape": 17
+    "shape": 14
   },
   {
     "order": 35,
     "name": "flower35.png",
     "colour": 180,
-    "shade": 181,
+    "shade": 182,
     "category": "A",
-    "shape": 3.1
+    "shape": 2
   },
   {
     "order": 36,
     "name": "flower36.png",
     "colour": 180,
-    "shade": 168,
+    "shade": 169,
     "category": "B",
-    "shape": 13
+    "shape": 16
   },
   {
     "order": 37,
     "name": "flower37.png",
     "colour": 210,
-    "shade": 199,
-    "category": "A",
-    "shape": 6
+    "shade": 200,
+    "category": "B",
+    "shape": 18
   },
   {
     "order": 38,
     "name": "flower38.png",
     "colour": 210,
-    "shade": 204,
+    "shade": 198,
     "category": "B",
-    "shape": 16.9
+    "shape": 12
   },
   {
     "order": 39,
     "name": "flower39.png",
     "colour": 210,
-    "shade": 195,
-    "category": "B",
-    "shape": 13.1
+    "shade": 197,
+    "category": "A",
+    "shape": 3
   },
   {
     "order": 40,
     "name": "flower40.png",
     "colour": 210,
-    "shade": 206,
+    "shade": 195,
     "category": "A",
-    "shape": 4
+    "shape": 7
   },
   {
     "order": 41,
     "name": "flower41.png",
     "colour": 240,
-    "shade": 247,
-    "category": "A",
-    "shape": 7.9
+    "shade": 231,
+    "category": "B",
+    "shape": 14
   },
   {
     "order": 42,
     "name": "flower42.png",
     "colour": 240,
-    "shade": 230,
+    "shade": 249,
     "category": "A",
-    "shape": 2.1
+    "shape": 3
   },
   {
     "order": 43,
     "name": "flower43.png",
     "colour": 240,
-    "shade": 240,
-    "category": "B",
-    "shape": 16.9
+    "shade": 252,
+    "category": "A",
+    "shape": 7
   },
   {
     "order": 44,
     "name": "flower44.png",
     "colour": 240,
-    "shade": 248,
+    "shade": 245,
     "category": "B",
-    "shape": 13.1
+    "shape": 16
   },
   {
     "order": 45,
     "name": "flower45.png",
     "colour": 270,
-    "shade": 279,
-    "category": "A",
-    "shape": 3.4
+    "shade": 277,
+    "category": "B",
+    "shape": 18
   },
   {
     "order": 46,
     "name": "flower46.png",
     "colour": 270,
-    "shade": 284,
+    "shade": 268,
     "category": "A",
-    "shape": 6.6
+    "shape": 3
   },
   {
     "order": 47,
     "name": "flower47.png",
     "colour": 270,
-    "shade": 281,
-    "category": "B",
-    "shape": 12.9
+    "shade": 264,
+    "category": "A",
+    "shape": 7
   },
   {
     "order": 48,
@@ -381,6 +381,6 @@ var set300_flower_info = [
     "colour": 270,
     "shade": 270,
     "category": "B",
-    "shape": 17.1
+    "shape": 12
   }
 ]
