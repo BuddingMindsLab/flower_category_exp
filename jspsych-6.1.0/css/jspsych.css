@@ -194,3 +194,12 @@
   max-height: 100vh;
   margin: auto;
 }
+
+#afc-stimulus {
+  position: relative;
+  top: 0;
+  left: 0;
+  max-width: 40%;
+  max-height: 100vh;
+  margin: auto;
+}
