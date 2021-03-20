@@ -13,7 +13,7 @@
     <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-survey-multi-choice.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-afc-button-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-afc-keyboard-response.js"></script>
 
     <script src="assets/img/flowers/set0/set0_order.js"></script>
     <script src="assets/img/flowers/set60/set60_order.js"></script>
@@ -87,14 +87,14 @@
     var recon_count_down = recon_time/1000;
 
     // 4AFC association task
-    var assoc_question = "Which flower was seen with this mat?"
+    var assoc_question = "Which flower was shown with this mat?"
 
     // instructions 
     var learning_ins_start = '<font size="+5">Welcome!</font><br><br>Thank you for participating in our study. <br><br>\
                             Please read the following instructions carefully, as you will be <b>quizzed</b> on your understanding before you begin the experiment.<br><br>'
     
     var overall_ins = 'There will be <b>four</b> parts to complete in this experiment.<br><br>The first task will take 6 minutes, the second task will take 5 minutes, <br>\
-                        the third task is expected to take about 12 minutes, and the last task will ttake 3 minutes.<br><br>\
+                        the third task is expected to take about 12 minutes, and the last task should take 4 minutes.<br><br>\
                         It is important that you pay attention and try your best throughout each task.<br>If you do well, you will be able to earn up to <b>$1 in bonus pay</b> beyond the usual rate.<br><br>'
 
     var learning_ins = 'Your first task in this experiment is to <b>sort flowers into categories</b>.<br><br>\
@@ -188,14 +188,16 @@
                                 The computer will move on to the next task in 90 seconds.<br>";
 
     var assoc_instructions = ["For the final part of this experiment, <br>we will continue to test your memory for the <b>flower</b> you saw with each <b>decorative mat</b>.<br><br>",
-                            "This task is expected to take 3 minutes to complete.<br><br>\
-                                In each trial, you will see a decorative mat at the top the screen.<br>\
-                                Below will be four of the flowers you saw during the category learning phase.</p>\
-                        Use your mouse to select which of the four flowers was shown with this mat during learning and proceed to the next trial.<br>\
-                        <img src='assets/img/instructions/example_recon_trial.png' style='width:25%; vertical-align: middle;'></img>\
+                            "This task is expected to take 4 minutes to complete.<br><br>\
+                                In each trial, you will see a decorative mat in the middle of the screen.<br>\
+                                Below the mat will be four of the flowers you saw during the initial learning phase, each with a different petal colour and shape.</p>\
+                        Use your keyboard to indicate <b>which of the four flowers was shown with this mat</b> during learning.<br><br>\
+                        <img src='assets/img/instructions/4afc_example.png' style='width:30%; vertical-align: middle;'></img>\
+                        <br><br>There will be a number under each flower indicating which key to press for that option (<b>1</b>,<b>2</b>,<b>3</b>, or <b>4</b>).\
+                         <br>For example, press the number <b>1</b> key to select the leftmost flower.\
                         <br><br>You will have as long as you need to make your choice.<br>\
                         If after a few seconds you cannot remember the flower that was shown with the mat, make your best guess.<br><br>\
-                        Please make your responses as <b>accurately</b> as possible.<br><br>",
+                        Please make your responses as <b>quickly and accurately</b> as possible.<br><br>",
                         "<br>Once you have finished reading the instructions, please press <i>Next</i> to begin.<br><br>"
                             ];
     
@@ -398,7 +400,7 @@
         // FOR s1c1
 
         // 1) correct shape, correct colour (s1c1)
-        choices.push(assoc_stimuli[i].stimulus)
+        choices.push(assoc_stimuli[i].stimulus);
 
         // 2) different shape, correct (similar) colour (s2c1)
         var choice1 = jsPsych.randomization.sampleWithoutReplacement(opts.filter(s => s.category != assoc_stimuli[i].category && s.colour_section == assoc_stimuli[i].colour_section), 1)[0];
@@ -423,7 +425,7 @@
         var choice3 = jsPsych.randomization.sampleWithoutReplacement(opts.filter(s => s.category != assoc_stimuli[i].category && s.colour_section == tmp.colour_section), 1)[0];
         choices.push(choice3.stimulus);
 
-        assoc_stimuli[i].choices = choices;       
+        assoc_stimuli[i].choices = jsPsych.randomization.shuffle(choices);       
         
 
         // FOR PAIR ITEM (s2c1)
@@ -448,10 +450,9 @@
         var choice3 = jsPsych.randomization.sampleWithoutReplacement(opts.filter(s => s.category != choice1.category && s.colour_section == tmp.colour_section), 1)[0];
         pair_choices.push(choice3.stimulus);
 
-        assoc_stimuli.filter(c => c.stimulus == choice1.stimulus)[0].choices = pair_choices;
+        assoc_stimuli.filter(c => c.stimulus == choice1.stimulus)[0].choices = jsPsych.randomization.shuffle(pair_choices);
 
     }
-    assoc_stimuli = jsPsych.randomization.shuffle(assoc_stimuli); // shuffle original learning stim
 
     /**************************************************** subject ID ****************************************************/
     
@@ -1053,19 +1054,43 @@
     }
 
     var assoc_trial = {
-        type: 'afc-button-response',
+        type: 'afc-keyboard-response',
         stimulus: jsPsych.timelineVariable('background'),
         choices: jsPsych.timelineVariable('choices'),
+        key_choices: ['1','2','3','4'],
         prompt: '<p class="prompt">'+assoc_question+'</p>',
         response_ends_trial: true,
         data: {
             exp_section: 'flower_scene_association',
             stimulus: jsPsych.timelineVariable('background'),
-            correct: jsPsych.timelineVariable('stimulus'),
+            correct_ans: jsPsych.timelineVariable('stimulus'),
             create_trial: jsPsych.timelineVariable('create'),
             choices: jsPsych.timelineVariable('choices')
         },
         on_finish: function(data){
+            var resp = -1;
+            switch(data.key_press) {
+                case 49:
+                    resp = 0;
+                    break;
+                case 50:
+                    resp = 1;
+                    break;
+                case 51:
+                    resp = 2;
+                    break;
+                case 52:
+                    resp = 3;
+                    break;
+            }
+            if (data.choices[resp] == data.correct_ans) {
+                data.correct = true;
+            } else {
+                data.correct = false;
+            }
+
+            data.ans = data.choices[resp];
+
             var curr_progress_bar_value = jsPsych.getProgressBarCompleted();
             jsPsych.setProgressBar(curr_progress_bar_value + (1/num_trials));
         }

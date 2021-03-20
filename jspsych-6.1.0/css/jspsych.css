@@ -199,7 +199,16 @@
   position: relative;
   top: 0;
   left: 0;
-  max-width: 40%;
+  max-width: 32%;
+  max-height: 100vh;
+  margin: auto;
+}
+
+#afc-choice {
+  position: relative;
+  top: 0;
+  left: 0;
+  max-width: 80%;
   max-height: 100vh;
   margin: auto;
 }

@@ -1,5 +1,5 @@
 /**
- * afc-button-response
+ * afc-keyboard-response
  * Merron Woodbury
  *
  * plugin for Alternative Forced Choice Task with button response
@@ -8,17 +8,17 @@
  **/
 
 
-jsPsych.plugins["afc-button-response"] = (function() {
+jsPsych.plugins["afc-keyboard-response"] = (function() {
 
     var plugin = {};
   
-    jsPsych.pluginAPI.registerPreload('afc-button-response', 'stimulus', 'image');
-    jsPsych.pluginAPI.registerPreload('afc-button-response', 'choice1', 'image');
-    jsPsych.pluginAPI.registerPreload('afc-button-response', 'choice2', 'image');
-    jsPsych.pluginAPI.registerPreload('afc-button-response', 'choice3', 'image');
+    jsPsych.pluginAPI.registerPreload('afc-keyboard-response', 'stimulus', 'image');
+    jsPsych.pluginAPI.registerPreload('afc-keyboard-response', 'choice1', 'image');
+    jsPsych.pluginAPI.registerPreload('afc-keyboard-response', 'choice2', 'image');
+    jsPsych.pluginAPI.registerPreload('afc-keyboard-response', 'choice3', 'image');
 
     plugin.info = {
-      name: 'afc-button-response',
+      name: 'afc-keyboard-response',
       description: '',
       parameters: {
         stimulus: {
@@ -26,6 +26,13 @@ jsPsych.plugins["afc-button-response"] = (function() {
           pretty_name: 'Stimulus',
           default: undefined,
           description: 'The image to be displayed'
+        },
+        key_choices: {
+          type: jsPsych.plugins.parameterType.KEYCODE,
+          array: true,
+          pretty_name: 'Key Choices',
+          default: jsPsych.ALL_KEYS,
+          description: 'The keys the subject is allowed to press to respond to the stimulus.'
         },
         choices: {
           type: jsPsych.plugins.parameterType.IMAGE,
@@ -95,16 +102,17 @@ jsPsych.plugins["afc-button-response"] = (function() {
         html += trial.prompt;
       }
       // stimulus
-      html += '<div style="clear:both; align-items:top; top:5%; right:20%"><img src="'+trial.stimulus+'" id="afc-stimulus" style="';
+      html += '<div style="clear:both; align-items:top; top:0%; right:20%">\
+                <img src="'+trial.stimulus+'" id="afc-stimulus" style="';
       if(trial.stimulus_height !== null){
             html += 'height:'+trial.stimulus_height+'%; '
-            if(trial.stimulus_width == null && trial.maintain_aspect_ratio){
+            if(trial.stimulus_width == null){
             html += 'width: auto; ';
             }
       }
       if(trial.stimulus_width !== null){
             html += 'width:'+trial.stimulus_width+'%; '
-            if(trial.stimulus_height == null && trial.maintain_aspect_ratio){
+            if(trial.stimulus_height == null){
             html += 'height: auto; ';
             }
       }
@@ -112,11 +120,12 @@ jsPsych.plugins["afc-button-response"] = (function() {
       html +='"></img></div><br>';
 
       // options
-      html += '<div style="clear:both; align-items:center; margin: 0% 0% 0% 0%;">';
+      html += '<div style="clear:both; align-items:center; margin: 0% 25% 0% 25%;">';
       var sep = (100/trial.choices.length).toString();
       for (i=0; i<trial.choices.length; i++) {
         html += '<div style="float:left; width:'+sep+'%; vertical-align: middle;">\
-                    <input type="image" src="'+trial.choices[i]+'" style="width:50%; vertical-align: middle;" id=jspsych-html-button-response-button-' + i +' class="afc_choice"></img>\
+                    <img src="'+trial.choices[i]+'" style="vertical-align: middle;" id="afc-choice"></img>\
+                    <p>'+(i+1)+'</p>\
                 </div>';
       }
       html += "</div>";
@@ -126,45 +135,11 @@ jsPsych.plugins["afc-button-response"] = (function() {
 
       // start time
       var start_time = performance.now();
-  
-      // add event listeners to buttons
-      for (var i = 0; i < trial.choices.length; i++) {
-        display_element.querySelector('#jspsych-html-button-response-button-' + i).addEventListener('click', function(e){
-          var choice = e.currentTarget.getAttribute('src'); // don't use dataset for jsdom compatibility
-          after_response(choice);
-        });
-      }
     
       // store response
       var response = {
         rt: null,
-        button: null
-      };
-  
-      // function to handle responses by the subject
-      var after_response = function(choice) {
-  
-        // measure rt
-        var end_time = performance.now();
-        var rt = end_time - start_time;
-        response.button = choice;
-        response.rt = rt;
-
-        // after a valid response, the stimulus will have the CSS class 'responded'
-        // which can be used to provide visual feedback that a response was recorded
-        display_element.querySelector('#afc-stimulus').className += ' responded';
-
-        // disable all the buttons after a response
-        var btns = document.querySelectorAll('.jspsych-html-button-response-button button');
-        for(var i=0; i<btns.length; i++){
-          //btns[i].removeEventListener('click');
-          btns[i].setAttribute('disabled', 'disabled');
-        }
-
-        if (trial.response_ends_trial) {
-          end_trial();
-        }
-        
+        key: null
       };
   
       // function to end trial when it is time
@@ -173,12 +148,16 @@ jsPsych.plugins["afc-button-response"] = (function() {
         // kill any remaining setTimeout handlers
         jsPsych.pluginAPI.clearAllTimeouts();
   
-  
+        // kill keyboard listeners
+        if (typeof keyboardListener !== 'undefined') {
+          jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
+        }
+
         // gather the data to store for the trial
         var trial_data = {
           "rt": response.rt,
           "stimulus": trial.stimulus,
-          "button": response.button
+          "key_press": response.key
         };
   
         // clear the display
@@ -187,7 +166,35 @@ jsPsych.plugins["afc-button-response"] = (function() {
         // move on to the next trial
         jsPsych.finishTrial(trial_data);
       };
+
+      // function to handle responses by the subject
+      var after_response = function(choice) {
+
+        // after a valid response, the stimulus will have the CSS class 'responded'
+        // which can be used to provide visual feedback that a response was recorded
+        display_element.querySelector('#afc-stimulus').className += ' responded';
+
+        // only record the first response
+        if (response.key == null) {
+          response = choice;
+        }
+
+        if (trial.response_ends_trial) {
+          end_trial();
+        }
+        
+      };
   
+      // start the response listener
+      if (trial.key_choices != jsPsych.NO_KEYS) {
+        var keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
+          callback_function: after_response,
+          valid_responses: trial.key_choices,
+          rt_method: 'performance',
+          persist: false,
+          allow_held_key: false
+        });
+      }
   
       // end trial if trial_duration is set
       if (trial.trial_duration !== null) {
