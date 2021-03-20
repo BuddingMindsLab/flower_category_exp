@@ -62,7 +62,7 @@
     var num_trials = 48; // number of learning trials (multiple of 4) - usually 48
     
     // feedback and instruction images
-    var ins_img = ['assets/img/instructions/example_learning_trial.png', 'assets/img/instructions/example_recon_trial.png','assets/img/instructions/japanese_garden.jpg', 'assets/img/instructions/recon_dials.png'];
+    var ins_img = ['assets/img/instructions/example_learning_trial.png', 'assets/img/instructions/example_recon_trial.png','assets/img/instructions/japanese_garden.jpg', 'assets/img/instructions/recon_dials.png', 'assets/img/instructions/4afc_example.png'];
     var feedback_img = ['assets/img/feedback/smile.png', 'assets/img/feedback/smile.png'];
     var category_img = ['assets/img/bee.png', 'assets/img/hummingbird.png']
 
@@ -93,8 +93,8 @@
     var learning_ins_start = '<font size="+5">Welcome!</font><br><br>Thank you for participating in our study. <br><br>\
                             Please read the following instructions carefully, as you will be <b>quizzed</b> on your understanding before you begin the experiment.<br><br>'
     
-    var overall_ins = 'There will be <b>four</b> parts to complete in this experiment.<br><br>The first task will take 6 minutes, the second task will take 5 minutes, <br>\
-                        the third task is expected to take about 12 minutes, and the last task should take 4 minutes.<br><br>\
+    var overall_ins = 'There will be <b>three</b> parts to complete in this experiment.<br><br>The first task will take 6 minutes, the second task will take 5 minutes, <br>\
+                        and the last task should take 4 minutes.<br><br>\
                         It is important that you pay attention and try your best throughout each task.<br>If you do well, you will be able to earn up to <b>$1 in bonus pay</b> beyond the usual rate.<br><br>'
 
     var learning_ins = 'Your first task in this experiment is to <b>sort flowers into categories</b>.<br><br>\
@@ -187,7 +187,7 @@
     var recon_test_complete = "Great job! You have completed the flower reconstruction task.<br><br>\
                                 The computer will move on to the next task in 90 seconds.<br>";
 
-    var assoc_instructions = ["For the final part of this experiment, <br>we will continue to test your memory for the <b>flower</b> you saw with each <b>decorative mat</b>.<br><br>",
+    var assoc_instructions = ["For the final part of this experiment, <br>we will test your memory for the <b>flower</b> you saw with each <b>decorative mat</b>.<br><br>",
                             "This task is expected to take 4 minutes to complete.<br><br>\
                                 In each trial, you will see a decorative mat in the middle of the screen.<br>\
                                 Below the mat will be four of the flowers you saw during the initial learning phase, each with a different petal colour and shape.</p>\
@@ -1222,7 +1222,7 @@
 
     /********************************************** End ********************************************/
   
-    timeline.push(fullscreen);
+/*     timeline.push(fullscreen);
     timeline.push(consent_inst);
     timeline.push(consent_page);
     timeline.push(start_trial);
@@ -1244,16 +1244,16 @@
     timeline.push(rec_instruction_trial2);
 
     timeline.push(recognition_trials);
-    timeline.push(rec_fixation);
+    timeline.push(rec_fixation); */
     timeline.push(draw_end_rec_test);
     timeline.push(timer_loop);
     timeline.push(next_trial);
 
-    timeline.push(recon_instruction_trial);
+    /*timeline.push(recon_instruction_trial);
     timeline.push(reconstruction_trials);
     timeline.push(draw_end_recon_test);
     timeline.push(timer_loop);
-    timeline.push(next_trial);
+    timeline.push(next_trial);*/
 
     timeline.push(assoc_ins);
     timeline.push(assoc_trials);
