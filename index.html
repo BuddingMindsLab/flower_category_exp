@@ -1226,20 +1226,14 @@
     var backs = backgrounds.flat().flat();
     var preload_ins = {
         type: 'preload',
-        images: ins_img,
-        message: 'Loading task...'
+        images: [ins_img, category_img, feedback_img, flowers],
+        message: 'Loading...'
     }
 
     var preload_cat = {
         type: 'preload',
-        images: [category_img, feedback_img, flowers, backs.slice(0, (num_trials/2))],
-        message: 'Loading task...'
-    }
-
-    var preload_cat2 = {
-        type: 'preload',
-        images: backs.slice((num_trials/2), num_trials),
-        message: 'Loading task...'
+        images: backs,
+        message: 'Loading...'
     }
 
     var preload_rec = {
@@ -1251,11 +1245,10 @@
     /********************************************** End ********************************************/
 
     timeline.push(preload_ins);
-    timeline.push(preload_cat);
     timeline.push(fullscreen);
     timeline.push(consent_inst);
     timeline.push(consent_page);
-    timeline.push(preload_cat2);
+    timeline.push(preload_cat);
     timeline.push(start_trial);
     
     timeline.push(ins_quiz);
