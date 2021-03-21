@@ -1230,17 +1230,20 @@
 
     var preload_cat = {
         type: 'preload',
-        images: [category_img, feedback_img, flowers, backgrounds.flat().flat()] // automatically preload just the images from categorization trials
+        images: [category_img, feedback_img, flowers, backgrounds.flat().flat()], // automatically preload just the images from categorization trials
+        message: 'Loading task...'
     }
 
     var preload_rec = {
         type: 'preload',
-        images: [rec_backs.map(a => a.background), rec_backs_practice.map(a => a.background)]
+        images: [rec_backs.map(a => a.background), rec_backs_practice.map(a => a.background)],
+        message: 'Loading task...'
     }
   
     /********************************************** End ********************************************/
 
     timeline.push(preload_ins);
+    timeline.push(preload_cat);
     timeline.push(fullscreen);
     timeline.push(consent_inst);
     timeline.push(consent_page);
@@ -1251,7 +1254,6 @@
     timeline.push(quiz_end_wrong);
     timeline.push(start_task_ins);
 
-    timeline.push(preload_cat);
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
     timeline.push(timer_loop);
