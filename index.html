@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Category Learning Task</title>
-    <script src="jspsych-6.1.0/jspsych.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-image-bkg-keyboard-response.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-external-html.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-external-html-flower-recon.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-survey-multi-choice.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
-    <script src="jspsych-6.1.0/plugins/jspsych-afc-keyboard-response.js"></script>
+    <script src="jspsych-6.3.0/jspsych.js"></script>
+    <script src="jspsych-6.3.0/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych-6.3.0/plugins/jspsych-html-button-response.js"></script>
+    <script src="jspsych-6.3.0/plugins/jspsych-image-bkg-keyboard-response.js"></script>
+    <script src="jspsych-6.3.0/plugins/jspsych-external-html.js"></script>
+    <script src="jspsych-6.3.0/plugins/jspsych-external-html-flower-recon.js"></script>
+    <script src="jspsych-6.3.0/plugins/jspsych-instructions.js"></script>
+    <script src="jspsych-6.3.0/plugins/jspsych-fullscreen.js"></script>
+    <script src="jspsych-6.3.0/plugins/jspsych-survey-multi-choice.js"></script>
+    <script src="jspsych-6.3.0/plugins/jspsych-survey-text.js"></script>
+    <script src="jspsych-6.3.0/plugins/jspsych-afc-keyboard-response.js"></script>
+    <script src="jspsych-6.3.0/plugins/jspsych-preload.js"></script>
 
     <script src="assets/img/flowers/set0/set0_order.js"></script>
     <script src="assets/img/flowers/set60/set60_order.js"></script>
@@ -24,7 +25,7 @@
     <script src="assets/img/flowers/set270/set270_order.js"></script>
     <script src="assets/img/flowers/set300/set300_order.js"></script>
 
-    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    <link href="jspsych-6.3.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
 
     <style type="text/css">
         html,
@@ -63,7 +64,7 @@
     
     // feedback and instruction images
     var ins_img = ['assets/img/instructions/example_learning_trial.png', 'assets/img/instructions/example_recon_trial.png','assets/img/instructions/japanese_garden.jpg', 'assets/img/instructions/recon_dials.png', 'assets/img/instructions/4afc_example.png'];
-    var feedback_img = ['assets/img/feedback/smile.png', 'assets/img/feedback/smile.png'];
+    var feedback_img = ['assets/img/feedback/smile.png', 'assets/img/feedback/frown.png'];
     var category_img = ['assets/img/bee.png', 'assets/img/hummingbird.png']
 
     // category learning task
@@ -697,8 +698,8 @@
             lure: jsPsych.timelineVariable('lure')
         },
         on_finish: function(data){
-            if( ( (data.key_press == 39) && (data.stimulus_type == 'hummingbird') )
-                || ( (data.key_press == 37) && (data.stimulus_type == 'bee') ) ){
+            if( ( (data.response == 'arrowright') && (data.stimulus_type == 'hummingbird') )
+                || ( (data.response == 'arrowleft') && (data.stimulus_type == 'bee') ) ){
                 data.correct = true;
             } else {
                 data.correct = false;
@@ -862,9 +863,9 @@
         },
         on_finish: function(data){
             // "old" and actually old (0), "new" and lure (1) or new (-1)
-            if( ( (data.key_press == 37) && (data.lure== 0) )
-                || ( (data.key_press == 39) && (data.lure == 1) ) 
-                || ( (data.key_press == 39) && (data.lure == -1) )){
+            if( ( (data.response == 'arrowleft') && (data.lure== 0) )
+                || ( (data.response == 'arrowright') && (data.lure == 1) ) 
+                || ( (data.response == 'arrowright') && (data.lure == -1) )){
                 data.correct = true;
             } else {
                 data.correct = false;
@@ -895,9 +896,9 @@
         },
         on_finish: function(data){
             // "old" and actually old (0), "new" and lure (1) or new (-1)
-            if( ( (data.key_press == 37) && (data.lure== 0) )
-                || ( (data.key_press == 39) && (data.lure == 1) ) 
-                || ( (data.key_press == 39) && (data.lure == -1) )){
+            if( ( (data.response == 'arrowleft') && (data.lure== 0) )
+                || ( (data.response == 'arrowright') && (data.lure == 1) ) 
+                || ( (data.response == 'arrowright') && (data.lure == -1) )){
                 data.correct = true;
             } else {
                 data.correct = false;
@@ -922,11 +923,11 @@
                 var lure = jsPsych.data.get().last(2).values()[0].lure;
 
                 // "old" and actually old (0), "new" and lure (1) or new (-1)
-                if( ( (data.key_press == 37) && (lure== 0) )
-                    || ( (data.key_press == 39) && (lure == 1) ) 
-                    || ( (data.key_press == 39) && (lure == -1) )){
+                if( ( (data.response == 'arrowleft') && (lure== 0) )
+                    || ( (data.response == 'arrowright') && (lure == 1) ) 
+                    || ( (data.response == 'arrowright') && (lure == -1) )){
                     data.correct = true;
-                } else if (data.key_press) {
+                } else if (data.response) {
                     data.correct = false;
                 }
 
@@ -967,10 +968,10 @@
             rec_fixation
         ],  
         conditional_function: function(){
-            var keypress_data = jsPsych.data.get().filter([{exp_section: 'scene_recognition', stimulus: ""}]).values().map(a=>a.key_press);
+            var keypress_data = jsPsych.data.get().filter([{exp_section: 'scene_recognition', stimulus: ""}]).values().map(a=>a.response);
             
             // skip second practice if respond to more than 2 with arrow keys
-            if (keypress_data.map(a=>a==39||a==37).filter(Boolean).length > 2) {
+            if (keypress_data.map(a=>a=='arrowright'||a=='arrowleft').filter(Boolean).length > 2) {
                 return false;
             }
             return true;
@@ -1082,21 +1083,7 @@
             choices: jsPsych.timelineVariable('choices')
         },
         on_finish: function(data){
-            var resp = -1;
-            switch(data.key_press) {
-                case 49:
-                    resp = 0;
-                    break;
-                case 50:
-                    resp = 1;
-                    break;
-                case 51:
-                    resp = 2;
-                    break;
-                case 52:
-                    resp = 3;
-                    break;
-            }
+            var resp = parseInt(data.response)-1;
             if (data.choices[resp] == data.correct_ans) {
                 data.correct = true;
             } else {
@@ -1234,8 +1221,26 @@
         choices: jsPsych.ANY_KEYS
     }
 
-    /********************************************** End ********************************************/
+    /********************************************** Preload Trials ********************************************/
+
+    var preload_ins = {
+        type: 'preload',
+        images: ins_img
+    }
+
+    var preload_cat = {
+        type: 'preload',
+        images: [category_img, feedback_img, flowers, backgrounds.flat().flat()] // automatically preload just the images from categorization trials
+    }
+
+    var preload_rec = {
+        type: 'preload',
+        images: [rec_backs.map(a => a.background), rec_backs_practice.map(a => a.background)]
+    }
   
+    /********************************************** End ********************************************/
+
+    timeline.push(preload_ins);
     timeline.push(fullscreen);
     timeline.push(consent_inst);
     timeline.push(consent_page);
@@ -1246,11 +1251,13 @@
     timeline.push(quiz_end_wrong);
     timeline.push(start_task_ins);
 
+    timeline.push(preload_cat);
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
     timeline.push(timer_loop);
     timeline.push(next_trial);
  
+    timeline.push(preload_rec);
     timeline.push(rec_instruction_trial);
     timeline.push(recognition_practice_trials);
     timeline.push(rec_fixation);

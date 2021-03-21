@@ -9,6 +9,12 @@
 
 /* Container holding jsPsych content */
 
+#jspsych-survey-multi-choice-form {
+  text-align: center;
+  vertical-align: middle;
+  left: 50%;
+}
+
  .jspsych-display-element {
    display: flex;
    flex-direction: column;
@@ -130,7 +136,7 @@
 }
 
 /* Control appearance of layered images for jspych-image-bkg-keyboard_response */
-#jspych-image-bkg-keyboard-response-container {
+#jspsych-image-bkg-keyboard-response-container {
   position: relative;
   top: 0;
   left: 0;
@@ -145,7 +151,7 @@
   margin: auto;
 }
 
-#jspych-image-bkg-keyboard-response-stimulus {
+#jspsych-image-bkg-keyboard-response-stimulus {
   position: absolute;
   top: 30%;
   left: 37.5%;
@@ -156,31 +162,6 @@
 
 #jspsych-image-keyboard-response-stimulus {
   max-width: 75%;
-  max-height: 100vh;
-  margin: auto;
-}
-
-/* jspsych-image-bkg-button-response */
-#jspych-image-bkg-button-response-container {
-  position: relative;
-  top: 0;
-  left: 0;
-}
-
-#jspsych-image-bkg-button-response-background {
-  position: relative;
-  top: 0;
-  left: 0;
-  max-width: 100%;
-  max-height: 100vh;
-  margin: auto;
-}
-
-#jspsych-image-bkg-button-response-stimulus {
-  position: absolute;
-  top: 30%;
-  left: 37.5%;
-  max-width: 25%;
   max-height: 100vh;
   margin: auto;
 }
@@ -212,3 +193,9 @@
   max-height: 100vh;
   margin: auto;
 }
+
+.jspsych-survey-multi-choice-question {
+  text-align: center;
+  vertical-align: middle;
+}
+
