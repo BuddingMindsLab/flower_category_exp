@@ -1223,20 +1223,22 @@
 
     /********************************************** Preload Trials ********************************************/
 
+    var backs = backgrounds.flat().flat();
     var preload_ins = {
         type: 'preload',
-        images: ins_img
+        images: ins_img,
+        message: 'Loading task...'
     }
 
     var preload_cat = {
         type: 'preload',
-        images: [category_img, feedback_img, flowers],
+        images: [category_img, feedback_img, flowers, backs.slice(0, (num_trials/2))],
         message: 'Loading task...'
     }
 
     var preload_cat2 = {
         type: 'preload',
-        images: backgrounds.flat().flat(),
+        images: backs.slice((num_trials/2), num_trial),
         message: 'Loading task...'
     }
 
@@ -1253,6 +1255,7 @@
     timeline.push(fullscreen);
     timeline.push(consent_inst);
     timeline.push(consent_page);
+    timeline.push(preload_cat2);
     timeline.push(start_trial);
     
     timeline.push(ins_quiz);
@@ -1260,7 +1263,6 @@
     timeline.push(quiz_end_wrong);
     timeline.push(start_task_ins);
 
-    timeline.push(preload_cat2);
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
     timeline.push(timer_loop);
