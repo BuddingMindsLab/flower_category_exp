@@ -193,6 +193,7 @@
                                 Below the mat will be four of the flowers you saw during the initial learning phase, each with a different petal colour and shape.</p>\
                         Use your keyboard to indicate <b>which of the four flowers was shown with this mat</b> during learning.<br><br>\
                         <img src='assets/img/instructions/4afc_example.png' style='width:30%; vertical-align: middle;'></img>\
+                        <br><br>In the above example, all of the flowers are the same, but in the real task each flower will be different.\
                         <br><br>There will be a number under each flower indicating which key to press for that option (<b>1</b>,<b>2</b>,<b>3</b>, or <b>4</b>).\
                          <br>For example, press the number <b>1</b> key to select the leftmost flower.\
                         <br><br>You will have as long as you need to make your choice.<br>\
@@ -1144,10 +1145,10 @@
             var learning_data = {'phase': 'category_learning', 'data': learning_responses.values()};
             var scene_responses = jsPsych.data.get().filter([{exp_section: 'scene_recognition'}]);
             var scene_data = {'phase': 'scene_recognition', 'data': scene_responses.values()};
-            var recon_responses = jsPsych.data.get().filter([{trial_type: 'external-html-flower-recon', exp_section: 'flower_reconstruction'}]);
-            var recon_data = {'phase': 'flower_reconstruction', 'data': recon_responses.values()};
-            var assoc_responses = jsPsych.data.get().filter([{trial_type: 'afc-button-response', exp_section: 'flower_scene_association'}]);
-            var assoc_data = {'phase': 'flower_scene_association', 'data': recon_responses.values()};
+            //var recon_responses = jsPsych.data.get().filter([{trial_type: 'external-html-flower-recon', exp_section: 'flower_reconstruction'}]);
+            //var recon_data = {'phase': 'flower_reconstruction', 'data': recon_responses.values()};
+            var assoc_responses = jsPsych.data.get().filter([{trial_type: 'afc-keyboard-response', exp_section: 'flower_scene_association'}]);
+            var assoc_data = {'phase': 'flower_scene_association', 'data': assoc_responses.values()};
             
 
             var survey_responses = jsPsych.data.get().filter([{exp_section: 'survey'}]);
@@ -1170,7 +1171,7 @@
                 data: [
                     learning_data,
                     scene_data,
-                    recon_data,
+                    //recon_data,
                     assoc_data,
                     quiz_data,
                     survey_data
