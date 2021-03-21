@@ -276,6 +276,9 @@
     }   
     var categories = flower_info.map(a=>a.category);
 
+    var t2 = new Date();
+    console.log("var setup : "+((t2.getTime() - start_time.getTime())/1000));
+
     // category learning stimuli (flower, sun/shade, background, lure)
     var stimuli = []; 
     var flowers = [];       
@@ -311,6 +314,9 @@
             flowers.push('assets/img/flowers/'+set_folder+'/flower'+(i+x+1).toString() +'.png');
         }      
     }
+
+    t2 = new Date();
+    console.log("cat learn stim : "+((t2.getTime() - start_time.getTime())/1000));
 
     // stimuli for recognition test
     var rec_backs = []
@@ -384,6 +390,9 @@
         });
     }
 
+    t2 = new Date();
+    console.log("rec backs : "+((t2.getTime() - start_time.getTime())/1000));
+
     // 4AFC association stimuli choices
     var assoc_stimuli = stimuli; // shuffle original learning stim
     assoc_stimuli = assoc_stimuli.map(e => ({...e, used: 0}));
@@ -454,6 +463,10 @@
         assoc_stimuli.filter(c => c.stimulus == choice1.stimulus)[0].choices = jsPsych.randomization.shuffle(pair_choices);
 
     }
+
+    t2 = new Date();
+    console.log("afc choices : "+((t2.getTime() - start_time.getTime())/1000));
+
 
     /**************************************************** subject ID ****************************************************/
     
