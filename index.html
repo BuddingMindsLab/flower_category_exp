@@ -1230,7 +1230,13 @@
 
     var preload_cat = {
         type: 'preload',
-        images: [category_img, feedback_img, flowers, backgrounds.flat().flat()], // automatically preload just the images from categorization trials
+        images: [category_img, feedback_img, flowers],
+        message: 'Loading task...'
+    }
+
+    var preload_cat2 = {
+        type: 'preload',
+        images: backgrounds.flat().flat(),
         message: 'Loading task...'
     }
 
@@ -1254,6 +1260,7 @@
     timeline.push(quiz_end_wrong);
     timeline.push(start_task_ins);
 
+    timeline.push(preload_cat2);
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
     timeline.push(timer_loop);
