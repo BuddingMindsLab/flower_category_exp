@@ -1223,7 +1223,7 @@
 
     /********************************************** Preload Trials ********************************************/
 
-    var backs = backgrounds.flat().flat();
+    var backs = stimuli.map(i=>i.background);
     var preload_ins = {
         type: 'preload',
         images: [ins_img, category_img, feedback_img, flowers],
