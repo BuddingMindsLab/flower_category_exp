@@ -1227,13 +1227,13 @@
     var preload_ins = {
         type: 'preload',
         images: [ins_img, category_img, feedback_img, flowers],
-        message: 'Loading...'
+        message: 'Loading Experiment...'
     }
 
     var preload_cat = {
         type: 'preload',
         images: backs,
-        message: 'Loading...'
+        message: 'Loading First Task...'
     }
 
     var preload_rec = {
@@ -1245,10 +1245,10 @@
     /********************************************** End ********************************************/
 
     timeline.push(preload_ins);
+    timeline.push(preload_cat);
     timeline.push(fullscreen);
     timeline.push(consent_inst);
     timeline.push(consent_page);
-    timeline.push(preload_cat);
     timeline.push(start_trial);
     
     timeline.push(ins_quiz);
