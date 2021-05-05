@@ -1295,7 +1295,7 @@
     // run experiment
     jsPsych.init({
         timeline: timeline,
-        //preload_images: [rec_backs.map(a => a.background), rec_backs_practice.map(a => a.background), category_img, feedback_img, ins_img, flowers],
+        preload_images: [ins_img, category_img, feedback_img, flowers, backs, rec_backs.map(a => a.background),rec_backs_practice.map(a => a.background)],
         preload_audio: [neg_feedback_aud, pos_feedback_aud],
         show_progress_bar: true,
         auto_update_progress_bar: false,
