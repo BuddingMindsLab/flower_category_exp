@@ -1240,13 +1240,14 @@
     var preload_rec = {
         type: 'preload',
         images: [rec_backs.map(a => a.background), rec_backs_practice.map(a => a.background)],
-        message: 'Loading task...'
+        message: 'Loading Second task...'
     }
   
     /********************************************** End ********************************************/
 
     timeline.push(preload_ins);
     timeline.push(preload_cat);
+    timeline.push(preload_rec);
     timeline.push(fullscreen);
     timeline.push(consent_inst);
     timeline.push(consent_page);
@@ -1262,7 +1263,6 @@
     timeline.push(timer_loop);
     timeline.push(next_trial);
  
-    //timeline.push(preload_rec);
     timeline.push(rec_instruction_trial);
     timeline.push(recognition_practice_trials);
     timeline.push(rec_fixation);
