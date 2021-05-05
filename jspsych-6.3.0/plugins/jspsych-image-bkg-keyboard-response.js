@@ -91,7 +91,13 @@ jsPsych.plugins["image-bkg-keyboard-response"] = (function() {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'Stimulus duration',
         default: null,
-        description: 'How long to hide the stimulus.'
+        description: 'How long to hide the stimulus at end of trial.'
+      },
+      stimulus_onset: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Stimulus onset',
+        default: null,
+        description: 'How long to hide the stimulus before reveal.'
       },
       trial_duration: {
         type: jsPsych.plugins.parameterType.INT,
@@ -177,9 +183,14 @@ jsPsych.plugins["image-bkg-keyboard-response"] = (function() {
           else {
           html += 'right:'+trial.stimulus_height*2.5+'px; ';
           }
-      }
+    }
+
+    // hide stimulus
+    if (trial.stimulus_onset !== null) {
+      html += 'visibility: hidden; ';
+    }
       
-      html +='"></img>';
+    html +='"></img>';
 
     html += "</div>";
 
@@ -269,6 +280,13 @@ jsPsych.plugins["image-bkg-keyboard-response"] = (function() {
       jsPsych.pluginAPI.setTimeout(function() {
         display_element.querySelector('#jspsych-image-bkg-keyboard-response-stimulus').style.visibility = 'hidden';
       }, trial.stimulus_duration);
+    }
+
+    // hide stimulus if stimulus_onset is set
+    if (trial.stimulus_onset !== null) {
+      jsPsych.pluginAPI.setTimeout(function() {
+        display_element.querySelector('#jspsych-image-bkg-keyboard-response-stimulus').style.visibility = 'visible';
+      }, trial.stimulus_onset);
     }
 
     // end trial if trial_duration is set

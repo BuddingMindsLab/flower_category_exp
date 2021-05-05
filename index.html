@@ -70,6 +70,7 @@
     // category learning task
     var fixation_time = 1000;
     var stim_time = 3500;
+    var stim_onset = 500;
     var bkg_time = 500;
     var feedback_time = 1000;
     var stim_question = "Does this flower feed <i>bees</i> or <i>hummingbirds</i>?";
@@ -99,10 +100,10 @@
                         It is important that you pay attention and try your best throughout each task.<br>If you do well, you will be able to earn up to <b>$0.5 in bonus pay</b> beyond the usual rate.<br><br>'
 
     var learning_ins = 'Your first task in this experiment is to <b>sort flowers into categories</b>.<br><br>\
-                    In each trial, you will see a flower with a different petal shape and colour appear on top of a decorative mat for '+stim_time/1000+' seconds.<br>\
-                    The flower will then disappear and the mat will remain on screen for '+bkg_time/1000+' seconds.<br><br>\
+                    In each trial, you will see a decorative mat on screen for '+stim_onset/1000+' seconds and then a flower will appear on top of it for '+stim_time/1000+' seconds.<br>\
+                    Each flower will have a different petal shape and colour.<br><br>\
                     For each flower, you should indicate whether it feeds <i>bees</i> or <i>hummingbirds</i>.<br>\
-                    <br>You can respond as soon as the flower appears, and you have until the mat disappears to make your choice.<br> That gives you a total of <b>'+(bkg_time+stim_time)/1000+' seconds</b> to decide.<br><br>\
+                    <br>You can respond as soon as the flower appears, and you have until the trial ends to make your choice.<br> That gives you <b>'+(stim_time)/1000+' seconds</b> to decide.<br><br>\
                     <p style="text-align:left; margin: 0% 32% 0% 32%;">EX:<font>\
                     <div style="display:flex; align-items:center; margin: 0% 25% 0% 25%;"">\
                             <div style="float:left; width:100%; vertical-align: middle;">\
@@ -554,7 +555,7 @@
     var q3_prompt = "3) TRUE or FALSE: The decorative mat shown behind the flower is relevant to the category choice.";
     var q3_options = ["True", "False"];
     
-    var q4_prompt = "4) TRUE or FALSE: For each trial, I have until the decorative mat disappears to make a choice."
+    var q4_prompt = "4) TRUE or FALSE: For each trial, I can make a choice as soon as the flower appears."
     var q4_options = ["True", "False"];
 
     var num_quiz_qs = 4;
@@ -686,7 +687,7 @@
         prompt: '<p class="prompt">'+stim_question+'</p>',
         response_ends_trial: false,
         trial_duration: stim_time+bkg_time,
-        stimulus_duration: stim_time,
+        stimulus_onset: stim_onset,
         options: ['Bees', 'Hummingbirds'],
         option_img: category_img,
         data: {
@@ -1246,9 +1247,9 @@
 
     timeline.push(preload_ins);
     timeline.push(preload_cat);
-    timeline.push(fullscreen);
+   /* timeline.push(fullscreen);
     timeline.push(consent_inst);
-    timeline.push(consent_page);
+    timeline.push(consent_page);*/
     timeline.push(start_trial);
     
     timeline.push(ins_quiz);
