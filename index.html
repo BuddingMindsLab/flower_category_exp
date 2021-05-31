@@ -1144,10 +1144,12 @@
 
             var learning_responses = jsPsych.data.get().filter([{trial_type: 'image-bkg-keyboard-response', exp_section: 'category_learning'}]);
             var learning_data = {'phase': 'category_learning', 'data': learning_responses.values()};
+            
             var scene_responses = jsPsych.data.get().filter([{exp_section: 'scene_recognition'}]);
             var scene_data = {'phase': 'scene_recognition', 'data': scene_responses.values()};
             //var recon_responses = jsPsych.data.get().filter([{trial_type: 'external-html-flower-recon', exp_section: 'flower_reconstruction'}]);
             //var recon_data = {'phase': 'flower_reconstruction', 'data': recon_responses.values()};
+            
             var assoc_responses = jsPsych.data.get().filter([{trial_type: 'afc-keyboard-response', exp_section: 'flower_scene_association'}]);
             var assoc_data = {'phase': 'flower_scene_association', 'data': assoc_responses.values()};
             
@@ -1181,7 +1183,7 @@
             
             // send data to savejs
             var xhr = new XMLHttpRequest();
-            xhr.open('POST','https://savejs-bml.netlify.app/.netlify/functions/savejs');
+            xhr.open('POST','https://savejs.netlify.app/.netlify/functions/savejs');
             xhr.setRequestHeader('Content-Type','application/json');
             xhr.onload = function(){
                 if(xhr.status==200){
