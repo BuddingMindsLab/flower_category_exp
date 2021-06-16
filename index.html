@@ -47,7 +47,7 @@
     // get prolific ID and session ID
     var prolific_ids = jsPsych.data.urlVariables();
 
-    // get experiment type (A, B, C, or D)
+    // get experiment type (1-12)
     var exp_type = prolific_ids.exp;
 
     window.globals = {x1: 180, x2: 180, x3: 9};
@@ -231,47 +231,115 @@
     ]
     var back_copy = [[backgrounds[0][0].slice(), backgrounds[0][1].slice()], [backgrounds[1][0].slice(), backgrounds[1][1].slice()]];
 
-    var flower_sets = ['set0','set60', 'set90', 'set120', 'set180', 'set240', 'set270', 'set300'];
+    var flower_sets = ['set0','set60','set120', 'set180', 'set240', 'set300'];
     var set_folder = flower_sets[0];
     var group_condition = 0;
     var background_set = 0;
     var lure = 0;
     var flower_info = [];
 
-    /*                      A                        B        C       D
-        start colour :      0                      | 90     | 180   | 270
-        group condition:    0 (A:sun, B:cloud)     | 0      | 1     | 1
-        background set:     0                      | 1      | 0     | 1
-        lure:               1                      | 1      | 0     | 0
+    /*                      Group 1                Group 2  Group 3 Group 4 etc.
+        start colour :      0                      | 60     | 120   | 180
+        group condition:    0 (A:bee, B:humming)   | 1      | 0     | 1
+        background set:     0                      | 0      | 1     | 1
+        lure:               1                      | 0      | 1     | 0
     */
     switch(exp_type){
-        case "A":
+        case "1":
             set_folder = flower_sets[0];
             group_condition = 0;
             background_set = 0;
             lure = 1;
+            novel = 0;
             flower_info = set0_flower_info;
             break;
-        case "B":
+        case "2":
+            set_folder = flower_sets[1];
+            group_condition = 1;
+            background_set = 0;
+            lure = 0;
+            novel = 1;
+            flower_info = set60_flower_info;
+            break;
+        case "3":
             set_folder = flower_sets[2];
             group_condition = 0;
             background_set = 1;
             lure = 1;
-            flower_info = set90_flower_info;
+            novel = 0;
+            flower_info = set120_flower_info;
             break;
-        case "C":
-            set_folder = flower_sets[4];
-            group_condition = 1;
-            background_set = 0;
-            lure = 0;
-            flower_info = set180_flower_info;
-            break;
-        case "D":
-            set_folder = flower_sets[6];
+        case "4":
+            set_folder = flower_sets[3];
             group_condition = 1;
             background_set = 1;
             lure = 0;
-            flower_info = set270_flower_info;
+            novel = 1;
+            flower_info = set180_flower_info;
+            break;
+        case "5":
+            set_folder = flower_sets[4];
+            group_condition = 0;
+            background_set = 0;
+            lure = 1;
+            novel = 0;
+            flower_info = set240_flower_info;
+            break;
+        case "6":
+            set_folder = flower_sets[5];
+            group_condition = 1;
+            background_set = 0;
+            lure = 0;
+            novel = 1;
+            flower_info = set300_flower_info;
+            break;
+        case "7":
+            set_folder = flower_sets[0];
+            group_condition = 1;
+            background_set = 1;
+            lure = 1;
+            novel = 0;
+            flower_info = set0_flower_info;
+            break;
+        case "8":
+            set_folder = flower_sets[1];
+            group_condition = 0;
+            background_set = 1;
+            lure = 0;
+            novel = 1;
+            flower_info = set60_flower_info;
+            break;
+        case "9":
+            set_folder = flower_sets[2];
+            group_condition = 1;
+            background_set = 0;
+            lure = 1;
+            novel = 0;
+            flower_info = set120_flower_info;
+            break;
+        case "10":
+            set_folder = flower_sets[3];
+            group_condition = 0;
+            background_set = 0;
+            lure = 0;
+            novel = 1;
+            flower_info = set180_flower_info;
+            break;
+        case "11":
+            set_folder = flower_sets[4];
+            group_condition = 1;
+            background_set = 1;
+            lure = 1;
+            novel = 0;
+            flower_info = set240_flower_info;
+            break;
+        case "12":
+            set_folder = flower_sets[5];
+            group_condition = 0;
+            background_set = 1;
+            lure = 0;
+            novel = 1;
+            flower_info = set300_flower_info;
             break;
         default:
             break;
@@ -1304,23 +1372,7 @@
         message_progress_bar: '',
         max_load_time: 180000,
         on_finish: function() {
-            
-            switch(exp_type) {
-                case "A":
-                    window.location.replace("https://app.prolific.co/submissions/complete?cc=8404EC69");
-                    break;
-                case "B":
-                    window.location.replace("https://app.prolific.co/submissions/complete?cc=8404EC69");
-                    break;
-                case "C":
-                    window.location.replace("https://app.prolific.co/submissions/complete?cc=8404EC69");
-                    break;
-                case "D":
-                    window.location.replace("https://app.prolific.co/submissions/complete?cc=8404EC69");
-                    break;
-                default:
-            }
-          
+            window.location.replace("https://app.prolific.co/submissions/complete?cc=8404EC69");          
         },
     })
 
