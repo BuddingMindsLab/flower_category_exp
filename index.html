@@ -751,11 +751,17 @@
     
     var start_trial2 = {
         type: 'instructions',
-        pages: [learning_practice_ins, learning_practice_begin, learning_practice_complete, learning_practice_reminder],
+        pages: [learning_practice_ins, learning_practice_begin],
         show_clickable_nav: true,
         show_page_number: true
     };   
     
+    var start_trial3 = {
+        type: 'instructions',
+        pages: [learning_practice_complete, learning_practice_reminder],
+        show_clickable_nav: true,
+        show_page_number: true
+    };   
 
     // 1) fixation cross
     var fixation = {  
@@ -1373,6 +1379,7 @@
     timeline.push(start_task_ins);
     timeline.push(start_trial2);
     timeline.push(stim_learning);
+    timeline.push(start_trial3);
 
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
