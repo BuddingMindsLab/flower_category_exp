@@ -118,26 +118,13 @@
                     Please make your responses as <b>quickly and accurately</b> as possible.</div>';
 
     var start_ins = '<br>Once you have finished reading the instructions, please press <i>Next</i> to begin the instructions quiz.<br><br>\
-                    After you have successfully completed the quiz, you may begin the first task.<br><br>'    
+                    After you have successfully completed the quiz, you may begin the first task.<br><br>'                
 
     var quiz_end1 = '<p style="color:yellow; font-size: 100px; line-height: 0;";>&star;</p>Congratulations!<br><br> You have successfully completed the instructions quiz.<br><br>\
                 You may now proceed to the first task.<br><br>';
 
     var quiz_end2 = 'Remember to try your best!<br>You can receive bonus payment depending on how well you learn the categories.<br><br>\
-                    Please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br>Press right (&#8594;) to begin.<br><br>';  
-
-    var learning_practice_ins = "<br>Before starting the main task, please complete a brief <b>practice session</b>.<br><br>In this session, practice responding based on what you saw in the instructions.\
-                            <br><br>";                         
-                      
-    var learning_practice_begin = "<br>Once you understand the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the practice trials.<br><br>";  
-    
-    var learning_practice_reminder = '<b>Remember:</b><br>\
-                                      If you think it feeds on bees, press the <b>left (&#8592;)</b> arrow key.<br>\
-                                      If you think it feeds on hummingbirds, press the  <b>right (&#8594;)</b> arrow key.<br><br>'                                 
-
-    var learning_practice_complete = 'practice trials are done. Great job!<br><br>\
-                                      The Correct answer for the first trial was "Bee".<br> The second trial was "Hummingbird".\
-                                      <br><br> review the instruction if necessary.<br><br>';               
+                    Please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br>Press right (&#8594;) to begin.<br><br>';      
 
     var learning_halfway = "<p style='font-size: 20px;'><b>You are halfway!</b></p>\
                             <p style='color:yellow; font-size: 100px; line-height: 0;';>&star;</p><p style='font-size: 20px;'><b>Keep up the good work!<b></p>";
@@ -362,7 +349,7 @@
     var t2 = new Date();
     console.log("var setup : "+((t2.getTime() - start_time.getTime())/1000));
 
-    // category learning stimuli (flower, sun/shade, background, lure) 
+    // category learning stimuli (flower, sun/shade, background, lure)
     var stimuli = []; 
     var flowers = [];       
     for (i = 0; i < num_trials; i+=4) {
@@ -607,7 +594,7 @@
         cont_btn: "start",
         check_fn: check_consent,
         data: {disp_type: 'online_consent_form'}
-    } 
+    }
 
     var next_trial = {
         type: 'html-button-response',
@@ -624,7 +611,7 @@
         pages: [learning_ins_start, overall_ins, learning_ins, start_ins],
         show_clickable_nav: true,
         show_page_number: true
-    };    
+    };
 
     // instruction quiz
     var q1_prompt = "1) The goal of the first task is to...";
@@ -747,21 +734,6 @@
 
 
     /**************************************** PART I - category learning ******************************************/
-    // PRACTICE learning trial 
-    
-    var start_trial2 = {
-        type: 'instructions',
-        pages: [learning_practice_ins, learning_practice_begin],
-        show_clickable_nav: true,
-        show_page_number: true
-    };   
-    
-    var start_trial3 = {
-        type: 'instructions',
-        pages: [learning_practice_complete, learning_practice_reminder],
-        show_clickable_nav: true,
-        show_page_number: true
-    };   
 
     // 1) fixation cross
     var fixation = {  
@@ -771,35 +743,6 @@
         trial_duration: fixation_time,
         data: {
             exp_section: 'category_learning'
-        }
-    }
-    // 2a) stimulus + background for learning trial 
-    var stim_learning = {  
-        type: 'image-bkg-keyboard-response',
-        stimulus: "assets/img/instructions/template_flower.png",
-        background: "assets/img/instructions/japanese_garden.png",
-        choices: jsPsych.ALL_KEYS,
-        prompt: '<p class="prompt">'+stim_question+'</p>',
-        response_ends_trial: false,
-        trial_duration: stim_time+bkg_time,
-        stimulus_onset: stim_onset,
-        options: ['Bees', 'Hummingbirds'],
-        option_img: category_img,
-        data: {
-            exp_section: 'category_learning',
-            stimulus_type: ('group'),
-            category: ('category'),
-            create: ('create'),
-            background: "assets/img/instructions/japanese_garden.png",
-            lure: ('lure')
-        },
-        on_finish: function(data){
-            if( ( (data.response == 'arrowright') && (data.stimulus_type == 'hummingbird') )
-                || ( (data.response == 'arrowleft') && (data.stimulus_type == 'bee') ) ){
-                data.correct = true;
-            } else {
-                data.correct = false;
-            }
         }
     }
 
@@ -1372,14 +1315,11 @@
     timeline.push(consent_inst);
     timeline.push(consent_page);
     timeline.push(start_trial);
- 
+    
     timeline.push(ins_quiz);
     timeline.push(ins_quiz2);
     timeline.push(quiz_end_wrong);
     timeline.push(start_task_ins);
-    timeline.push(start_trial2);
-    timeline.push(stim_learning);
-    timeline.push(start_trial3);
 
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
