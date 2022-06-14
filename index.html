@@ -208,7 +208,7 @@
     var survey_q2 = "During the flower sorting game, were the photographs distracting? Did you ignore them?";
     var survey_q3 = "Which game was the hardest? Remember, today we played the flower sorting game, then the photograph remebering game, then the flower remembering game.";
     var survey_q4 = "Is there anything else you would like to tell me about the game? What did you think about it?";
-
+    
     // backgrounds in sets (for trials)
     var backgrounds = [
         [
@@ -531,6 +531,19 @@
 
     /**************************************************** subject ID ****************************************************/
     
+            // Subject id = subject number + group condition
+            var subjectID_survey = {
+            type: 'survey-text',
+            questions: [
+                {prompt: 'Subject Number:', name: 'subject_id', rows: 1, columns:10, required:true},
+                {prompt: 'Age:', name: 'age', rows: 1, columns:10, required:true},
+            ],
+            data: {
+                exp_section: 'subjectid_survey'
+            },
+            button_label: 'Start',
+        }
+
     // Subject id = subject number + shape condition + orig-lure background set + lure list + start colour
     function makeid() {
         var id = '';
@@ -1310,6 +1323,7 @@
   
     /********************************************** End ********************************************/
 
+    timeline.push(subjectID_survey)
     timeline.push(preload_ins);
     timeline.push(preload_cat);
    
