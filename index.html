@@ -760,6 +760,7 @@
         response_ends_trial: false,
         trial_duration: stim_time+bkg_time,
         stimulus_onset: stim_onset,
+        warning_duration: 2500,
         options: ['Bees', 'Hummingbirds'],
         option_img: category_img,
         data: {
@@ -1322,7 +1323,7 @@
     }
   
     /********************************************** End ********************************************/
-
+/*
     timeline.push(subjectID_survey)
     timeline.push(preload_ins);
     timeline.push(preload_cat);
@@ -1338,7 +1339,7 @@
     timeline.push(ins_quiz2);
     timeline.push(quiz_end_wrong);
     timeline.push(start_task_ins);
-
+*/
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
     timeline.push(timer_loop);

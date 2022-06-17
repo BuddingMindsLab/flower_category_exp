@@ -116,6 +116,12 @@ jsPsych.plugins["image-bkg-keyboard-response"] = (function() {
         pretty_name: 'Practice trial',
         default: false,
         description: 'If true, trial include a practice trial header.'
+      }, 
+      warning_duration: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Duration after which a warning to respond appears',
+        default: null,
+        description: 'How long after trial starts to show warning.'
       }
     }
   }
@@ -280,6 +286,14 @@ jsPsych.plugins["image-bkg-keyboard-response"] = (function() {
       jsPsych.pluginAPI.setTimeout(function() {
         display_element.querySelector('#jspsych-image-bkg-keyboard-response-stimulus').style.visibility = 'hidden';
       }, trial.stimulus_duration);
+    }
+
+    if (trial.warning_duration !== null) {
+      jsPsych.pluginAPI.setTimeout(function() {
+        display_element.querySelector('#jspsych-image-bkg-keyboard-response-container').style.border = 'solid';
+        display_element.querySelector('#jspsych-image-bkg-keyboard-response-container').style.borderColor = 'red';
+        display_element.querySelector('#jspsych-image-bkg-keyboard-response-container').style.padding = '10px';
+      }, trial.warning_duration);
     }
 
     // hide stimulus if stimulus_onset is set
