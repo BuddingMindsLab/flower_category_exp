@@ -100,12 +100,15 @@
 
     var gardener_ins = 'Meet the gardener! The gardener is getting ready for spring. For the first game, can you help them organize the flower beds? <br><br>\
                         The gardener wants to know which flowers should go in the <b>Bee</b> section and which flowers should go in the <b>Hummingbird</b> section of the garden.<br><br>\
-                        <div class="row" style= "display: flex"><div class="col">\
-                             <img src="assets/img/instructions/gardener_final.png" style="width:110%; vertical-align: middle;"></img>\
-                             </div>\
-                                 <div class="col"><img src="assets/img/instructions/garden.png" style="width:110%; vertical-align: middle;"></img>\
-                                 </div>\
+                        <div class="row" style="display:flex">\
+                            <div class="col">\
+                                <img src="assets/img/instructions/gardener.png" style="width:50%; vertical-align: middle;"></img>\
+                            </div>\
+                            <div class="col">\
+                                <img src="assets/img/instructions/garden.png" style="width:50%; vertical-align: middle;"></img>\
+                            </div>\
                         </div>'
+
 
     var learning_ins = 'You will be shown different flowers and you should decide whether the flower feeds <i>bees</i> or <i>hummingbirds</i>.<br><br>\
                     <p style="text-align:left; margin: 0% 32% 0% 32%;">EX:<font>\
@@ -134,7 +137,7 @@
    
     var test_instructions = "For the next game, the gardener needs you to help help them organize their <b>photographs</b>. <br><br>\
                             Can you help them remember which photographs they showed you during the flower sorting game?<br><br>\
-                                <img src='assets/img/instructions/gardener_use.png' style='width:30%; vertical-align: middle;''></img></div>"
+                                <img src='assets/img/instructions/gardener.png' style='width:30%; vertical-align: middle;''></img></div>"
     var rec_instructions =  'For this game, you will be shown different photographs and <b>asked whether you saw the photograph</b> behind a flower during the first game.<br><br>\
                             <div style="display:flex; align-items:center; margin: 0% 25% 0% 25%;">\
                             <div style="float:left; width:33%; vertical-align: middle;">\
@@ -187,7 +190,7 @@
 
     var assoc_instructions = ["The gardener needs help with one last task.<br><br>\
                             Can you help <b>match</b> each photograph to the flower it was shown with during the sorting game?<br><br>\
-                             <img src='assets/img/instructions/gardener_use.png' style='width:30%; vertical-align: middle;''></img></div>",
+                             <img src='assets/img/instructions/gardener.png' style='width:30%; vertical-align: middle;''></img></div>",
                                 
                              "Use the numbers on your keyboard to choose <b>which of the four flowers you saw on top of this photograph</b> before. <br><br>\
                                     <img src='assets/img/instructions/4afc_example.png' style='width:36%; vertical-align: middle;'></img>\
@@ -1323,15 +1326,13 @@
     }
   
     /********************************************** End ********************************************/
-/*
+
     timeline.push(subjectID_survey)
     timeline.push(preload_ins);
     timeline.push(preload_cat);
-   
+ 
     timeline.push(preload_rec);
     timeline.push(fullscreen);
-    timeline.push(consent_inst);
-    timeline.push(consent_page);
 
     timeline.push(start_trial);
     
@@ -1339,7 +1340,7 @@
     timeline.push(ins_quiz2);
     timeline.push(quiz_end_wrong);
     timeline.push(start_task_ins);
-*/
+
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
     timeline.push(timer_loop);
