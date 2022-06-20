@@ -397,6 +397,21 @@
             flowers.push('assets/img/flowers/'+set_folder+'/flower'+(i+x+1).toString() +'.png');
         }      
     }
+    var learning_practice_trials = [{
+                background: 'assets/img/instructions/japanese_garden.jpg',
+                lure: -1,
+                create: -1,
+                exp_sub_section: 'practice'
+    }];
+    var num_practice_trials = 2;
+        learning_practice_trials.push({
+                background: n,
+                lure: -1,
+                create: -1,
+                exp_sub_section: 'practice'
+        });
+    
+
 
     t2 = new Date();
     console.log("cat learn stim : "+((t2.getTime() - start_time.getTime())/1000));
@@ -777,7 +792,7 @@
     var stim_learning = {  
         type: 'image-bkg-keyboard-response',
         stimulus: "assets/img/instructions/template_flower.png",
-        background: "assets/img/instructions/japanese_garden.png",
+        background: "assets/img/instructions/japanese_garden.jpg",
         choices: jsPsych.ALL_KEYS,
         prompt: '<p class="prompt">'+stim_question+'</p>',
         response_ends_trial: false,
@@ -785,14 +800,7 @@
         stimulus_onset: stim_onset,
         options: ['Bees', 'Hummingbirds'],
         option_img: category_img,
-        data: {
-            exp_section: 'category_learning',
-            stimulus_type: ('group'),
-            category: ('category'),
-            create: ('create'),
-            background: "assets/img/instructions/japanese_garden.png",
-            lure: ('lure')
-        },
+
         on_finish: function(data){
             if( ( (data.response == 'arrowright') && (data.stimulus_type == 'hummingbird') )
                 || ( (data.response == 'arrowleft') && (data.stimulus_type == 'bee') ) ){
@@ -934,6 +942,13 @@
             };
         }  
     } 
+
+    // stimulus + background for learning trial 
+    var learning_practice_trials = {
+        timeline: [fixation, stim_learning, feedback],
+        timeline_variables: learning_practice_trials.slice(0,num_practice_trials),
+        randomize_order: true
+    }
 
     /**************************************** PART II - Old/New Memory test  *********************************************/
 
@@ -1378,8 +1393,9 @@
     timeline.push(quiz_end_wrong);
     timeline.push(start_task_ins);
     timeline.push(start_trial2);
-    timeline.push(stim_learning);
+    timeline.push(learning_practice_trials);
     timeline.push(start_trial3);
+    
 
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
