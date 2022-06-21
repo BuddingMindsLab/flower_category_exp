@@ -379,6 +379,7 @@
         }      
     }
 
+
     t2 = new Date();
     console.log("cat learn stim : "+((t2.getTime() - start_time.getTime())/1000));
 
@@ -589,13 +590,62 @@
 
      /**************************************************** Instructions and quiz ****************************************************/
     
-     // welcome and instructions
+     // welcome and instructions   
+
+    // practice trials
+    // 2a) stimulus + background for learning trial
+    var practice_prompt = 'Let’s give it a try! Can you respond that the flower feeds bees? ';
+    var practice_catlearn1 = {  
+        type: 'image-bkg-keyboard-response',
+        stimulus: "assets/img/instructions/template_flower.png",
+        background: "assets/img/instructions/japanese_garden.jpg",
+        choices: ['arrowleft'],
+        prompt: '<p class="prompt">'+practice_prompt+'</p>',
+        response_ends_trial: true,
+        //trial_duration: stim_time+bkg_time,
+        stimulus_onset: stim_onset,
+        options: ['Bees', 'Hummingbirds'],
+        option_img: category_img,
+    }
+    var good_job = {
+        type: 'html-keyboard-response',
+        stimulus: '<p style="font-size:300%; line-height:1.0">Good job!</p><img src="'+pos_feedback_img+'"></img>',
+        trial_duration: 1000
+    }
+    practice_prompt = 'Can you respond that the flower feeds hummingbirds? ';
+    var practice_catlearn2 = {  
+        type: 'image-bkg-keyboard-response',
+        stimulus: "assets/img/instructions/template_flower.png",
+        background: "assets/img/instructions/japanese_garden.jpg",
+        choices: ['arrowright'],
+        prompt: '<p class="prompt">'+practice_prompt+'</p>',
+        response_ends_trial: true,
+        //trial_duration: stim_time+bkg_time,
+        stimulus_onset: stim_onset,
+        options: ['Bees', 'Hummingbirds'],
+        option_img: category_img,
+    }
+
     var start_trial = {
-        type: 'instructions',
-        pages: [learning_ins_start, overall_ins, gardener_ins, learning_ins, start_ins],
-        show_clickable_nav: true,
-        show_page_number: true
-    };
+        timeline: [
+            {
+                type: 'instructions',
+                pages: [learning_ins_start, overall_ins, gardener_ins, learning_ins],
+                show_clickable_nav: true,
+                show_page_number: true
+            },
+            practice_catlearn1,
+            good_job,
+            practice_catlearn2,
+            good_job,
+            {
+                type: 'instructions',
+                pages: [start_ins],
+                show_clickable_nav: true,
+                show_page_number: true
+            },
+        ]
+    }; 
 
     // instruction quiz
     var q1_prompt = "1) In the first game I will _____";
@@ -710,8 +760,7 @@
     // end of quiz
     var start_task_ins = {
         type: 'instructions',
-        pages: [quiz_end1,
-                quiz_end2],
+        pages: [quiz_end1],
         show_clickable_nav: true,
         show_page_number: true
     }
@@ -1311,13 +1360,12 @@
  
     timeline.push(preload_rec);
     timeline.push(fullscreen);
-
     timeline.push(start_trial);
     
     timeline.push(ins_quiz);
     timeline.push(ins_quiz2);
     timeline.push(quiz_end_wrong);
-    timeline.push(start_task_ins);
+    timeline.push(start_task_ins);  
 
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
