@@ -1375,35 +1375,47 @@
   
     /********************************************** End ********************************************/
 
+    // subject ID survey
     timeline.push(subjectID_survey);
+
+    // preload images
     timeline.push(preload_ins);
     timeline.push(preload_cat);
     timeline.push(preload_rec);
     timeline.push(fullscreen);
+
+    // beginning instructions
     timeline.push(start_trial);
-    
     timeline.push(ins_quiz);
     timeline.push(ins_quiz2);
     timeline.push(quiz_end_wrong);
     timeline.push(start_task_ins);  
 
+    // category learning
     timeline.push(categorization_trials);
+    timeline.push(send_data);
+
     timeline.push(draw_end_learning);
     timeline.push(timer_loop);
     timeline.push(next_trial);
  
+    // recognition memory instructions
     timeline.push(rec_instruction_trial);
     timeline.push(recognition_practice_trials);
     timeline.push(rec_fixation);
     timeline.push(recognition_practice_trials2);
     timeline.push(rec_instruction_trial2);
 
+    // recognition memory test
     timeline.push(recognition_trials);
     timeline.push(rec_fixation);
+    timeline.push(send_data);
+
     timeline.push(draw_end_rec_test);
     timeline.push(timer_loop);
     timeline.push(next_trial);
 
+    // associative memory test
     timeline.push(assoc_ins);
     timeline.push(assoc_trials);
     timeline.push(draw_end_assoc_test);
@@ -1411,6 +1423,7 @@
     timeline.push(survey);
 */
     timeline.push(send_data);
+    
     timeline.push(draw_end); 
     //timeline.push(debrief_page);
     timeline.push(end_trial);
