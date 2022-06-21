@@ -534,8 +534,8 @@
 
     /**************************************************** subject ID ****************************************************/
     
-            // Subject id = subject number + group condition
-            var subjectID_survey = {
+    // Subject id = subject number + group condition
+     var subjectID_survey = {
             type: 'survey-text',
             questions: [
                 {prompt: 'Subject Number:', name: 'subject_id', rows: 1, columns:10, required:true},
@@ -545,30 +545,7 @@
                 exp_section: 'subjectid_survey'
             },
             button_label: 'Start',
-        }
-
-    // Subject id = subject number + shape condition + orig-lure background set + lure list + start colour
-    function makeid() {
-        var id = '';
-
-        // subject number (15 digit code)
-        id += jsPsych.randomization.randomID(15);
-
-        // shape condition (0: sun = A or 1: shade = A)
-        id += group_condition.toString();
-
-        // orig-lure background set (0 or 1)
-        id += background_set.toString();
-
-        // lure list (0 or 1)
-        id += lure.toString();
-
-        // starting colour ()
-        id += set_folder.slice(3, set_folder.length);
-
-        return id;
     }
-    var subject_id = makeid();
     
     /**************************************************** consent ****************************************************/
     
@@ -1218,6 +1195,9 @@
             var end_time = new Date();
             var duration = ((end_time - start_time)/60000).toFixed(2);
 
+            var subject_id = jsPsych.data.get().filter([{exp_section: 'subjectid_survey'}]).values()[0].response.subject_id;
+            var age = jsPsych.data.get().filter([{exp_section: 'subjectid_survey'}]).values()[0].response.age;
+
             // organize data into sections
             var quiz_responses = jsPsych.data.get().filter([{exp_section: 'instruction_quiz'}]);
             var quiz_data = {'phase': 'instruction_quiz', 'data': quiz_responses.values()};
@@ -1238,12 +1218,10 @@
             var survey_data = {'phase': 'survey', 'data': survey_responses.values()};
 
             var data = {
-                prolific_id: prolific_ids.PROLIFIC_PID,
-                study_id: prolific_ids.STUDY_ID,
-                session_id: prolific_ids.SESSION_ID,
                 experiment: "flower_category_exp",
                 repo: "buddingmindslab.github.io",
                 subject: subject_id,
+                age: age,
                 duration: duration,
                 date: Date(),
                 exp_type: exp_type,
