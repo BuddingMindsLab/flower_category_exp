@@ -82,59 +82,63 @@
     // old/new recognition task
     var rec_time = 1500;
     var rec_iti = 1000;
-    var rec_question = "Is this image old or new?";
+    var rec_question = "Is this photograph old or new?";
 
     // reconstruction task
     var recon_time = 30000;
     var recon_count_down = recon_time/1000;
 
     // 4AFC association task
-    var assoc_question = "Which flower was shown with this mat?"
+    var assoc_question = "Which flower was shown with this photograph?"
 
     // instructions 
-    var learning_ins_start = '<font size="+5">Welcome!</font><br><br>Thank you for participating in our study. <br><br>\
-                            Please read the following instructions carefully, as you will be <b>quizzed</b> on your understanding before you begin the experiment.<br><br>'
+    var learning_ins_start = '<font size="+5">Welcome!</font><br><br>Thank you for participating in our study! <br><br>\
+                            First, we are going to go through some instructions and then I will ask you a few <b>questions</b> to make sure you understand the instructions before we begin the games.<br><br>'
     
-    var overall_ins = 'There will be <b>three</b> parts to complete in this experiment.<br><br>The first task will take 6 minutes, the second task will take 5 minutes, <br>\
-                        and the last task should take 4 minutes.<br><br>\
-                        It is important that you pay attention and try your best throughout each task.<br>If you do well, you will be able to earn up to <b>$0.5 in bonus pay</b> beyond the usual rate.<br><br>'
+    var overall_ins = 'Today you are going to be playing <b>three</b> games as part of this experiment.<br><br>\
+                        For each of these games, it is really important that you pay attention and try your best.<br>If you do well, you will be able to earn an extra <b>$1.00 in bonus money!<br><br>'
 
-    var learning_ins = 'Your first task in this experiment is to <b>sort flowers into categories</b>.<br><br>\
-                    In each trial, you will see a decorative mat on screen for '+stim_onset/1000+' seconds and then a flower will appear on top of it for '+stim_time/1000+' seconds.<br>\
-                    Each flower will have a different petal shape and colour.<br><br>\
-                    For each flower, you should indicate whether it feeds <i>bees</i> or <i>hummingbirds</i>.<br>\
-                    <br>You can respond as soon as the flower appears, and you have until the trial ends to make your choice.<br> That gives you <b>'+(stim_time)/1000+' seconds</b> to decide.<br><br>\
+    var gardener_ins = 'Meet the gardener! The gardener is getting ready for spring. For the first game, can you help them organize the flower beds? <br><br>\
+                        The gardener wants to know which flowers should go in the <b>Bee</b> section and which flowers should go in the <b>Hummingbird</b> section of the garden.<br><br>\
+                        <div class="row" style="display:flex">\
+                            <div class="col">\
+                                <img src="assets/img/instructions/gardener.png" style="width:50%; vertical-align: middle;"></img>\
+                            </div>\
+                            <div class="col">\
+                                <img src="assets/img/instructions/garden.png" style="width:50%; vertical-align: middle;"></img>\
+                            </div>\
+                        </div>'
+
+
+    var learning_ins = 'You will be shown different flowers and you should decide whether the flower feeds <i>bees</i> or <i>hummingbirds</i>.<br><br>\
                     <p style="text-align:left; margin: 0% 32% 0% 32%;">EX:<font>\
                     <div style="display:flex; align-items:center; margin: 0% 25% 0% 25%;"">\
                             <div style="float:left; width:100%; vertical-align: middle;">\
-                                <img src="assets/img/instructions/example_learning_trial.png" style="width:80%; vertical-align: middle;"></img></div>\
+                                <img src="assets/img/instructions/example_learning_trial.png" style="width:110%; vertical-align: middle;"></img></div>\
                     </div>\
-                    <br><div style="text-align: center; clear: both"> The decorative mat is NOT relevant to the category decision.<br><br>\
-                    Use the <b>arrow keys</b> on your keyboard to respond.<br>\
-                    Press the left (&#8592;) arrow key if you think the flower feeds <i>bees</i>.<br>\
-                    Press the right (&#8594;) arrow key if you think the flower feeds <i>hummingbirds</i>.<br><br>\
-                    You will receive feedback after responding to an image.<br>\
-                    At the beginning of the task, you will be mostly guessing. That is okay, make your best guess and use the feedback to learn.<br><br>\
-                    Please make your responses as <b>quickly and accurately</b> as possible.</div>';
+                    <br><div style="text-align: center; clear: both"> Remember that the photographs you see behind the flowers will <b>not </b> help you make your choice.<br><br>\
+                    Use the <b>arrow keys</b> on your keyboard to respond.</div>';
+                
+    var start_ins = '<br>When you are ready, please press <i>Next</i> to answer some questions about the instructions.<br><br>\
+                    After you have completed the questions, you can start the first game!<br><br>'                
 
-    var start_ins = '<br>Once you have finished reading the instructions, please press <i>Next</i> to begin the instructions quiz.<br><br>\
-                    After you have successfully completed the quiz, you may begin the first task.<br><br>'                
+    var quiz_end1 = '<p style="color:yellow; font-size: 100px; line-height: 0;";>&star;</p>Congratulations!<br><br> I can tell you really understand how to play!<br><br>';
 
-    var quiz_end1 = '<p style="color:yellow; font-size: 100px; line-height: 0;";>&star;</p>Congratulations!<br><br> You have successfully completed the instructions quiz.<br><br>\
-                You may now proceed to the first task.<br><br>';                 
+    var quiz_end2 = 'Remember to try your best so you can get the bonus!<br><br>\
+                    Please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br>Press the right (&#8594;) arrow key to start.<br><br>';      
 
     var learning_halfway = "<p style='font-size: 20px;'><b>You are halfway!</b></p>\
                             <p style='color:yellow; font-size: 100px; line-height: 0;';>&star;</p><p style='font-size: 20px;'><b>Keep up the good work!<b></p>";
                     
-    var learning_complete = "Great job! You have completed the category learning phase of this experiment.<br><br>\
-                              The computer will move on to the next task in 90 seconds.<br>";
+    var learning_complete = "Nice job! You finished the flower sorting game.<br><br>\
+                              Let us take a quick break before we move on to the next game.<br>";
 
-    var rec_start_ins = '<br>Once you have finished reading the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the main task.<br><br>';
+    var rec_start_ins = '<br>Once you have finished reading the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the next game.<br><br>';
    
-    var test_instructions = "The next part of this experiment is a memory test for <br>the <b>decorative mats</b> you saw behind the flowers.<br><br>";                          
-
-    var rec_instructions = 'This task will take 5 minutes to complete.<br><br>\
-                            In each trial, you will <b>judge whether you saw the image</b> as a decorative mat during the category learning phase.<br><br>\
+    var test_instructions = "For the next game, the gardener needs you to help help them organize their <b>photographs</b>. <br><br>\
+                            Can you help them remember which photographs they showed you during the flower sorting game?<br><br>\
+                                <img src='assets/img/instructions/gardener.png' style='width:30%; vertical-align: middle;''></img></div>"
+    var rec_instructions =  'For this game, you will be shown different photographs and <b>asked whether you saw the photograph</b> behind a flower during the first game.<br><br>\
                             <div style="display:flex; align-items:center; margin: 0% 25% 0% 25%;">\
                             <div style="float:left; width:33%; vertical-align: middle;">\
                                 <p style="font-size:200%">Old &#8592;</p>\
@@ -146,28 +150,26 @@
                                 <p style="font-size:200%">&#8594; New</p>\
                             </div>\
                             </div>\
-                            <br><div style="text-align: center; clear: both"> If you have seen the exact same picture before in this experiment, press the <b>left (&#8592;)</b> arrow key.<br>\
-                            If you have not seen this exact picture, press the <b>right (&#8594;)</b> arrow key.<br><br>\
-                            You will have <b>'+rec_time/1000+' seconds</b> to respond while the picture is on the screen.<br>\
-                            You should try to respond for every single picture. It is okay if you are not sure; just make your best guess!<br><br>\
-                            Please make your responses as <b>quickly and accurately</b> as possible.<br><br>\
+                            <br><div style="text-align: center; clear: both"> Use the arrow keys to respond.<br>\
+                            You will have <b>'+rec_time/1000+' seconds</b> to respond while the photograph is on the screen.<br>\
+                            Try your best to give an answer to every single photograph.<br><br>\
+                            Try to respond as <b>quickly and correctly</b> as possible.<br><br>\
                             </div>'; 
 
-    var rec_practice_ins = "<br>Before starting the main task, please complete a brief <b>practice session</b>.<br><br>In this session, practice responding based on what you saw in the instructions.\
+    var rec_practice_ins = "<br>Before we start the real memory game, we are going to do a <b>practice together</b>.<br><br>Practice responding based on what you were told to do in the instructions.\
                             <br><br>";
                             
-    var rec_practice_begin = "<br>Once you understand the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the practice trials.<br><br>";
+    var rec_practice_begin = "<br>Once you understand the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the practice game.<br><br>";
 
     var rec_practice_reminder = '<b>Remember:</b><br>\
                                 If you have seen the exact same picture before in this experiment, press the <b>left (&#8592;)</b> arrow key.<br>\
                                 If you have not seen this exact picture, press the <b>right (&#8594;)</b> arrow key.<br><br>'
 
-    var rec_practice_complete = 'Practice trials are done. Great job!<br><br>\
-                                You should have responded "old" for the picture with the red garden because it was shown earlier in the instructions.<br>The other pictures were “new".\
-                                <br><br>Review the instructions if necessary before moving on to the <b>main</b> decorative mat memory test.<br><br>';
+    var rec_practice_complete = '<p style="color:yellow; font-size: 100px; line-height: 0;";>&star;</p>The practice is finished. Great job!<br><br>\
+                                Do you want to go over the instuctions again before starting the real memory game? If you are ready to start the <b>real</b> memory game, press <i>Next</i>.<br><br>';
 
-    var rec_test_complete = "Good work! You have completed the decorative mat memory test.<br><br>\
-                            The computer will move on to the next task in 90 seconds.<br>";
+    var rec_test_complete = "Nice work! You have now finished the photograph memory game.<br><br>\
+                            Take a quick break before we move on to the final game. The computer will move on to the next task in 90 seconds.<br>";
 
     var test2_instructions = "For the next part of this experiment, <br>we are going to test your memory for the <b>flower</b> you saw with each decorative mat.<br><br>";    
 
@@ -186,35 +188,30 @@
     var recon_test_complete = "Great job! You have completed the flower reconstruction task.<br><br>\
                                 The computer will move on to the next task in 90 seconds.<br>";
 
-    var assoc_instructions = ["For the final part of this experiment, <br>we will test your memory for the <b>flower</b> you saw with each <b>decorative mat</b>.<br><br>",
-                            "This task is expected to take 4 minutes to complete.<br><br>\
-                                In each trial, you will see a decorative mat in the middle of the screen.<br>\
-                                Below the mat will be four of the flowers you saw during the initial learning phase, each with a different petal colour and shape.</p>\
-                        Use your keyboard to indicate <b>which of the four flowers was shown with this mat</b> during learning.<br><br>\
-                        <img src='assets/img/instructions/4afc_example.png' style='width:30%; vertical-align: middle;'></img>\
-                        <br><br>In the above example, all of the flowers are the same, but in the real task each flower will be different.\
-                        <br><br>There will be a number under each flower indicating which key to press for that option (<b>1</b>,<b>2</b>,<b>3</b>, or <b>4</b>).\
-                         <br>For example, press the number <b>1</b> key to select the leftmost flower.\
-                        <br><br>You will have as long as you need to make your choice.<br>\
-                        If after a few seconds you cannot remember the flower that was shown with the mat, make your best guess.<br><br>\
-                        Please make your responses as <b>quickly and accurately</b> as possible.<br><br>",
-                        "<br>Once you have finished reading the instructions, please press <i>Next</i> to begin.<br><br>"
+    var assoc_instructions = ["The gardener needs help with one last task.<br><br>\
+                            Can you help <b>match</b> each photograph to the flower it was shown with during the sorting game?<br><br>\
+                             <img src='assets/img/instructions/gardener.png' style='width:30%; vertical-align: middle;''></img></div>",
+                                
+                             "Use the numbers on your keyboard to choose <b>which of the four flowers you saw on top of this photograph</b> before. <br><br>\
+                                    <img src='assets/img/instructions/4afc_example.png' style='width:36%; vertical-align: middle;'></img>\
+                                    <br>\
+                        Try your best to give an answer as <b>quickly and as correctly</b> as possible. Remember, the gardener needs our help!<br><br>\
+                        <br>Do you understand the instructions? Please press <i>Next</i> when you are ready to begin.<br><br>"
                             ];
     
-
-    var assoc_test_complete = "Great job! You have almost completed the experiment.<br><br>\
-                                Now you will be redirected to a brief survey.<br>\
-                                You will receive your compensation only after completing the survey.<br><br>";
-
+    var assoc_test_complete = "Great job! The gardener is happy that you could help them out today! You are almost done the experiment.<br><br>";
+                                    
     var next_trial_ins = 'Start the next task<br><br>';
 
-    var test_complete = "You have completed the experiment!<br><br> Please proceed to the debriefing.<br><br>";
-
-    var survey_q1 = "What strategies did you use to categorize the flowers during the learning phase?";
-    var survey_q2 = "During the category learning phase, were the decorative mats distracting or were you able to ignore them?";
-    var survey_q3 = "Which part of the task did you find the most difficult?";
-    var survey_q4 = "Do you have any general comments about the experiment?";
-
+    var test_complete = "Awesome! You have finished the experiment!<br><br> Now I am going to tell you a little bit about why we are doing this experiment.<br><br>\
+                                <img src='assets/img/instructions/gardener_thanks.png' style='width:45%; vertical-align: middle;''></img></div>";
+              
+                                
+    var survey_q1 = "What strategies did you use to sort the flowers during the first game? Did you have any tips of tricks that helped you sort them?";
+    var survey_q2 = "During the flower sorting game, were the photographs distracting? Did you ignore them?";
+    var survey_q3 = "Which game was the hardest? Remember, today we played the flower sorting game, then the photograph remebering game, then the flower remembering game.";
+    var survey_q4 = "Is there anything else you would like to tell me about the game? What did you think about it?";
+    
     // backgrounds in sets (for trials)
     var backgrounds = [
         [
@@ -538,6 +535,19 @@
 
     /**************************************************** subject ID ****************************************************/
     
+            // Subject id = subject number + group condition
+            var subjectID_survey = {
+            type: 'survey-text',
+            questions: [
+                {prompt: 'Subject Number:', name: 'subject_id', rows: 1, columns:10, required:true},
+                {prompt: 'Age:', name: 'age', rows: 1, columns:10, required:true},
+            ],
+            data: {
+                exp_section: 'subjectid_survey'
+            },
+            button_label: 'Start',
+        }
+
     // Subject id = subject number + shape condition + orig-lure background set + lure list + start colour
     function makeid() {
         var id = '';
@@ -643,7 +653,7 @@
         timeline: [
             {
                 type: 'instructions',
-                pages: [learning_ins_start, overall_ins, learning_ins],
+                pages: [learning_ins_start, overall_ins, gardener_ins, learning_ins],
                 show_clickable_nav: true,
                 show_page_number: true
             },
@@ -661,16 +671,16 @@
     }; 
 
     // instruction quiz
-    var q1_prompt = "1) The goal of the first task is to...";
-    var q1_options = ["learn to categorize decorative mats.", "learn to respond as fast as possible.", "learn to categorize flowers."];
+    var q1_prompt = "1) In the first game I will _____";
+    var q1_options = ["learn to sort the gardener's photographs into groups.", "learn to respond as fast as possible.", "learn to sort the flowers based on whether they feed bees or hummingbirds."];
     
-    var q2_prompt = "2) In each trial, I should ______ to respond.";
-    var q2_options = ["click the bee or hummingbird with my mouse", "press the left or right shift key", "press the left or right arrow key", "right click or left click with my mouse"];
+    var q2_prompt = "2) For each flower, I should ______ to respond.";
+    var q2_options = ["click the bee or hummingbird with my mouse", "press any random letter on my keyboard", "press the left or right arrow key", "use my mouse to click left or right"];
     
-    var q3_prompt = "3) TRUE or FALSE: The decorative mat shown behind the flower is relevant to the category choice.";
+    var q3_prompt = "3) TRUE or FALSE: The photograph shown behind the flower will help me make my choice.";
     var q3_options = ["True", "False"];
     
-    var q4_prompt = "4) TRUE or FALSE: For each trial, I can make a choice as soon as the flower appears."
+    var q4_prompt = "4) TRUE or FALSE: I can make a choice as soon as the flower appears."
     var q4_options = ["True", "False"];
 
     var num_quiz_qs = 4;
@@ -717,8 +727,8 @@
         type: 'html-button-response',
         stimulus: function() {
             return 'Your score was '+jsPsych.data.get().last(1).values()[0].num_correct+'/'+num_quiz_qs+'.<br><br>\
-                    Please review the instructions again and repeat the quiz.<br><br>\
-                    Once you have successfully completed the instructions quiz, you may proceed to the first task.<br><br>';
+                    Let us take another look at the instructions together to make sure you understand.<br><br>\
+                    After that, we will give the questions another try and then start the first game.<br><br>';
         },
         choices: ['Review instructions'],
     } 
@@ -802,6 +812,7 @@
         response_ends_trial: false,
         trial_duration: stim_time+bkg_time,
         stimulus_onset: stim_onset,
+        warning_duration: 2500,
         options: ['Bees', 'Hummingbirds'],
         option_img: category_img,
         data: {
@@ -828,9 +839,10 @@
         stimulus: function() {
             var last_trial_correct = jsPsych.data.get().last().values()[0].correct;
             var html = "";
+            var last_trial_rt = jsPsych.data.get().last().values()[0].rt==null;
 
             if(last_trial_correct){
-                html += "<p style='color:green; font-size:90px; line-height: 0.2; margin-top: 5%;'>Correct! &nbsp;"+
+                html += "<p style='color:green; font-size:90px; line-height: 0.7; margin-top: 5%;'>Correct! &nbsp;"+
                         "<img style='vertical-align:middle;' src="+pos_feedback_img+" width='160'>"+
                         '<audio autoplay>\
                             <source src="'+pos_feedback_aud+'" type="audio/wav">\
@@ -838,15 +850,25 @@
                         </audio>';
         
             } else {
-                html += "<p style='color:red; font-size:90px; line-height: 0.2; margin-top: 5%;'>Wrong. &nbsp;"+
-                        "<img style='vertical-align:middle;' src="+neg_feedback_img+" width='160'>"+
+                if(last_trial_rt){ 
+                html += "<p style='color:red; font-size:60px; line-height: 0.7; margin-top: 5%;'>Try to respond faster. &nbsp;"+
                         '<audio autoplay>\
                             <source src="'+neg_feedback_aud+'" type="audio/wav">\
                             Your browser does not support the audio element.\
                         </audio>';
-                      
+            
+                 } else {
+                    html += "<p style='color:red; font-size:75px; line-height: 0.7; margin-top: 5%;'>Wrong. &nbsp;"+
+                        '<audio autoplay>\
+                            <source src="'+neg_feedback_aud+'" type="audio/wav">\
+                            Your browser does not support the audio element.\
+                        </audio>';        
+                }
             }
             
+            
+          
+
             html += "<br><span style='color:black; font-size:68px; line-height: 1.5;'>This flower feeds <i>"+jsPsych.data.get().last().values()[0].stimulus_type+"s</i>.</span><br>";
             
             if(jsPsych.data.get().last().values()[0].stimulus_type == 'hummingbird') {
@@ -1354,12 +1376,12 @@
   
     /********************************************** End ********************************************/
 
+    timeline.push(subjectID_survey)
     timeline.push(preload_ins);
     timeline.push(preload_cat);
+ 
     timeline.push(preload_rec);
-    /*timeline.push(fullscreen);
-    timeline.push(consent_inst);
-    timeline.push(consent_page);*/
+    timeline.push(fullscreen);
     timeline.push(start_trial);
     
     timeline.push(ins_quiz);
@@ -1370,6 +1392,7 @@
     timeline.push(categorization_trials);
     timeline.push(draw_end_learning);
     timeline.push(timer_loop);
+  
     timeline.push(next_trial);
  
     timeline.push(rec_instruction_trial);
@@ -1384,21 +1407,17 @@
     timeline.push(timer_loop);
     timeline.push(next_trial);
 
-    /*timeline.push(recon_instruction_trial);
-    timeline.push(reconstruction_trials);
-    timeline.push(draw_end_recon_test);
-    timeline.push(timer_loop);
-    timeline.push(next_trial);*/
-
+ // testing
     timeline.push(assoc_ins);
     timeline.push(assoc_trials);
     timeline.push(draw_end_assoc_test);
-
+/*
     timeline.push(survey);
-
+*/
     timeline.push(send_data);
     timeline.push(draw_end); 
-    timeline.push(debrief_page);
+    /*
+    timeline.push(debrief_page);*/
     timeline.push(end_trial);
  
     // run experiment
@@ -1410,9 +1429,6 @@
         auto_update_progress_bar: false,
         message_progress_bar: '',
         max_load_time: 180000,
-        on_finish: function() {
-            window.location.replace("https://app.prolific.co/submissions/complete?cc=8404EC69");          
-        },
     })
 
 </script>
