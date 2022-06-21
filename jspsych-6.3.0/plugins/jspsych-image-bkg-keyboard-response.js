@@ -151,7 +151,7 @@ jsPsych.plugins["image-bkg-keyboard-response"] = (function() {
     html += '<div id="jspsych-image-bkg-keyboard-response-container" style="float:left; max-width:50%; max-height: 100vh; vertical-align: middle;">'
 
     // add background
-    html += '<img src="'+trial.background+'" id="jspsych-image-bkg-keyboard-response-background" style="'
+    html += '<img src="'+trial.background+'" id="jspsych-image-bkg-keyboard-response-background" style="padding: 10px; border: medium solid white; '
     if(trial.background_height !== null){
       html += 'height:'+trial.background_height+'%; '
       if(trial.background_width == null && trial.maintain_aspect_ratio){
@@ -290,9 +290,9 @@ jsPsych.plugins["image-bkg-keyboard-response"] = (function() {
 
     if (trial.warning_duration !== null) {
       jsPsych.pluginAPI.setTimeout(function() {
-        display_element.querySelector('#jspsych-image-bkg-keyboard-response-container').style.border = 'solid';
-        display_element.querySelector('#jspsych-image-bkg-keyboard-response-container').style.borderColor = 'red';
-        display_element.querySelector('#jspsych-image-bkg-keyboard-response-container').style.padding = '10px';
+        display_element.querySelector('#jspsych-image-bkg-keyboard-response-background').style.border = 'medium solid red';
+        //display_element.querySelector('#jspsych-image-bkg-keyboard-response-container').style.borderColor = 'red';
+        //display_element.querySelector('#jspsych-image-bkg-keyboard-response-background').style.padding = '10px';
       }, trial.warning_duration);
     }
 
