@@ -161,7 +161,7 @@
                             
     var rec_practice_begin = "<br>Once you understand the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the practice game.<br><br>";
 
-    var rec_practice_reminder = '<b>Remember:</b><br>\
+    var rec_practice_reminder_ins = '<b>Remember:</b><br>\
                                 If you have seen the exact same picture before in this experiment, press the <b>left (&#8592;)</b> arrow key.<br>\
                                 If you have not seen this exact picture, press the <b>right (&#8594;)</b> arrow key.<br><br>'
 
@@ -1079,7 +1079,7 @@
     var rec_practice_reminder = {
         type: 'html-button-response',
         choices: ['Continue practice session'],
-        stimulus: rec_practice_reminder,
+        stimulus: rec_practice_reminder_ins,
         on_start: function() {
             // set progress bar to 0 at the start of experiment
             jsPsych.setProgressBar(0);
@@ -1108,7 +1108,7 @@
             }
         ],  
         conditional_function: function(){
-            var keypress_data = jsPsych.data.get().filter([{exp_section: 'scene_recognition', practice: true, stimulus: ""}]).values().map(a=>a.response);
+            var keypress_data = jsPsych.data.get().filter([{exp_section: 'scene_recognition', stimulus: ""}]).values().map(a=>a.response);
             
             // skip second practice if respond to more than 2 with arrow keys
             if (keypress_data.map(a=>a=='arrowright'||a=='arrowleft').filter(Boolean).length > 2) {
@@ -1118,10 +1118,38 @@
         }
     }
 
-    // real
+    // halfway notification (if missing lots of trials)
+    var rec_halfway_notif = {
+        type: 'html-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        stimulus: rec_practice_reminder_ins,
+        trial_duration: instruction_time,
+        conditional_function: function() {
+            var keypress_data = jsPsych.data.get().filter([{exp_section: 'scene_recognition', 
+                                                            exp_sub_section: 'main',
+                                                            stimulus: ""}]).values().map(a=>a.response);
+            
+            // skip reminder if respond to more than 3/4 with arrow keys
+            if (keypress_data.map(a=>a=='arrowright'||a=='arrowleft').filter(Boolean).length > rec_backs.length*3/4) {
+                return false;
+            }
+            return true;
+        }
+    }
+    
+    // entire recognition trial set
     var recognition_trials = {
-        timeline: [rec_fixation, rec_background],
-        timeline_variables: rec_backs
+        timeline: [
+            {
+            timeline : [rec_fixation, rec_background],
+            timeline_variables: rec_backs.slice(0, rec_backs.length/2)    
+            },
+            rec_halfway_notif,
+            {
+            timeline : [rec_fixation, rec_background],
+            timeline_variables: rec_backs.slice(rec_backs.length/2)    
+            }
+        ]
     }
 
     // draw instructions for ending recognition phase
@@ -1388,13 +1416,13 @@
     /********************************************** End ********************************************/
 
     // subject ID survey
-    timeline.push(subjectID_survey);
+    //timeline.push(subjectID_survey);
 
     // preload images
     timeline.push(preload_ins);
     timeline.push(preload_cat);
     timeline.push(preload_rec);
-    timeline.push(fullscreen);
+    /*timeline.push(fullscreen);
 
     // beginning instructions
     timeline.push(start_trial);
@@ -1416,7 +1444,7 @@
     timeline.push(recognition_practice_trials);
     timeline.push(rec_fixation);
     timeline.push(recognition_practice_trials2);
-    timeline.push(rec_instruction_trial2);
+    timeline.push(rec_instruction_trial2);*/
 
     // recognition memory test
     timeline.push(recognition_trials);
