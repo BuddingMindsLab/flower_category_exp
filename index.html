@@ -1093,10 +1093,22 @@
             timeline: [rec_fixation, rec_background_practice],
             timeline_variables: rec_backs_practice.slice(num_practice_trials)
             }, 
-            rec_fixation
+            rec_fixation,
+            {
+                timeline: [ rec_practice_reminder ],
+                conditional_function: function() {
+                    var keypress_data = jsPsych.data.get().filter([{exp_section: 'scene_recognition', stimulus: ""}]).values().map(a=>a.response).slice(num_practice_trials, num_practice_trials*2);
+            
+                    // skip reminder if respond to more than 2 with arrow keys
+                    if (keypress_data.map(a=>a=='arrowright'||a=='arrowleft').filter(Boolean).length > 2) {
+                        return false;
+                    }
+                    return true;
+                }
+            }
         ],  
         conditional_function: function(){
-            var keypress_data = jsPsych.data.get().filter([{exp_section: 'scene_recognition', stimulus: ""}]).values().map(a=>a.response);
+            var keypress_data = jsPsych.data.get().filter([{exp_section: 'scene_recognition', practice: true, stimulus: ""}]).values().map(a=>a.response);
             
             // skip second practice if respond to more than 2 with arrow keys
             if (keypress_data.map(a=>a=='arrowright'||a=='arrowleft').filter(Boolean).length > 2) {
