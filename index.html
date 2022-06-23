@@ -118,7 +118,22 @@
                     </div>\
                     <br><div style="text-align: center; clear: both"> Remember that the photographs you see behind the flowers will <b>not </b> help you make your choice.<br><br>\
                     Use the <b>arrow keys</b> on your keyboard to respond.</div>';
-                
+
+    var time_ins = 'You will have 3 and a half seconds to decide.<br><br>\
+                        Try your best to give an answer as quickly and as correctly as you can!<br><br>\
+                        When there is 1 second left, a red border will show on your screen.<br><br>'
+    
+    var feedback_ins = 'After you respond, a new screen will appear that tells you if you got it right and whether the flower feeds bees or hummingbirds.<br><br>\
+                            This is what it looks like if you chose correctly versus incorrectly:<br><br>\
+                            <div class="row" style="display:flex">\
+                            <div class="column">\
+                                <img src="assets/img/instructions/feedbackpicture_correct.png" style="width:120%; vertical-align: middle;"></img>\
+                            </div>\
+                            <div class="column">\
+                                <img src="assets/img/instructions/feedbackpicture_incorrect.png" style="width:120%; vertical-align: middle;"></img>\
+                            </div>\
+                        </div>'
+
     var start_ins = '<br>When you are ready, please press <i>Next</i> to answer some questions about the instructions.<br><br>\
                     After you have completed the questions, you can start the first game!<br><br>'                
 
@@ -168,8 +183,7 @@
     var rec_practice_complete = '<p style="color:yellow; font-size: 100px; line-height: 0;";>&star;</p>The practice is finished. Great job!<br><br>\
                                 Do you want to go over the instuctions again before starting the real memory game? If you are ready to start the <b>real</b> memory game, press <i>Next</i>.<br><br>';
 
-    var rec_test_complete = "Nice work! You have now finished the photograph memory game.<br><br>\
-                            Take a quick break before we move on to the final game. The computer will move on to the next task in 90 seconds.<br>";
+    var rec_test_complete = "Nice work! You have now finished the photograph memory game!<br><br>";
 
     var test2_instructions = "For the next part of this experiment, <br>we are going to test your memory for the <b>flower</b> you saw with each decorative mat.<br><br>";    
 
@@ -195,15 +209,18 @@
                              "Use the numbers on your keyboard to choose <b>which of the four flowers you saw on top of this photograph</b> before. <br><br>\
                                     <img src='assets/img/instructions/4afc_example.png' style='width:36%; vertical-align: middle;'></img>\
                                     <br>\
-                        Try your best to give an answer as <b>quickly and as correctly</b> as possible. Remember, the gardener needs our help!<br><br>\
-                        <br>Do you understand the instructions? Please press <i>Next</i> when you are ready to begin.<br><br>"
-                            ];
-    
+                        Try your best to give an answer as <b>quickly and as correctly</b> as possible. Remember, the gardener needs our help!<br><br>", 
+
+                        "Do you understand the instructions? Please press <i>Next</i> when you are ready to begin.<br><br>"
+                        
+                        ];
+
+                            
     var assoc_test_complete = "Great job! The gardener is happy that you could help them out today! You are almost done the experiment.<br><br>";
                                     
     var next_trial_ins = 'Start the next task<br><br>';
 
-    var test_complete = "Awesome! You have finished the experiment!<br><br> Now I am going to tell you a little bit about why we are doing this experiment.<br><br>\
+    var test_complete = "Awesome! You have finished the experiment!<br><br> Now I am going to ask you about your thoughts on the games.<br><br>\
                                 <img src='assets/img/instructions/gardener_thanks.png' style='width:45%; vertical-align: middle;''></img></div>";
               
                                 
@@ -654,14 +671,14 @@
                 pages: [learning_ins_start, overall_ins, gardener_ins, learning_ins],
                 show_clickable_nav: true,
                 show_page_number: true
-            },
+            }, 
             practice_catlearn1,
             good_job,
             practice_catlearn2,
             good_job,
             {
                 type: 'instructions',
-                pages: [start_ins],
+                pages: [time_ins, feedback_ins, start_ins],
                 show_clickable_nav: true,
                 show_page_number: true
             },
@@ -1372,7 +1389,7 @@
         type: 'html-button-response',
         choices: ['Continue'],
         stimulus: test_complete,
-        trial_duration: instruction_time,
+        
     };
     /********************************************* Debriefing *********************************************/
 
@@ -1425,10 +1442,10 @@
     timeline.push(fullscreen);
 
     // beginning instructions
-    timeline.push(start_trial);
+    timeline.push(start_trial); 
     timeline.push(ins_quiz);
     timeline.push(ins_quiz2);
-    timeline.push(quiz_end_wrong);
+    timeline.push(quiz_end_wrong); 
     timeline.push(start_task_ins);  
 
     // category learning
