@@ -63,7 +63,7 @@
     var num_trials = 48; // number of learning trials (multiple of 4) - usually 48
     
     // feedback and instruction images
-    var ins_img = ['assets/img/instructions/example_learning_trial.png', 'assets/img/instructions/example_recon_trial.png','assets/img/instructions/japanese_garden.jpg', 'assets/img/instructions/recon_dials.png', 'assets/img/instructions/4afc_example.png'];
+    var ins_img = ['assets/img/instructions/example_learning_trial.png', 'assets/img/instructions/example_recon_trial.png','assets/img/instructions/japanese_garden.jpg', 'assets/img/instructions/recon_dials.png', 'assets/img/instructions/4afc_example.png','assets/img/instructions/template_flower_shape360.png', 'assets/img/instructions/template_flower_shape1.png'];
     var feedback_img = ['assets/img/feedback/smile.png', 'assets/img/feedback/frown.png'];
     var category_img = ['assets/img/bee.png', 'assets/img/hummingbird.png']
 
@@ -109,16 +109,24 @@
                             </div>\
                         </div>'
 
-
     var learning_ins = 'You will be shown different flowers and you should decide whether the flower feeds <i>bees</i> or <i>hummingbirds</i>.<br><br>\
                     <p style="text-align:left; margin: 0% 32% 0% 32%;">EX:<font>\
                     <div style="display:flex; align-items:center; margin: 0% 25% 0% 25%;"">\
                             <div style="float:left; width:100%; vertical-align: middle;">\
-                                <img src="assets/img/instructions/example_learning_trial.png" style="width:110%; vertical-align: middle;"></img></div>\
-                    </div>\
-                    <br><div style="text-align: center; clear: both"> Remember that the photographs you see behind the flowers will <b>not </b> help you make your choice.<br><br>\
-                    Use the <b>arrow keys</b> on your keyboard to respond.</div>';
+                                <img src="assets/img/instructions/example_learning_trial.png" style="width:110%; vertical-align: middle;"></img></div>'
+                            
                 
+    var flower_ins = 'The flower petals can be different colours and they can be thicker or thinner.<br><br>\
+                        <div class="row" style="display:flex">\
+                                <div class="column">\
+                                    <img src="assets/img/instructions/template_flower_shape360.png" style="width:50%; vertical-align: middle;"></img>\
+                                </div>\
+                                <div class="column">\
+                                 <img src="assets/img/instructions/template_flower_shape1.png" style="width:50%; vertical-align: middle;"></img>\
+                          </div>\
+                             <br><div style="text-align: center; clear: both"> Remember that the photographs you see behind the flowers will <b>not </b> help you make your choice.<br><br>\
+                            Use the <b>arrow keys</b> on your keyboard to respond.</div>'
+                   
     var start_ins = '<br>When you are ready, please press <i>Next</i> to answer some questions about the instructions.<br><br>\
                     After you have completed the questions, you can start the first game!<br><br>'                
 
@@ -653,7 +661,7 @@
         timeline: [
             {
                 type: 'instructions',
-                pages: [learning_ins_start, overall_ins, gardener_ins, learning_ins],
+                pages: [learning_ins_start, overall_ins, gardener_ins, learning_ins, flower_ins],
                 show_clickable_nav: true,
                 show_page_number: true
             },
