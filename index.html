@@ -63,7 +63,19 @@
     var num_trials = 48; // number of learning trials (multiple of 4) - usually 48
     
     // feedback and instruction images
-    var ins_img = ['assets/img/instructions/example_learning_trial.png', 'assets/img/instructions/example_recon_trial.png','assets/img/instructions/japanese_garden.jpg', 'assets/img/instructions/recon_dials.png', 'assets/img/instructions/4afc_example.png','assets/img/instructions/template_flower_shape360.png', 'assets/img/instructions/template_flower_shape1.png'];
+    var ins_img = ['assets/img/instructions/example_learning_trial.png', 
+    'assets/img/instructions/example_recon_trial.png',
+    'assets/img/instructions/japanese_garden.jpg', 
+    'assets/img/instructions/recon_dials.png', 
+    'assets/img/instructions/4afc_example.png',
+    'assets/img/instructions/template_flower_shape360.png',
+    'assets/img/instructions/feedbackpicture_correct.png',
+    'assets/img/instructions/feedbackpicture_incorrect.png',
+    'assets/img/instructions/garden.png',
+    'assets/img/instructions/gardener_thanks.png',
+    'assets/img/instructions/gardener.png',
+    'assets/img/instructions/template_flower.png',
+    'assets/img/instructions/template_flower_shape1.png'];
     var feedback_img = ['assets/img/feedback/smile.png', 'assets/img/feedback/frown.png'];
     var category_img = ['assets/img/bee.png', 'assets/img/hummingbird.png']
 
@@ -115,7 +127,6 @@
                             <div style="float:left; width:100%; vertical-align: middle;">\
                                 <img src="assets/img/instructions/example_learning_trial.png" style="width:110%; vertical-align: middle;"></img></div>'
                             
-                
     var flower_ins = 'The flower petals can be different colours and they can be thicker or thinner.<br><br>\
                         <div class="row" style="display:flex">\
                                 <div class="column">\
@@ -124,9 +135,25 @@
                                 <div class="column">\
                                  <img src="assets/img/instructions/template_flower_shape1.png" style="width:50%; vertical-align: middle;"></img>\
                           </div>\
+                        </div>\
                              <br><div style="text-align: center; clear: both"> Remember that the photographs you see behind the flowers will <b>not </b> help you make your choice.<br><br>\
                             Use the <b>arrow keys</b> on your keyboard to respond.</div>'
-                   
+
+    var time_ins = 'You will have 3 and a half seconds to decide.<br><br>\
+                        Try your best to give an answer as quickly and as correctly as you can!<br><br>\
+                        When there is 1 second left, a red border will show on your screen.<br><br>'
+    
+    var feedback_ins = 'After you respond, a new screen will appear that tells you if you got it right and whether the flower feeds bees or hummingbirds.<br><br>\
+                            This is what it looks like if you chose correctly versus incorrectly:<br><br>\
+                            <div class="row" style="display:flex">\
+                            <div class="column">\
+                                <img src="assets/img/instructions/feedbackpicture_correct.png" style="width:120%; vertical-align: middle;"></img>\
+                            </div>\
+                            <div class="column">\
+                                <img src="assets/img/instructions/feedbackpicture_incorrect.png" style="width:120%; vertical-align: middle;"></img>\
+                            </div>\
+                        </div>'
+
     var start_ins = '<br>When you are ready, please press <i>Next</i> to answer some questions about the instructions.<br><br>\
                     After you have completed the questions, you can start the first game!<br><br>'                
 
@@ -169,15 +196,14 @@
                             
     var rec_practice_begin = "<br>Once you understand the instructions, <br>please place your fingers on the left (&#8592;) and right (&#8594;) arrow keys on your keyboard.<br><br> Press right (&#8594;) to begin the practice game.<br><br>";
 
-    var rec_practice_reminder = '<b>Remember:</b><br>\
+    var rec_practice_reminder_ins = '<b>Remember:</b><br>\
                                 If you have seen the exact same picture before in this experiment, press the <b>left (&#8592;)</b> arrow key.<br>\
                                 If you have not seen this exact picture, press the <b>right (&#8594;)</b> arrow key.<br><br>'
 
     var rec_practice_complete = '<p style="color:yellow; font-size: 100px; line-height: 0;";>&star;</p>The practice is finished. Great job!<br><br>\
                                 Do you want to go over the instuctions again before starting the real memory game? If you are ready to start the <b>real</b> memory game, press <i>Next</i>.<br><br>';
 
-    var rec_test_complete = "Nice work! You have now finished the photograph memory game.<br><br>\
-                            Take a quick break before we move on to the final game. The computer will move on to the next task in 90 seconds.<br>";
+    var rec_test_complete = "Nice work! You have now finished the photograph memory game!<br><br>";
 
     var test2_instructions = "For the next part of this experiment, <br>we are going to test your memory for the <b>flower</b> you saw with each decorative mat.<br><br>";    
 
@@ -203,15 +229,18 @@
                              "Use the numbers on your keyboard to choose <b>which of the four flowers you saw on top of this photograph</b> before. <br><br>\
                                     <img src='assets/img/instructions/4afc_example.png' style='width:36%; vertical-align: middle;'></img>\
                                     <br>\
-                        Try your best to give an answer as <b>quickly and as correctly</b> as possible. Remember, the gardener needs our help!<br><br>\
-                        <br>Do you understand the instructions? Please press <i>Next</i> when you are ready to begin.<br><br>"
-                            ];
-    
+                        Try your best to give an answer as <b>quickly and as correctly</b> as possible. Remember, the gardener needs our help!<br><br>", 
+
+                        "Do you understand the instructions? Please press <i>Next</i> when you are ready to begin.<br><br>"
+                        
+                        ];
+
+                            
     var assoc_test_complete = "Great job! The gardener is happy that you could help them out today! You are almost done the experiment.<br><br>";
                                     
     var next_trial_ins = 'Start the next task<br><br>';
 
-    var test_complete = "Awesome! You have finished the experiment!<br><br> Now I am going to tell you a little bit about why we are doing this experiment.<br><br>\
+    var test_complete = "Awesome! You have finished the experiment!<br><br> Now I am going to ask you about your thoughts on the games.<br><br>\
                                 <img src='assets/img/instructions/gardener_thanks.png' style='width:45%; vertical-align: middle;''></img></div>";
               
                                 
@@ -387,7 +416,6 @@
         }      
     }
 
-
     t2 = new Date();
     console.log("cat learn stim : "+((t2.getTime() - start_time.getTime())/1000));
 
@@ -543,8 +571,8 @@
 
     /**************************************************** subject ID ****************************************************/
     
-            // Subject id = subject number + group condition
-            var subjectID_survey = {
+    // Subject id = subject number + group condition
+     var subjectID_survey = {
             type: 'survey-text',
             questions: [
                 {prompt: 'Subject Number:', name: 'subject_id', rows: 1, columns:10, required:true},
@@ -555,7 +583,6 @@
             },
             button_label: 'Start',
         }
-
     // Subject id = subject number + shape condition + orig-lure background set + lure list + start colour
     function makeid() {
         var id = '';
@@ -664,14 +691,14 @@
                 pages: [learning_ins_start, overall_ins, gardener_ins, learning_ins, flower_ins],
                 show_clickable_nav: true,
                 show_page_number: true
-            },
+            }, 
             practice_catlearn1,
             good_job,
             practice_catlearn2,
             good_job,
             {
                 type: 'instructions',
-                pages: [start_ins],
+                pages: [time_ins, feedback_ins, start_ins],
                 show_clickable_nav: true,
                 show_page_number: true
             },
@@ -1089,7 +1116,7 @@
     var rec_practice_reminder = {
         type: 'html-button-response',
         choices: ['Continue practice session'],
-        stimulus: rec_practice_reminder,
+        stimulus: rec_practice_reminder_ins,
         on_start: function() {
             // set progress bar to 0 at the start of experiment
             jsPsych.setProgressBar(0);
@@ -1103,7 +1130,19 @@
             timeline: [rec_fixation, rec_background_practice],
             timeline_variables: rec_backs_practice.slice(num_practice_trials)
             }, 
-            rec_fixation
+            rec_fixation,
+            {
+                timeline: [ rec_practice_reminder ],
+                conditional_function: function() {
+                    var keypress_data = jsPsych.data.get().filter([{exp_section: 'scene_recognition', stimulus: ""}]).values().map(a=>a.response).slice(num_practice_trials, num_practice_trials*2);
+            
+                    // skip reminder if respond to more than 2 with arrow keys
+                    if (keypress_data.map(a=>a=='arrowright'||a=='arrowleft').filter(Boolean).length > 2) {
+                        return false;
+                    }
+                    return true;
+                }
+            }
         ],  
         conditional_function: function(){
             var keypress_data = jsPsych.data.get().filter([{exp_section: 'scene_recognition', stimulus: ""}]).values().map(a=>a.response);
@@ -1116,10 +1155,38 @@
         }
     }
 
-    // real
+    // halfway notification (if missing lots of trials)
+    var rec_halfway_notif = {
+        type: 'html-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        stimulus: rec_practice_reminder_ins,
+        trial_duration: instruction_time,
+        conditional_function: function() {
+            var keypress_data = jsPsych.data.get().filter([{exp_section: 'scene_recognition', 
+                                                            exp_sub_section: 'main',
+                                                            stimulus: ""}]).values().map(a=>a.response);
+            
+            // skip reminder if respond to more than 3/4 with arrow keys
+            if (keypress_data.map(a=>a=='arrowright'||a=='arrowleft').filter(Boolean).length > rec_backs.length*3/4) {
+                return false;
+            }
+            return true;
+        }
+    }
+    
+    // entire recognition trial set
     var recognition_trials = {
-        timeline: [rec_fixation, rec_background],
-        timeline_variables: rec_backs
+        timeline: [
+            {
+            timeline : [rec_fixation, rec_background],
+            timeline_variables: rec_backs.slice(0, rec_backs.length/2)    
+            },
+            rec_halfway_notif,
+            {
+            timeline : [rec_fixation, rec_background],
+            timeline_variables: rec_backs.slice(rec_backs.length/2)    
+            }
+        ]
     }
 
     // draw instructions for ending recognition phase
@@ -1275,7 +1342,13 @@
             var end_time = new Date();
             var duration = ((end_time - start_time)/60000).toFixed(2);
 
+            var subject_id = jsPsych.data.get().filter([{exp_section: 'subjectid_survey'}]).values()[0].response.subject_id;
+            var age = jsPsych.data.get().filter([{exp_section: 'subjectid_survey'}]).values()[0].response.age;
+
             // organize data into sections
+            var subject_id = jsPsych.data.get().filter([{exp_section: 'subjectid_survey'}]).values()[0].response.subject_id;
+            var age = jsPsych.data.get().filter([{exp_section: 'subjectid_survey'}]).values()[0].response.age;
+
             var quiz_responses = jsPsych.data.get().filter([{exp_section: 'instruction_quiz'}]);
             var quiz_data = {'phase': 'instruction_quiz', 'data': quiz_responses.values()};
 
@@ -1295,12 +1368,10 @@
             var survey_data = {'phase': 'survey', 'data': survey_responses.values()};
 
             var data = {
-                prolific_id: prolific_ids.PROLIFIC_PID,
-                study_id: prolific_ids.STUDY_ID,
-                session_id: prolific_ids.SESSION_ID,
                 experiment: "flower_category_exp",
                 repo: "buddingmindslab.github.io",
                 subject: subject_id,
+                age: age,
                 duration: duration,
                 date: Date(),
                 exp_type: exp_type,
@@ -1341,7 +1412,7 @@
         type: 'html-button-response',
         choices: ['Continue'],
         stimulus: test_complete,
-        trial_duration: instruction_time,
+        
     };
     /********************************************* Debriefing *********************************************/
 
@@ -1384,38 +1455,47 @@
   
     /********************************************** End ********************************************/
 
-    timeline.push(subjectID_survey)
+    // subject ID survey
+    timeline.push(subjectID_survey);
+
+    // preload images
     timeline.push(preload_ins);
     timeline.push(preload_cat);
- 
     timeline.push(preload_rec);
     timeline.push(fullscreen);
-    timeline.push(start_trial);
-    
+
+    // beginning instructions
+    timeline.push(start_trial); 
     timeline.push(ins_quiz);
     timeline.push(ins_quiz2);
-    timeline.push(quiz_end_wrong);
+    timeline.push(quiz_end_wrong); 
     timeline.push(start_task_ins);  
 
+    // category learning
     timeline.push(categorization_trials);
+    timeline.push(send_data);
+
     timeline.push(draw_end_learning);
     timeline.push(timer_loop);
-  
     timeline.push(next_trial);
  
+    // recognition memory instructions
     timeline.push(rec_instruction_trial);
     timeline.push(recognition_practice_trials);
     timeline.push(rec_fixation);
     timeline.push(recognition_practice_trials2);
     timeline.push(rec_instruction_trial2);
 
+    // recognition memory test
     timeline.push(recognition_trials);
     timeline.push(rec_fixation);
+    timeline.push(send_data);
+
     timeline.push(draw_end_rec_test);
     timeline.push(timer_loop);
     timeline.push(next_trial);
 
- // testing
+    // associative memory test
     timeline.push(assoc_ins);
     timeline.push(assoc_trials);
     timeline.push(draw_end_assoc_test);
@@ -1423,9 +1503,9 @@
     timeline.push(survey);
 */
     timeline.push(send_data);
+    
     timeline.push(draw_end); 
-    /*
-    timeline.push(debrief_page);*/
+    //timeline.push(debrief_page);
     timeline.push(end_trial);
  
     // run experiment
